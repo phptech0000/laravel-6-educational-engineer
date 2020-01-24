@@ -373,19 +373,26 @@
                     <div class="wc-title">
                         <h4>Role {{$role->name}}</h4>
                     </div>
-                    <div class=col-12>
-                      <strong>Permissions:</strong>
-                    </div>
-                    <?php if(!empty($roles_has_permissions)):?>
-                     <?php foreach ($roles_has_permissions as $permission):?>
-                     <div class="col-12">
-                         <label>{{$permission->name}}</label>
-                        
-                    </div>
-                    <?php endforeach;?>
-                    <?php endif;?>
-
+                    <div class=""
+                    <table class="table table-condensed table-hover">
+                        <tr>
+                            <th>No</th>
+                            <th>Permission Name</th>
+                        </tr>
+                        <?php $i = 0 ?>
+                        <?php if (!empty($role_has_permissions)): ?>
+                            <?php foreach ($role_has_permissions as $permission): ?>
+                                <tr> 
+                                    <td><?= ++$i ?></td>
+                                    <td>
+                                        <label class="badge badge-success">  <?= $permission->name ?></label> 
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </table>
                 </div>
+
             </div>
         </div>
         <!-- Your Profile Views Chart END-->
