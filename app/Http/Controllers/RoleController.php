@@ -27,7 +27,7 @@ class RoleController extends Controller {
         $this->middleware('permission:role-list');
         $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
         $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:role-detete', ['only' => ['destroy']]);
+        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $requset) {
@@ -74,13 +74,12 @@ class RoleController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $role  = Role::find($id);
+        $role = Role::find($id);
         $role_has_permissions = Permission::join("role_has_permissions",
-                 "role_has_permissions.permission_id","=" , "permissions.id" )
-                ->where("role_has_permissions.role_id" , $id)
+                        "role_has_permissions.permission_id", "=", "permissions.id")
+                ->where("role_has_permissions.role_id", $id)
                 ->get();
-        return view('Dashboard.roles.show' , compact('role' ,'role_has_permissions' ));
-              
+        return view('Dashboard.roles.show', compact('role', 'role_has_permissions'));
     }
 
     /**
@@ -106,7 +105,7 @@ class RoleController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        
+
         $valiator = $request->validate([
             'role_name' => 'required|string|max:255',
             'permission' => 'required',
@@ -128,7 +127,9 @@ class RoleController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        $role = DB::table("roles")->where('id', $id)->delete();
+        return redirect()->route('roles.index')
+                        ->with('success', 'Role deleted successfully');
     }
 
 }

@@ -51,6 +51,55 @@
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
+        <style >
+
+            /* Hiding the checkbox, but allowing it to be focused */
+            .badgebox
+            {
+                opacity: 0;
+            }
+
+            .badgebox + .badge
+            {
+                /* Move the check mark away when unchecked */
+                text-indent: -999999px;
+                /* Makes the badge width stay the same checked and unchecked */
+                width: 27px;
+            }
+
+            .badgebox:focus + .badge
+            {
+                /* Set something to make the badge looks focused */
+                /* This really depends on the application, in my case it was: */
+
+                /* Adding a light border */
+                box-shadow: inset 0px 0px 5px;
+            }
+
+            .badgebox:checked + .badge
+            {
+                /* Move the check mark back when checked */
+                text-indent: 0;
+            }
+
+
+
+        </style>
+
+        <style>
+            .grid-container {
+                display: grid;
+                grid-template-columns: auto auto auto;
+                padding: 10px;
+            }
+            .grid-item {
+
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+            }
+        </style>
 
     </head>
     <body class="ttr-opened-sidebar ttr-pinned-sidebar">
@@ -391,15 +440,34 @@
                                         <input class="form-control" type="text"  placeholder="Enter Name" name="role_name"/>
                                     </div>
                                 </div>
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <?php foreach ($permissions as $permission): ?>
-                                        <div class=" form-group col-12">
-                                            <input type="checkbox" name="permission[]"  value ="{{$permission->id}}" class="checkbox"
-                                                   />
-                                            <label><?= $permission->name ?></label>
-                                        </div>
-                                    <?php endforeach; ?>
+
+                                <div class="col-12">
+                                    <div class="ml-auto">
+                                        <h4> Permissions</h4>
+                                    </div>
                                 </div>
+
+                                <div class="feature-filters clearfix center m-b40">
+                                    <div class="grid-container">
+                                        <?php foreach ($permissions as $permission): ?>
+                                            <div class="grid-item">
+                                                <ul class="filter" data-toggle="buttons"  >
+                                                    <li data-filter="happening" class="btn " >
+
+                                                        <a class="" href="">
+                                                            <input type="checkbox" name="permission[]"  value ="{{$permission->id}}" class="badgebox">
+                                                            <span class="badge">&check;</span>
+                                                            <?= $permission->name ?>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                    </div>
+                                </div>
+
+
 
                                 <div class="col-xs-12 col-sm-12 col-md-12  text-right">
                                     <div class=" form-group col-12">
@@ -445,21 +513,21 @@
 <script  src="{{asset('admin/assets/vendors/file-upload/imageuploadify.min.js')}}"></script>
 <script>
 // Pricing add
-                                                                     function newMenuItem() {
-                                                                     var newElem = $('tr.list-item').first().clone();
-                                                                     newElem.find('input').val('');
-                                                                     newElem.appendTo('table#item-add');
-                                                                     }
-                                                                     if ($("table#item-add").is('*')) {
-                                                                     $('.add-item').on('click', function (e) {
-                                                                     e.preventDefault();
-                                                                     newMenuItem();
-                                                                     });
-                                                                     $(document).on("click", "#item-add .delete", function (e) {
-                                                                     e.preventDefault();
-                                                                     $(this).parent().parent().parent().parent().remove();
-                                                                     });
-                                                                     }
+                                        function newMenuItem() {
+                                        var newElem = $('tr.list-item').first().clone();
+                                        newElem.find('input').val('');
+                                        newElem.appendTo('table#item-add');
+                                        }
+                                        if ($("table#item-add").is('*')) {
+                                        $('.add-item').on('click', function (e) {
+                                        e.preventDefault();
+                                        newMenuItem();
+                                        });
+                                        $(document).on("click", "#item-add .delete", function (e) {
+                                        e.preventDefault();
+                                        $(this).parent().parent().parent().parent().remove();
+                                        });
+                                        }
 </script>
 
 <!-- include plugin -->
