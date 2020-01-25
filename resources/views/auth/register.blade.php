@@ -15,7 +15,7 @@
         <link href="<?= asset('reg/css/sweetalert.css') ?>" rel="stylesheet">
 
     </head>
-    <body >
+    <body>
         <div class="signupForm-section wrapper">
             <div class=display-table>
                 <div class=display-table-cell>
