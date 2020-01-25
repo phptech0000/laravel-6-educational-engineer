@@ -374,55 +374,57 @@
                             <div class="wc-title">
                                 <h4>Roles</h4>
                             </div>
-                            <div class="pull-left">
-                                @can('role-create')
-                                <a class="btn btn-success" href="{{route('roles.create')}}"> Create New Role</a>
-                                @endcan
+
+                            <div class="container-fluid">
+
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Name</th>
+                                        <th width="280px">Action</th>
+                                    </tr>
+                                    <?php foreach ($roles as $role): ?>
+                                        <tr>
+                                            <td><?= ++$i ?></td>
+                                            <td><?= $role->name ?></td>
+                                            <td>
+
+                                                <a class="btn btn-info" href="{{route('roles.show' , $role->id)}}">Show</a>
+                                                @can('role-edit')
+                                                <a class="btn btn-primary" href="{{route('roles.edit' , $role->id)}}">Edit</a>
+                                                @endcan
+                                                @can('role-delete')
+                                                <form method="POST" action="{{route('roles.destroy' , $role->id)}}" style="display: inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                </form>
+                                                @endcan
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </table>
+                            </div>
+                         
+                            <div class="col-xs-12 col-sm-12 col-md-12  text-left">
+                                <div class=" form-group col-12">
+                                    @can('role-create')
+                                    <a class="btn btn-success" href="{{route('roles.create')}}"> Create New Role</a>
+                                    @endcan
+                                    <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-12 margin-tb">
-                            <div class="pull-left">
-                                <h2>Role Management</h2>
-                            </div>
-
-                        </div>
-                    </div>
 
 
 
 
 
-                    <table class="table table-bordered">
 
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th width="280px">Action</th>
-                        </tr>
-                        <?php foreach ($roles as $role): ?>
-                            <tr>
-                                <td><?= ++$i ?></td>
-                                <td><?= $role->name ?></td>
-                                <td>
 
-                                    <a class="btn btn-info" href="{{route('roles.show' , $role->id)}}">Show</a>
-                                    @can('role-edit')
-                                    <a class="btn btn-primary" href="{{route('roles.edit' , $role->id)}}">Edit</a>
-                                    @endcan
-                                    @can('role-delete')
-                                    <form method="POST" action="{{route('roles.destroy' , $role->id)}}" style="display: inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </form>
-                                    @endcan
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </table>
 
                     <?php $roles->render(); ?>
 
@@ -458,21 +460,21 @@
 <script  src="{{asset('admin/assets/vendors/file-upload/imageuploadify.min.js')}}"></script>
 <script>
 // Pricing add
-                                                                     function newMenuItem() {
-                                                                     var newElem = $('tr.list-item').first().clone();
-                                                                     newElem.find('input').val('');
-                                                                     newElem.appendTo('table#item-add');
-                                                                     }
-                                                                     if ($("table#item-add").is('*')) {
-                                                                     $('.add-item').on('click', function (e) {
-                                                                     e.preventDefault();
-                                                                     newMenuItem();
-                                                                     });
-                                                                     $(document).on("click", "#item-add .delete", function (e) {
-                                                                     e.preventDefault();
-                                                                     $(this).parent().parent().parent().parent().remove();
-                                                                     });
-                                                                     }
+                                        function newMenuItem() {
+                                        var newElem = $('tr.list-item').first().clone();
+                                        newElem.find('input').val('');
+                                        newElem.appendTo('table#item-add');
+                                        }
+                                        if ($("table#item-add").is('*')) {
+                                        $('.add-item').on('click', function (e) {
+                                        e.preventDefault();
+                                        newMenuItem();
+                                        });
+                                        $(document).on("click", "#item-add .delete", function (e) {
+                                        e.preventDefault();
+                                        $(this).parent().parent().parent().parent().remove();
+                                        });
+                                        }
 </script>
 
 <!-- include plugin -->

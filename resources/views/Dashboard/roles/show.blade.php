@@ -387,7 +387,7 @@
                         <h4> {{$role->name}}  Role</h4>
                     </div>
 
-                       <div class="col-12">
+                    <div class="col-12">
                         <h4>{{$role->name}} Permissions </h4>
                     </div>
 
@@ -408,11 +408,17 @@
                             <?php endif; ?>
                         </div>
                     </div>
-                </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12  text-left">
+                        <div class=" form-group col-12">
 
+                            <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-        <!-- Your Profile Views Chart END-->
+            <!-- Your Profile Views Chart END-->
     </main>
 
     <div class="ttr-overlay"></div>

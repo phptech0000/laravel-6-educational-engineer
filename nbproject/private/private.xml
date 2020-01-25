@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/Project/laravel/Engineering/resources/views/welcome.blade.php</file>
+            <file>file:/E:/Project/laravel/Engineering/public/reg/css/reg.css</file>
             <file>file:/E:/Project/laravel/Engineering/app/Http/Controllers/RoleController.php</file>
-            <file>file:/E:/Project/laravel/Engineering/database/migrations/2020_01_21_211409_create_permission_tables.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/Dashboard/roles/edit.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/users/index.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/Dashboard/roles/create.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/Dashboard/roles/index.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/Dashboard/roles/show.blade.php</file>
+            <file>file:/E:/Project/laravel/Engineering/resources/views/auth/register.blade.php</file>
         </group>
     </open-files>
 </project-private>
