@@ -33,7 +33,9 @@ class HomeController extends Controller
         $allusers = User::all();
          return view('Dashboard.dashboard' , compact('allusers'));
     }
-
+    public function getBranchs($id) {
+        $branchs = DB::table("branches")->where('dep_id', $id)->pluck("branch","id");
+        return json_encode($branchs);
+    }
     
-   
 }
