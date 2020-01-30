@@ -40,8 +40,8 @@ class deps extends Model
             return $this->belongsTo('App\User','user_id');
     }
     
-    public function brances() {
-        return $this->hasMany(branch::class);
+    public function branches() {
+        return $this->hasMany('App\branch');
     }
     
     public function medias() {

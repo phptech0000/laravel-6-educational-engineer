@@ -51,17 +51,18 @@ document.addEventListener("touchstart", function () { }, false);
     $(function () {
         $(document).on('change', ':file', function () {
             var input = $(this),
-                numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
             input.trigger('fileselect', [numFiles, label]);
         });
         $(':file').on('fileselect', function (event, numFiles, label) {
             var input = $(this).parents('.form-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
+                    log = numFiles > 1 ? numFiles + ' files selected' : label;
             if (input.length) {
                 input.val(log);
             } else {
-                if (log) alert(log);
+                if (log)
+                    alert(log);
             }
         });
     });
@@ -315,10 +316,10 @@ function show() {
         $("#select_mangment").addClass("hidden");
         $("#select_year").removeClass("hidden");
     } else if (
-        AcademicRank == 'Assistant Professor' ||
-        AcademicRank == 'Associate Professor' ||
-        AcademicRank == 'Professor'
-    ) {
+            AcademicRank == 'Assistant Professor' ||
+            AcademicRank == 'Associate Professor' ||
+            AcademicRank == 'Professor'
+            ) {
 
         $("#select_mangment").removeClass("hidden");
         $("#mangmetData").removeClass("hidden");
@@ -331,6 +332,8 @@ function show() {
         $("#yearData").addClass("hidden");
     }
 }
+
+
 
 
 

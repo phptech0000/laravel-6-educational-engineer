@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+
 class UsersTableSeeder extends Seeder {
 
     /**
@@ -12,11 +13,18 @@ class UsersTableSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        
+
         $admin = User::create([
-                    'name' => 'Hassan Elsaied',
+                    'username' => 'Hassan Elsaied',
+                    'firstname' => 'Hassan',
+                    'lastname' => 'Elsaied',
+                    'gender' => 'male',
+                    'birthdata' => '1_7_1996',
+                    'academicrang' => 'Profssor',
                     'email' => 'admin@gmail.com',
-                    'password' => bcrypt('123456')
+                    'is_staff' => '0',
+                    'password' => bcrypt('123456'),
+                     'is_admin' =>'1',
         ]);
 
 
@@ -26,12 +34,6 @@ class UsersTableSeeder extends Seeder {
         $permissions = Permission::all();
         $role->syncPermissions($permissions);
         $admin->syncPermissions($permissions);
-       
-      
-        
-        
-     
-       
     }
 
 }

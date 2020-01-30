@@ -28,13 +28,13 @@ use App\User;
  */
 class branch extends Model {
 
-    protected $fillable = ['name' , 'dep_id'];
+    protected $fillable = ['branch' , 'dep_id'];
 
     public function users() {
         return $this->hasMany('App\User');
     }
     public function dep() {
-        return $this->belongsTo('App\deps', 'dep_id');
+        return $this->belongsTo('App\deps','dep_id');
     }
 
 }

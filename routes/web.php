@@ -20,9 +20,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', 'RoleController');
     Route::resource('users', 'UserController');
     Route::resource('deps', 'DepsController');
-   
 });
-Route::get('/branchs/get/{id}','HomeController@getBranchs' )->name('branchs');
+
 
 
 

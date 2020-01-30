@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{{asset('reg/u/css/select2.min.css')}}">
         <link rel="stylesheet" href="{{asset('reg/u/css/select2-bootstrap.css')}}">
         <link rel="stylesheet" href="{{asset('reg/u/css/gh-pages.css')}}">
+
     </head>
 
     <body>
@@ -99,9 +100,9 @@
                                                             <div class="help-block with-errors"></div>
                                                         </div>
                                                         <div class="form-group signUpForm-step-1">
-                                                            <button class="btn btn-default disable" type=button>Are you
-                                                                ready!
-                                                            </button>
+
+                                                            <a  class="btn btn-danger" href="<?= route('login') ?>">Are you ready!</a>
+
                                                             <button class="btn btn-custom pull-right" type=button
                                                                     onclick=nextStep2()>Next <span
                                                                     class="fa fa-arrow-right"></span></button>
@@ -207,16 +208,10 @@
                                                             <select class="form-control select2-single"
                                                                     data-error="Please Select  Year " id="year" name="year"
                                                                     required>
-                                                                <option value="">Select Your Year *
-                                                                </option>
-                                                                <option value="First Year 1st">First Year 1st
-                                                                </option>
-                                                                <option value="Second Year  2nd">Second Year 2nd
-                                                                </option>
-                                                                <option value="Thard Year 3rd">Thard Year 3rd</option>
-                                                                <option value="Fourth Year 4th">Fourth Year 4th</option>
-
-
+                                                                <option value="">Select Your Year *</option>
+                                                                <?php foreach ($years as $year): ?>
+                                                                    <option value="<?= $year->id ?>"> <?= $year->year_name ?></option>
+                                                                <?php endforeach; ?>
                                                             </select>
                                                             <div class=input-group-icon><i class="fa fa-map-marker"></i>
                                                             </div>
@@ -304,21 +299,20 @@
                                                             <div class=input-group-icon><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-
-
-
                                                         <div class="form-group validbranch">
                                                             <select class="form-control select2-single"
-                                                                    data-error="Please Select Branch" id=branch name=branch 
+                                                                    data-error="Please Select Branch" id="branch" name="branch "
                                                                     required >
-                                                                <option value=""> Branch*
-
+                                                                <option value=""> Branch*</option>
+                                                                <?php foreach ($deps as $dep): ?>
+                                                                    <?php foreach ($dep->branches() as $branch): ?>
+                                                                        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
+                                                                    <?php endforeach; ?>
+                                                                <?php endforeach; ?>
                                                             </select>
                                                             <div class=input-group-icon><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-
-
                                                         <div class="form-group validmangmet hidden"
                                                              id="select_mangment">
                                                             <select class="form-control select2-single" id="mangment"
@@ -599,5 +593,5 @@
         </script>
 
     </body>
-    
+
 </html>

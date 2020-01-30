@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\deps;
 use App\branch;
+use App\Year;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
@@ -72,11 +73,21 @@ class User extends Authenticatable {
 
     /**
      * The attributes that are mass assignable.
-     *
+     *  
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'is_admin', 'is_staff', 'is_student', 'staff_type',
+        'username',
+        'firstname',
+        'lastname',
+        'image',
+        'gender',
+        'birthdata',
+        'academicrang',
+        'mangment',
+        'email', 
+        'is_staff',
+        'password',
     ];
 
     /**
@@ -105,6 +116,8 @@ class User extends Authenticatable {
         return $this->belongsTo('App\branch', 'branch_id');
     }
 
-
+    public function year() {
+        return $this->belongsTo(Year::class, 'year_id');
+    }
 
 }
