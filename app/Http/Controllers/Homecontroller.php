@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use DB;
+use App\dep;
 use App\branch;
 
 class HomeController extends Controller {
@@ -29,6 +30,13 @@ class HomeController extends Controller {
         return view('Dashboard.dashboard', compact('allusers'));
     }
 
-
+    public function getBranch($id) {
+        $branch = branch::where('dep_id' ,"=" , $id)->pluck('branch' , 'id');
+        return json_encode($branch);
+    }
+    public function getdep_name($id) {
+        $dep = dep::where('id' , $id)->pluck('name' ,'id');
+        return json_encode($dep);
+    }
 
 }

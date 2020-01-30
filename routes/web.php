@@ -22,8 +22,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('deps', 'DepsController');
 });
 
-
-
+Route::get('/branch/get/{id}', 'HomeController@getBranch')->name('branch');
+Route::get('/dep/get/{id}', 'HomeController@getdep_name')->name('dep_name');
 
 Auth::routes();
 

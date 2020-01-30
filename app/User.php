@@ -88,6 +88,9 @@ class User extends Authenticatable {
         'email', 
         'is_staff',
         'password',
+        'is_admin',
+        'Contact_method',
+        
     ];
 
     /**

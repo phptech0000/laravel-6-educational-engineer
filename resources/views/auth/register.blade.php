@@ -303,12 +303,7 @@
                                                             <select class="form-control select2-single"
                                                                     data-error="Please Select Branch" id="branch" name="branch "
                                                                     required >
-                                                                <option value=""> Branch*</option>
-                                                                <?php foreach ($deps as $dep): ?>
-                                                                    <?php foreach ($dep->branches() as $branch): ?>
-                                                                        <option value="<?= $branch->id ?>"><?= $branch->name ?></option>
-                                                                    <?php endforeach; ?>
-                                                                <?php endforeach; ?>
+                                                                <option value=""> Branch* </option>
                                                             </select>
                                                             <div class=input-group-icon><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
@@ -591,7 +586,30 @@
                 }
             });
         </script>
+        <script>
+            $(document).ready(function () {
+                $("#dep").on('change', function () {
+                   var depId = $(this).val();
+                    if (depId) {
+                        $.ajax({
+                            url: '/branch/get/' + depId,
+                            method: 'GET',
+                            dataType: 'json',
+                            delay: 250,
+                            success: function (data) {
+                                $("#branch").empty();
+                                $.each(data, function (key, value) {
+                                    $("#branch").append('<option value="' + value + '">' + value + '</option>');
+                                });
+                            },
+                        });
+                    } else {
+                        $("#branch").empty();
+                    }
+                });
+            });
 
+        </script>
     </body>
 
 </html>

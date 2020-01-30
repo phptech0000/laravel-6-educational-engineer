@@ -24,7 +24,7 @@ document.addEventListener("touchstart", function () { }, false);
 
     });
     $("#signUpForm").validator().on("submit", function (event) {
-        if (event.isDefaultPrevented()) {
+        if (event.isDefaultPrevented() && $("#select_year").is(":visible") && $("#select_mangment").is(":visible")) {
             formError();
             submitMSG(false, "Please fill in the form properly!");
         } else {
@@ -255,7 +255,24 @@ function nextStep4() {
     $("#yearData").html('<strong>Year:</strong>' + Year);
     $("#phoneData").html('<strong>Phone:</strong> ' + phone);
     $("#preferedcontactData").html('<strong>Prefered Contact Method:</strong> ' + preferedcontact);
-    $("#depData").html('<strong> Department:</strong> ' + dep);
+    if (dep) {
+        $.ajax({
+            url: '/dep/get/' + dep,
+            method: 'GET',
+            dataType: 'json',
+            delay: 250,
+            success: function (data) {
+                $("#depData").empty();
+                $.each(data, function (key ,value) {
+                    $("#depData").html('<strong> Department:</strong> ' + value);
+                });
+            },
+        });
+
+    } else {
+        $("#depData").empty();
+    }
+
     $("#branhData").html('<strong>Branch:</strong> ' + branch);
     $("#mangmetData").html('<strong>Mangment Level:</strong> ' + mangment);
     if (dep)
