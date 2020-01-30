@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\deps;
+use App\dep;
 
 /**
  * App\media
@@ -15,7 +15,7 @@ use App\deps;
  * @property int $dep_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\deps $dep
+ * @property-read \App\dep $dep
  * @method static \Illuminate\Database\Eloquent\Builder|\App\media newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\media newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\media query()

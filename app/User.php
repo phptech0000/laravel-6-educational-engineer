@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\deps;
+use App\dep;
 use App\branch;
 use App\Year;
 use Spatie\Permission\Models\Role;
@@ -51,7 +51,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string|null $staff_type
  * @property int $branch_id
  * @property-read \App\branch $branch
- * @property-read \App\deps $dep
+ * @property-read \App\dep $dep
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereBranchId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereIsStaff($value)

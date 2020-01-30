@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-
+use App\dep;
 /**
  * App\branch
  *
@@ -13,7 +13,7 @@ use App\User;
  * @property int $dep_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\deps $dep
+ * @property-read \App\dep $dep
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\branch newModelQuery()
@@ -34,7 +34,6 @@ class branch extends Model {
         return $this->hasMany('App\User');
     }
     public function dep() {
-        return $this->belongsTo('App\deps','dep_id');
+        return $this->belongsTo(dep::class,'dep_id');
     }
-
 }

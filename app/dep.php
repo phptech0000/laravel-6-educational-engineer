@@ -21,19 +21,19 @@ use App\media;
  * @property-read int|null $brances_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\media[] $medias
  * @property-read int|null $medias_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereDescirptions($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\deps whereYearFound($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereDescirptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereYearFound($value)
  * @mixin \Eloquent
  */
-class deps extends Model
+class dep extends Model
 {
     protected $fillable = ['name' , 'year_found','descirptions','user_id'];
     public function SuperVisior() {
@@ -41,7 +41,7 @@ class deps extends Model
     }
     
     public function branches() {
-        return $this->hasMany('App\branch');
+        return $this->hasMany(branch::class);
     }
     
     public function medias() {

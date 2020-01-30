@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\deps;
+use App\dep;
 use App\branch;
 use App\media;
 
@@ -54,7 +54,7 @@ class DepsController extends Controller {
             'descirptions' => 'required|string|max:255'
         ];
         $request->validate($rules);
-        $deps = new deps();
+        $deps = new dep();
         $deps->name = $request->input('name');
         $deps->year_found = $request->input('year_found');
         $deps->descirptions = $request->input('descirptions');
