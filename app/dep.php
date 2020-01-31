@@ -32,6 +32,8 @@ use App\media;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\dep whereYearFound($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\branch[] $branches
+ * @property-read int|null $branches_count
  */
 class dep extends Model
 {
@@ -46,5 +48,6 @@ class dep extends Model
     
     public function medias() {
         return $this->hasMany(media::class);
+        
     }
 }

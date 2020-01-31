@@ -23,7 +23,11 @@ document.addEventListener("touchstart", function () { }, false);
         });
 
     });
-    $("#signUpForm").validator().on("submit", function (event) {
+    $("#signUpForm").validator({
+        submitHandler: function (form) {
+            form.submit();
+        }
+    }).on("submit", function (event) {
         if (event.isDefaultPrevented() && $("#select_year").is(":visible") && $("#select_mangment").is(":visible")) {
             formError();
             submitMSG(false, "Please fill in the form properly!");
@@ -35,17 +39,23 @@ document.addEventListener("touchstart", function () { }, false);
             if (inputHumanAns == correctMathSolution) {
                 event.preventDefault();
                 submitForm();
+
+
             } else {
                 submitMSG(false, "Please solve Human Captcha!!!");
                 sweetAlert("Oops...", "Please solve Human Captcha!!!", "error");
                 return false;
             }
         }
+        // Make sure the form is submitted to the destination defined
+        // in the "action" attribute of the form when valid
+
     });
 
     function submitForm() {
+
         $("#mgsFormSubmit").html('');
-        $("#final-step-buttons").html('<div class="h3 text-center text-success"> You have finished all steps of this html form successfully </div>');
+        $("#final-step-buttons").html('<div class="h3 text-center text-success"> You have finished all steps successfully Pleas check your email box to verify your mail  </div>');
         swal("Good job!", "You have finished all steps successfully!", "success");
     }
     $(function () {
@@ -246,7 +256,7 @@ function nextStep4() {
 
     $("#unameData").html('<strong>UserName:</strong> ' + uname);
     $("#emailData").html('<strong>Email:</strong> ' + email);
-    $("#passData").html('<strong>Password:</strong> *****');
+    $("#passData").html('<strong>Password:</strong> *******');
     $("#firstNameData").html('<strong>First Name:</strong> ' + fname);
     $("#lastNameData").html('<strong>Last Name:</strong> ' + lname);
     $("#genderData").html('<strong>Gender:</strong> ' + gender);
@@ -263,7 +273,7 @@ function nextStep4() {
             delay: 250,
             success: function (data) {
                 $("#depData").empty();
-                $.each(data, function (key ,value) {
+                $.each(data, function (key, value) {
                     $("#depData").html('<strong> Department:</strong> ' + value);
                 });
             },
