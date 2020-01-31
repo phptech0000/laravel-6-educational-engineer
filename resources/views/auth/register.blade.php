@@ -33,7 +33,7 @@
                                 <div class="clearfix form-wrap">
                                     <h2 class=form-title>Registration of Education Engineer</h2>
                                     <div class="col-sm-6 col-sm-offset-3">
-                                        <form    action="{{ route('register') }}" method="POST" enctype="multipart/form-data " 
+                                        <form    action="{{route('register')}}" method="POST" enctype="multipart/form-data " 
                                                  class ="signUpForm" id=signUpForm  data-toggle=validator  name="signUpForm">
                                             @csrf
                                             <div class=signUpForm-step-holder>
