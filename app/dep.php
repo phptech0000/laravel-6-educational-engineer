@@ -43,6 +43,7 @@ class dep extends Model
     }
     
     public function branches() {
+        
         return $this->hasMany(branch::class);
     }
     

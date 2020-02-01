@@ -119,7 +119,7 @@
                                     <div class="topbar-right">
                                         <ul>
                                             <li><a href="{{route('login')}}">Login</a></li>
-                                            <li><a href="{{route('register')}}">Register</a></li>
+                                            <li><a href="{{route('registeruser.create')}}">Register</a></li>
                                         </ul>
                                     </div>
 
@@ -259,7 +259,7 @@
                             <div class="topbar-right">
                                 <ul>
                                     <li><a href="{{route('login')}}">Login</a></li>
-                                    <li><a href="{{route('register')}}">Register</a></li>
+                                    <li><a href="{{route('registeruser.create')}}">Register</a></li>
                                 </ul>
                             </div>
 

@@ -6,7 +6,6 @@ document.addEventListener("touchstart", function () { }, false);
         var randNumber_2 = parseInt(Math.ceil(Math.random() * 15), 10);
         humanCheckCaptcha(randNumber_1, randNumber_2);
     });
-
     function humanCheckCaptcha(randNumber_1, randNumber_2) {
         $("#humanCheckCaptchaBox").html("Solve The Math ");
         $("#firstDigit").html('<input name="mathfirstnum" id="mathfirstnum" class="form-control" type="text" value="' + randNumber_1 + '" readonly>');
@@ -21,13 +20,9 @@ document.addEventListener("touchstart", function () { }, false);
             todayHighlight: true,
             autoclose: true
         });
-
     });
-    $("#signUpForm").validator({
-        submitHandler: function (form) {
-            form.submit();
-        }
-    }).on("submit", function (event) {
+    
+    $("#signUpForm").validator().on("submit", function (event) {
         if (event.isDefaultPrevented() && $("#select_year").is(":visible") && $("#select_mangment").is(":visible")) {
             formError();
             submitMSG(false, "Please fill in the form properly!");
@@ -39,8 +34,6 @@ document.addEventListener("touchstart", function () { }, false);
             if (inputHumanAns == correctMathSolution) {
                 event.preventDefault();
                 submitForm();
-
-
             } else {
                 submitMSG(false, "Please solve Human Captcha!!!");
                 sweetAlert("Oops...", "Please solve Human Captcha!!!", "error");
@@ -51,12 +44,21 @@ document.addEventListener("touchstart", function () { }, false);
         // in the "action" attribute of the form when valid
 
     });
-
     function submitForm() {
+        $.ajax({
+            url: 'registeruser/store',
+            method: 'POST',
+            dataType: 'json',
+            delay: 250,
+            success: function (data) {
+                console.log(data);
+                $("#mgsFormSubmit").html('');
+                $("#final-step-buttons").html('<div class="h3 text-center text-success"> You have finished all steps successfully Pleas check your email box to verify your mail  </div>');
+                swal("Good job!", "You have finished all steps successfully!", "success");
+            },
+        });
 
-        $("#mgsFormSubmit").html('');
-        $("#final-step-buttons").html('<div class="h3 text-center text-success"> You have finished all steps successfully Pleas check your email box to verify your mail  </div>');
-        swal("Good job!", "You have finished all steps successfully!", "success");
+
     }
     $(function () {
         $(document).on('change', ':file', function () {
@@ -76,7 +78,6 @@ document.addEventListener("touchstart", function () { }, false);
             }
         });
     });
-
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -89,7 +90,6 @@ document.addEventListener("touchstart", function () { }, false);
     $("#userfile").on('change', function () {
         readURL(this);
     });
-
     function formSuccess() {
         $("#signUpForm")[0].reset();
         submitMSG(true, "Registration Process Successfully!")
@@ -108,14 +108,11 @@ document.addEventListener("touchstart", function () { }, false);
         $("#mgsFormSubmit").removeClass().addClass(msgClasses).text(msg);
     }
 })(jQuery);
-
-
 $(function () {
     $("#signUpForm").on('focus', ':input', function () {
         $(this).attr('autocomplete', 'on');
     });
 });
-
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -171,7 +168,6 @@ function nextStep3() {
     var AcademicRank = $("#academicrank").val();
     var phone = $("#phone").val();
     var preferedcontact = $('input[name=preferedcontact]:checked').val();
-
     if (fname)
         $(".validfname .help-block.with-errors").html('');
     else
@@ -192,7 +188,6 @@ function nextStep3() {
         $(".validAcademicRank .help-block.with-errors").html('');
     else
         $(".validAcademicRank .help-block.with-errors").html('<ul class="list-unstyled"><li>Please enter Academic Rank</li></ul>');
-
     if ($("#select_year").is(":visible")) {
         if (year) {
             $(".validYear .help-block.with-errors").html('');
@@ -215,9 +210,6 @@ function nextStep3() {
         $(".validpreferedcontact .help-block.with-errors").html('');
     else
         $(".validpreferedcontact .help-block.with-errors").html('<ul class="list-unstyled"><li>Please Select Prefered Contact Method</li></ul>');
-
-
-
     if (fname.length > 0 && fname && lname.length > 0 && lname && gender && AcademicRank && birthdate.length > 4 && birthdate && phone.length > 4 && validphone > 0 && preferedcontact && ($("#select_year").is(":visible") ? year : true)) {
         $("#section-2 .help-block.with-errors.mandatory-error").html('');
         $("#section-2").removeClass("open");
@@ -252,8 +244,6 @@ function nextStep4() {
     var dep = $("#dep").val();
     var branch = $("#branch").val();
     var mangment = $("#mangment").val();
-
-
     $("#unameData").html('<strong>UserName:</strong> ' + uname);
     $("#emailData").html('<strong>Email:</strong> ' + email);
     $("#passData").html('<strong>Password:</strong> *******');
@@ -278,7 +268,6 @@ function nextStep4() {
                 });
             },
         });
-
     } else {
         $("#depData").empty();
     }

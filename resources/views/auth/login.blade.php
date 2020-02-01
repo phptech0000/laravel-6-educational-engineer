@@ -74,7 +74,7 @@
                     <div class="flex-sb-m w-full p-b-30">
                         <div class="contact100-form-checkbox">
 
-                            <a class="contact100-form-checkbox" href="{{route('register')}}" >Create New Account</a>
+                            <a class="contact100-form-checkbox" href="{{route('registeruser.create')}}" >Create New Account</a>
 
                         </div>
 

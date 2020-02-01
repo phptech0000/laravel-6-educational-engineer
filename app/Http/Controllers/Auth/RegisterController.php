@@ -48,15 +48,7 @@ use RegistersUsers;
      */
     protected function validator(array $data) {
         return Validator::make($data, [
-                    'username' => ['required', 'string', 'max:255'],
-                    'firstname' => ['required', 'string', 'max:255'],
-                    'lastname' => ['required', 'string', 'max:255'],
-                    'image' => ['nullable', 'mimes:jpg,jpeg,png,gif'],
-                    'gender' => ['required', 'string', 'max:255'],
-                    'birthdata' => ['required', 'string', 'max:255'],
-                    'academicrang' => ['required', 'string', 'max:255'],
-                    'mangment' => ['nullable', 'string', 'max:255'],
-                    'Contact_method' => ['required', 'string', 'max:255'],
+                    'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -70,7 +62,7 @@ use RegistersUsers;
      */
     protected function create(array $data) {
         return User::create([
-                    'username' => $data['uname'],
+                    'name' => $data['name'],
                     'email' => $data['email'],
                     'password' => Hash::make($data['password']),
         ]);

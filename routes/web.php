@@ -21,11 +21,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', 'UserController');
     Route::resource('deps', 'DepsController');
 });
-
+Route::get('registeruser/ceate', 'UserController@create')->name('registeruser.create');
+Route::post('registeruser/store', 'UserController@store')->name('registeruser.store');
 Route::get('/branch/get/{id}', 'HomeController@getBranch')->name('branch');
 Route::get('/dep/get/{id}', 'HomeController@getdep_name')->name('dep_name');
-Route::post('/reg' , 'RegisterController@register')->name('reg');
-   Auth::routes(); 
+Auth::routes();
 
 
 
