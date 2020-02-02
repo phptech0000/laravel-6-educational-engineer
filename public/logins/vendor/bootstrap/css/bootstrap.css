@@ -1681,7 +1681,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
   height: calc(2.3125rem + 2px);
 }
 
-.form-group {
+.form-group2 {
   margin-bottom: 1rem;
 }
 
@@ -1881,7 +1881,7 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
         justify-content: center;
     margin-bottom: 0;
   }
-  .form-inline .form-group {
+  .form-inline .form-group2 {
     display: -ms-flexbox;
     display: flex;
     -ms-flex: 0 0 auto;

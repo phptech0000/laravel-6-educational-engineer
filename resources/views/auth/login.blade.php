@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href="{{asset('logins/images/icons/favicon.ico')}}"/>
+        <link rel=icon href="{{asset('assets/images/favicon.ico')}}" />
         <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href="{{asset('logins/vendor/bootstrap/css/bootstrap.min.css')}}">
         <!--===============================================================================================-->
@@ -67,7 +67,7 @@
                             </div>
                         </div>
 
-                        <div class="container-login100-form-btn form-group" >
+                        <div class="container-login100-form-btn form-group2" >
                             <input  type="submit" name="submit" value="Login"class="login100-form-btn">
                         </div>
                     </form>

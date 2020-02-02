@@ -202,7 +202,7 @@ form#signUpForm {
     margin: 10px 0 15px;
 }
 
-#signUpForm .form-group {
+#signUpForm .form-group2 {
     margin: 0 0 30px;
     position: relative;
 }
@@ -279,7 +279,7 @@ form#signUpForm {
     max-width: 150px;
 }
 
-#signUpForm .form-group.attachmentFile {
+#signUpForm .form-group2.attachmentFile {
     display: table;
     margin: 15px 0 40px;
 }

@@ -9,7 +9,7 @@
         <title>Registration</title>
         <meta content="Add your website description here" name="description">
         <meta content="Add your website keywords here" name="keywords">
-        <link rel=icon href="{{asset('favicon.ico')}}" >
+        <link rel=icon href="{{asset('assets/images/favicon.ico')}}" >
         <link rel=stylesheet href="{{asset('reg/css/bootstrap.min.css')}}" >
         <link rel=stylesheet href="{{asset('reg/css/font-awesome.min.css')}}" >
         <link rel=stylesheet href="{{asset('reg/css/bootstrap-datepicker3.min.css')}}" >
@@ -31,433 +31,390 @@
                         <div class=row>
                             <div class=col-sm-12>
                                 <div class="clearfix form-wrap">
-                                    <h2 class=form-title>Registration of Education Engineer</h2>
+                                    <h2 class="form-title">Registration of Education Engineer</h2>
                                     <div class="col-sm-6 col-sm-offset-3">
-                                        <form   class="signUpForm"  action="{{route('registeruser.store')}}" method="POST"
-                                                data-toggle="validator" enctype="multipart/form-data" id="signUpForm" >
+                                        <form id="signUpForm"  class="signUpForm" novalidate  action="{{route('registeruser.store')}}"  method="post" >
                                             @csrf
-                                            <div class=signUpForm-step-holder>
-                                                <div class=signUpForm-step-wrap id=section-1>
-                                                    <h3 class=section-title>Step 1 of 4</h3>
-
-                                                    <div class="form-layer-steps form-layer-tolal-steps-4">
-                                                        <div class=form-layer-progress>
-                                                            <div class=form-layer-progress-line style=width:0%>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-layer-step active">
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-unlock-alt"></i></div>
-                                                            <p>Account
-                                                        </div>
-                                                        <div class=form-layer-step>
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-user"></i>
-                                                            </div>
-                                                            <p>Personal
-                                                        </div>
-                                                        <div class=form-layer-step>
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-credit-card-alt"></i></div>
-                                                            <p>Engineer Info
-                                                        </div>
-                                                        <div class=form-layer-step>
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-check"></i>
-                                                            </div>
-                                                            <p>Confirm
-                                                        </div>
-                                                    </div>
-                                                    <h3 class=section-form-title>Account Information</h3>
-                                                    <div class="help-block with-errors mandatory-error"></div>
-                                                    <div class="form-group validuname">
-                                                        <input id="uname" name="uname" class="form-control"
-                                                               data-error="Please enter UserName" placeholder="UserName*" 
-                                                               required>
-                                                        <div class=input-group-icon><i class="fa fa-user"></i></div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validemail">
-                                                        <input id="email" name="email" class="form-control"
-                                                               data-error="Please enter valid email" placeholder="Email*"
-                                                               required type="email">
-                                                        <div class=input-group-icon><i class="fa fa-envelope"></i>
-                                                        </div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validpass">
-                                                        <input id="pass" name="password" class="form-control"
-                                                               data-error="Please enter password"
-                                                               placeholder="Password* at least 8 character" required
-                                                               type="password">
-                                                        <div class=input-group-icon><i class="fa fa-key"></i></div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class=form-group>
-                                                        <input id="cpass" name="cpass" class=form-control
-                                                               data-error="Please retype password"
-                                                               placeholder="Confirm Password*" type="password" required >
-                                                        <div class="input-group-icon"><i class="fa fa-key"></i></div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group signUpForm-step-1">
-                                                        <button class="btn btn-default disable" type="button">Are you
-                                                            ready!
-                                                        </button>
-                                                        <button class="btn btn-custom pull-right" type="button"
-                                                                onclick="nextStep2()">Next <span
-                                                                class="fa fa-arrow-right"></span></button>
-                                                    </div>
-
-                                                </div>
-                                                <div class="signUpForm-step-wrap slide-right" id="section-2">
-                                                    <h3 class=section-title>Step 2 of 4</h3>
-
-                                                    <div class="form-layer-steps form-layer-tolal-steps-4">
-                                                        <div class=form-layer-progress>
-                                                            <div class=form-layer-progress-line style=width:37.25%>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-layer-step activated">
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-unlock-alt"></i></div>
-                                                            <p>Account
-                                                        </div>
-                                                        <div class="form-layer-step active">
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-user"></i>
-                                                            </div>
-                                                            <p>Personal
-                                                        </div>
-                                                        <div class=form-layer-step>
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-credit-card-alt"></i></div>
-                                                            <p>Engineer Info
-                                                        </div>
-                                                        <div class=form-layer-step>
-                                                            <div class=form-layer-step-icon><i
-                                                                    class="fa fa-check"></i>
-                                                            </div>
-                                                            <p>Confirm
-                                                        </div>
-                                                    </div>
-                                                    <h3 class=section-form-title>Personal Information</h3>
-                                                    <div class="help-block with-errors mandatory-error"></div>
-                                                    <div class="form-group validfname">
-                                                        <input id="fname" name="fname" class="form-control"
-                                                               data-error="Please enter First Name"
-                                                               placeholder="First Name*" required>
-                                                        <div class=input-group-icon><i class="fa fa-user"></i></div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validlname">
-                                                        <input id="lname" name="lname" class="form-control"
-                                                               data-error="Please enter Last Name"
-                                                               placeholder="Last Name*" required>
-                                                        <div class=input-group-icon><i class="fa fa-user"></i></div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validgender">
-                                                        <select class="form-control select2-single"
-                                                                data-error="Please Select Gender" id="gender" name="gender"
-                                                                required>
-                                                            <option value="">--- Select Your Gender* ---
-                                                            <option value=Male>Male
-                                                            <option value=Femal>Female
-                                                        </select>
-                                                        <div class=input-group-icon><i class="fa fa-mars"></i></div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validbirthdate" id="date-of-birth">
-                                                        <input id="birthdate" name="birthdate"class=form-control
-                                                               data-error="Please enter Date Of Birth"
-                                                               placeholder="Date Of Birth*" required>
-                                                        <div class=input-group-icon><i class="fa fa-calendar"></i>
-                                                        </div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-
-
-
-
-                                                    <div class="form-group validAcademicRank">
-
-                                                        <select class="form-control select2-single"
-                                                                data-error="Please Select  Academic Rank "
-                                                                id="academicrank" name="academicrank" required
-                                                                onchange="show()">
-                                                            <option value="">Select Your Academic Rank *
-                                                            </option>
-                                                            <option value="Student">Student</option>
-                                                            <option value="Assistant Teaching">Teaching Assistant
-                                                            </option>
-                                                            <option value="Assistant Lecturer">Assistant Lecturer
-                                                            </option>
-                                                            <option value="Assistant Professor">Assistant Professor
-                                                            </option>
-                                                            <option value="Associate Professor">Associate Professor
-                                                            </option>
-                                                            <option value="Professor">Professor</option>
-                                                            <option value="Professor Emeritus">Professor Emeritus
-                                                            </option>
-                                                        </select>
-                                                        <div class=input-group-icon><i class="fa fa-map-marker"></i>
-                                                        </div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validYear hidden" id="select_year">
-                                                        <select class="form-control select2-single"
-                                                                data-error="Please Select  Year " id="year" name="year"
-                                                                required>
-                                                            <option value="">Select Your Year *</option>
-                                                            <?php foreach ($years as $year): ?>
-                                                                <option value="<?= $year->id ?>"><?= $year->year_name ?></option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                        <div class=input-group-icon><i class="fa fa-map-marker"></i>
-                                                        </div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-
-                                                    <div class="form-group validphone">
-                                                        <input id="phone" name="phone" class="form-control"
-                                                               data-error="Please enter valid phone" placeholder="Phone*"
-                                                               required>
-                                                        <div class=input-group-icon><i class="fa fa-phone"></i>
-                                                        </div>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <div class="form-group validpreferedcontact">
-                                                        <strong>Contact Method*: </strong>
-
-                                                        <label class="radio-inline">
-                                                            <input id="preferedcontact1" name="preferedcontact"  type="radio" value="email">
-                                                            Email
-                                                        </label>
-                                                        <label class="radio-inline">
-                                                            <input id="preferedcontact2" name="preferedcontact" type="radio" value="Phone">
-                                                            Phone
-                                                        </label>
-                                                        <div class="help-block with-errors"></div>
-                                                    </div>
-                                                    <h3 class="section-form-title">Profile Image</h3>
-                                                    <div class="form-group attachmentFile">
-                                                        <label class="input-group-btn">
-                                                            <span class="btn">Browse… 
-                                                                <input  id="userfile" name="userfile" type="file" >
-                                                            </span>     
-                                                        </label>
-                                                        <input id=attachedFile class=form-control
-                                                               placeholder="Browse to select file" readonly>
-                                                    </div>
-                                                    <div class="form-group signUpForm-step-2">
-                                                        <button class="btn btn-custom" type="button"  onclick="previousStep1()">
-                                                            <span class="fa fa-arrow-left"></span>
-                                                            Back
-                                                        </button>
-                                                        <button class="btn btn-custom pull-right" type="button"  onclick="nextStep3()">
-                                                            Next 
-                                                            <span  class="fa fa-arrow-right"></span>
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                                <div class="signUpForm-step-wrap slide-right" id="section-3">
-                                                    <h3 class=section-title>Step 3 of 4</h3>
+                                            <div class="form-group2 signUpForm-step-holder  ">
+                                                <div class="signUpForm-step-wrap form-group2" id="section-1">
+                                                    <h3 class="section-title">Step 1 of 4</h3>
                                                     <fieldset>
                                                         <div class="form-layer-steps form-layer-tolal-steps-4">
                                                             <div class="form-layer-progress">
-                                                                <div class="form-layer-progress-line" style="width:62.25%">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-layer-step activated">
-                                                                <div class="form-layer-step-icon"><i
-                                                                        class="fa fa-unlock-alt"></i></div>
-                                                                <p>Account
-                                                            </div>
-                                                            <div class="form-layer-step activated">
-                                                                <div class="form-layer-step-icon"><i
-                                                                        class="fa fa-user"></i>
-                                                                </div>
-                                                                <p>Personal
+                                                                <div class="form-layer-progress-line" style="width:0%"></div>
                                                             </div>
                                                             <div class="form-layer-step active">
-                                                                <div class="form-layer-step-icon"><i
-                                                                        class="fa fa-credit-card-alt"></i></div>
-                                                                <p>Engineer Info
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-unlock-alt"></i>
+                                                                </div>
+                                                                <p>Account</p>
                                                             </div>
                                                             <div class="form-layer-step">
-                                                                <div class="form-layer-step-icon"><i
-                                                                        class="fa fa-check"></i>
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-user"></i>
                                                                 </div>
-                                                                <p>Confirm
+                                                                <p>Personal</p>
+                                                            </div>
+                                                            <div class="form-layer-step">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-credit-card-alt"></i>
+                                                                </div>
+                                                                <p>Engineer Info</p>
+                                                            </div>
+                                                            <div class="form-layer-step">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-check"></i>
+                                                                </div>
+                                                                <p>Confirm</p>
                                                             </div>
                                                         </div>
-                                                        <h3 class=section-title> Engineer Details :</h3>
+                                                        <h3 class="section-form-title">Account Information</h3>
                                                         <div class="help-block with-errors mandatory-error"></div>
-                                                        <div class="form-group validdep">
-                                                            <select class="form-control select2-single"
-                                                                    data-error="Please Select Department" id=dep name="dep"
-                                                                    required>
+                                                        <div class="form-group2 validuname">
+                                                            <input id="uname" type="text" name="uname" class="form-control"  data-error="Please enter UserName" placeholder="UserName*"  required="">
+                                                            <div class="input-group-icon">
+                                                                <i class="fa fa-user"></i>
+                                                            </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validemail">
+                                                            <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="Email*" required="" >
+                                                            <div class=input-group-icon>
+                                                                <i class="fa fa-envelope"></i>
+                                                            </div>
+
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validpass">
+                                                            <input id="pass" type="password" name="password"  class="form-control"   data-error="Please enter password"  placeholder="Password* at least 8 character" required="" >
+                                                            <div class=input-group-icon>
+                                                                <i class="fa fa-key"></i>
+                                                            </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2">
+                                                            <input id="cpass" type="password"  name="cpass" class="form-control" data-error="Please retype password" placeholder="Confirm Password*" required ="">
+                                                            <div class="input-group-icon">
+                                                                <i class="fa fa-key"></i>
+                                                            </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 signUpForm-step-1">
+                                                            <button class="btn btn-danger" type="button">
+                                                                Are you ready!
+                                                            </button>
+                                                            <button class="btn btn-custom pull-right" type="button" onclick="nextStep2()">
+                                                                Next
+                                                                <span class="fa fa-arrow-right"></span>
+                                                            </button>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="signUpForm-step-wrap slide-right form-group2" id="section-2">
+                                                    <h3 class="section-title">Step 2 of 4</h3>
+                                                    <fieldset>
+                                                        <div class="form-layer-steps form-layer-tolal-steps-4">
+                                                            <div class="form-layer-progress">
+                                                                <div class="form-layer-progress-line" style="width:37.25%">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-layer-step activated">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-unlock-alt"></i>
+                                                                </div>
+                                                                <p>Account</p>
+                                                            </div>
+                                                            <div class="form-layer-step active">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <p>Personal</p>
+                                                            </div>
+                                                            <div class="form-layer-step">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-credit-card-alt"></i>
+                                                                </div>
+                                                                <p>Engineer Info</p>
+                                                            </div>
+                                                            <div class="form-layer-step">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-check"></i>
+                                                                </div>
+                                                                <p>Confirm</p>
+                                                            </div>
+                                                        </div>
+                                                        <h3 class="section-form-title">Personal Information</h3>
+                                                        <div class="help-block with-errors mandatory-error"></div>
+                                                        <div class="form-group2 validfname">
+                                                            <input id="fname" type="text" name="fname" class="form-control" data-error="Please enter First Name"   placeholder="First Name*" required="">
+                                                            <div class="input-group-icon"><i class="fa fa-user"></i></div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validlname">
+                                                            <input id="lname" type="text" name="lname" class="form-control"  data-error="Please enter Last Name" placeholder="Last Name*" required="">
+                                                            <div class="input-group-icon"><i class="fa fa-user"></i></div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validgender">
+                                                            <select class="form-control select2-single" data-error="Please Select Gender" id="gender" name="gender"   required="">
+                                                                <option value="">Select Your Gender*</option>
+                                                                <option value=Male>Male</option>
+                                                                <option value=Femal>Female</option>
+                                                            </select>
+                                                            <div class=input-group-icon><i class="fa fa-mars"></i></div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validbirthdate" id="date-of-birth">
+                                                            <input id="birthdate" name="birthdate"  class="form-control" data-error="Please enter Date Of Birth"  placeholder="Date Of Birth*" required="">
+                                                            <div class="input-group-icon"><i class="fa fa-calendar"></i>
+                                                            </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validAcademicRank">
+
+                                                            <select class="form-control select2-single"   data-error="Please Select  Academic Rank "  id="academicrank" name="academicrank" required="" onchange="show()">
+                                                                <option value="">Select Your Academic Rank *</option>
+                                                                <option value="Student">Student</option>
+                                                                <option value="Assistant Teaching">Teaching Assistant</option>
+                                                                <option value="Assistant Lecturer">Assistant Lecturer  </option>
+                                                                <option value="Assistant Professor">Assistant Professor </option>
+                                                                <option value="Associate Professor">Associate Professor</option>
+                                                                <option value="Professor">Professor</option>
+                                                                <option value="Professor Emeritus">Professor Emeritus</option>
+                                                            </select>
+                                                            <div class="input-group-icon"><i class="fa fa-map-marker"></i>
+                                                            </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validYear hidden" id="select_year">
+                                                            <select class="form-control select2-single" data-error="Please Select  Year " id="year" name="year" required="">
+                                                                <option value="">Select Your Year *</option>
+                                                                <?php foreach ($years as $year): ?>
+                                                                    <option value="<?= $year->id ?>"><?= $year->year_name ?></option>
+                                                                <?php endforeach; ?>
+                                                            </select>
+                                                            <div class="input-group-icon"><i class="fa fa-map-marker"></i>
+                                                            </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validphone">
+                                                            <input id="phone" name="phone" class="form-control"  data-error="Please enter valid phone" placeholder="Phone*"  required="">
+                                                            <div class="input-group-icon"><i class="fa fa-phone"></i> </div>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <div class="form-group2 validpreferedcontact">
+                                                            <strong>Contact Method*: </strong>
+
+                                                            <label class="radio-inline">
+                                                                <input id="preferedcontact1" name="preferedcontact"  type="radio" value="email">
+                                                                Email
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input id="preferedcontact2" name="preferedcontact" type="radio" value="Phone">
+                                                                Phone
+                                                            </label>
+                                                            <div class="help-block with-errors"></div>
+                                                        </div>
+                                                        <h3 class="section-form-title">Profile Image</h3>
+                                                        <div class="form-group2 attachmentFile">
+                                                            <label class="input-group-btn">
+                                                                <span class="btn">Browse… 
+                                                                    <input  id="userfile" name="userfile" type="file" >
+                                                                </span>     
+                                                            </label>
+                                                            <input id=attachedFile class=form-control
+                                                                   placeholder="Browse to select file" readonly>
+                                                        </div>
+                                                        <div class="form-group2 signUpForm-step-2">
+                                                            <button class="btn btn-custom" type="button"  onclick="previousStep1()">
+                                                                <span class="fa fa-arrow-left"></span>
+                                                                Back
+                                                            </button>
+                                                            <button class="btn btn-custom pull-right" type="button"  onclick="nextStep3()">
+                                                                Next 
+                                                                <span  class="fa fa-arrow-right"></span>
+                                                            </button>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="signUpForm-step-wrap slide-right form-group2" id="section-3">
+                                                    <h3 class="section-title">Step 3 of 4</h3>
+                                                    <fieldset>
+                                                        <div class="form-layer-steps form-layer-tolal-steps-4">
+                                                            <div class="form-layer-progress">
+                                                                <div class="form-layer-progress-line" style="width:62.25%"> </div>
+                                                            </div>
+                                                            <div class="form-layer-step activated">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-unlock-alt"></i>
+                                                                </div>
+                                                                <p>Account</p>
+                                                            </div>
+                                                            <div class="form-layer-step activated">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <p>Personal</p>
+                                                            </div>
+                                                            <div class="form-layer-step active">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-credit-card-alt"></i>
+                                                                </div>
+                                                                <p>Engineer Info</p>
+                                                            </div>
+                                                            <div class="form-layer-step">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i   class="fa fa-check"></i>
+                                                                </div>
+                                                                <p>Confirm</p>
+                                                            </div>
+                                                        </div>
+                                                        <h3 class="section-title"> Engineer Details :</h3>
+                                                        <div class="help-block with-errors mandatory-error"></div>
+                                                        <div class="form-group2 validdep">
+                                                            <select class="form-control select2-single"   data-error="Please Select Department" id="dep" name="dep" required="">
                                                                 <option value=""> Department*</option>
                                                                 <?php foreach ($deps as $dep): ?>
                                                                     <option value="<?= $dep->id ?>"><?= $dep->name ?></option>
                                                                 <?php endforeach; ?>
                                                             </select>
-                                                            <div class=input-group-icon><i class="fa fa-mars"></i></div>
+                                                            <div class="input-group-icon"><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-
-
-
-                                                        <div class="form-group validbranch">
-                                                            <select class="form-control select2-single"
-                                                                    data-error="Please Select Branch" id="branch" name="branch"
-                                                                    required>
+                                                        <div class="form-group2 validbranch">
+                                                            <select class="form-control select2-single"  data-error="Please Select Branch" id="branch" name="branch" required="">
                                                                 <option value=""> Branch*</option>
-
                                                             </select>
-                                                            <div class=input-group-icon><i class="fa fa-mars"></i></div>
+                                                            <div class="input-group-icon"><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-
-
-                                                        <div class="form-group validmangmet hidden"
-                                                             id="select_mangment">
-                                                            <select class="form-control select2-single" id="mangment"
-                                                                    name="mangment " data-error="Please select a Mangment Level" required>
-                                                                <option value="">Select Mangment Level *</option>
+                                                        <div class="form-group2 validmangmet hidden"  id="select_mangment">
+                                                            <select class="form-control select2-single" id="mangment"  name="mangment" data-error="Please select a Mangment Level" required="">
+                                                                <option value="">Select Management Level *</option>
                                                                 <option value="Not under management">Not under management</option>
-                                                                <option value="Dean of the College">Dean</option>
-                                                                <option value="general supervisor">General Supervisor
-                                                                </option>
+                                                                <option value="Dean of the College">Dean of the College</option>
+                                                                <option value="general supervisor">General Supervisor</option>
                                                                 <option value="Vice Dean">Vice Dean</option>
-                                                                <option value="Vice Dean for Graduate Studies">Vice Dean
-                                                                    for Graduate Studies</option>
-                                                                <option value=" Head of Departmentr">Head of Department
-                                                                </option>
-                                                                <option value=""></option>
-
-
-
+                                                                <option value="Vice Dean for Graduate Studies">Vice Dean  for Graduate Studies</option>
+                                                                <option value="Head of Departmentr"> Head of Department   </option>
                                                             </select>
-                                                            <div class=input-group-icon><i class="fa fa-map-marker"></i>
+                                                            <div class="input-group-icon"><i class="fa fa-map-marker"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-
-                                                        <div class="form-group validagree">
-                                                            <div class=checkbox>
+                                                        <div class="form-group2 validagree">
+                                                            <div class="checkbox">
                                                                 <label>
-                                                                    <input id=aggre name=aggre type=checkbox
-                                                                           value=1>Aggre with terms & conditions
+                                                                    <input id="aggre" name="aggre" type="checkbox" value="1">
+                                                                    Aggre with terms & conditions
                                                                 </label>
                                                                 <div class="help-block with-errors"></div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group signUpForm-step-3">
-                                                            <button class="btn btn-custom" type=button
-                                                                    onclick=previousStep2()><span
-                                                                    class="fa fa-arrow-left"></span> Back</button>
-                                                            <button class="btn btn-custom pull-right" type=button
-                                                                    onclick=nextStep4()>Next <span
-                                                                    class="fa fa-arrow-right"></span></button>
+                                                        <div class="form-group2 signUpForm-step-3">
+                                                            <button class="btn btn-custom" type="button" onclick="previousStep2()">
+                                                                <span class="fa fa-arrow-left"></span>
+                                                                Back
+                                                            </button>
+                                                            <button class="btn btn-custom pull-right" type="button" onclick="nextStep4()">
+                                                                Next 
+                                                                <span class="fa fa-arrow-right"></span>
+                                                            </button>
                                                         </div>
                                                     </fieldset>
                                                 </div>
-                                                <div class="signUpForm-step-wrap slide-right review-submit-section"  id="section-4">
-
+                                                <div class="signUpForm-step-wrap slide-right review-submit-section form-group2"  id="section-4">
                                                     <h3 class="ection-title">Step 4 of 4: Review & Submit</h3>
-
-                                                    <div class="form-layer-steps form-layer-tolal-steps-4">
-                                                        <div class="form-layer-progress">
-                                                            <div class="form-layer-progress-line" style="width:100%">  </div>
-                                                        </div>
-                                                        <div class="form-layer-step activated">
-                                                            <div class="form-layer-step-icon"><i
-                                                                    class="fa fa-unlock-alt"></i></div>
-                                                            <p>Account</p>
-                                                        </div>
-                                                        <div class="form-layer-step activated">
-                                                            <div class="form-layer-step-icon"><i
-                                                                    class="fa fa-user"></i>
+                                                    <fieldset>
+                                                        <div class="form-layer-steps form-layer-tolal-steps-4">
+                                                            <div class="form-layer-progress">
+                                                                <div class="form-layer-progress-line" style="width:100%">  </div>
                                                             </div>
-                                                            <p>Personal</p>
-                                                        </div>
-                                                        <div class="form-layer-step activated">
-                                                            <div class="form-layer-step-icon"><i
-                                                                    class="fa fa-credit-card-alt"></i></div>
-                                                            <p>Engineer Info</p>
-                                                        </div>
-                                                        <div class="form-layer-step active">
-                                                            <div class="form-layer-step-icon"><i
-                                                                    class="fa fa-check"></i>
+                                                            <div class="form-layer-step activated">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i  class="fa fa-unlock-alt"></i>
+                                                                </div>
+                                                                <p>Account</p>
                                                             </div>
-                                                            <p>Confirm</p>
+                                                            <div class="form-layer-step activated">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i  class="fa fa-user"></i>
+                                                                </div>
+                                                                <p>Personal</p>
+                                                            </div>
+                                                            <div class="form-layer-step activated">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i class="fa fa-credit-card-alt"></i>
+                                                                </div>
+                                                                <p>Engineer Info</p>
+                                                            </div>
+                                                            <div class="form-layer-step active">
+                                                                <div class="form-layer-step-icon">
+                                                                    <i  class="fa fa-check"></i>
+                                                                </div>
+                                                                <p>Confirm</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <h3 class=section-form-title>Confirm Details</h3>
-                                                    <div class=row>
-                                                        <div class="col-sm-12 contentBoxMargin text-center">
-                                                            <div id=profile-Image><img alt="Prifile Image"
-                                                                                       id=userPhoto src=#></div>
-                                                            <h3>Profile Image</h3>
-                                                        </div>
-                                                        <div class="col-sm-12 contentBoxMargin text-center">
-                                                            <h5>Account Information</h5>
-                                                            <p id="unameData"></p>
-                                                            <p id="emailData"></p>
-                                                            <p id="passData"></p>
-                                                        </div>
-                                                        <div class="col-sm-12 contentBoxMargin text-center">
-                                                            <h5>Personal Information:</h5>
-                                                            <p id="firstNameData"></p>
-                                                            <p id="lastNameData"></p>
-                                                            <p id="genderData"></p>
-                                                            <p id="birthdateData"></p>
-                                                            <p id="academicRankDat"></p>
-                                                            <p id ="yearData"></p>
-                                                            <p id="emailaddressData"></p>
-                                                            <p id="phoneData"></p>
-                                                            <p id="preferedcontactData"></p>
-                                                        </div>
-                                                        <div class="col-sm-12 contentBoxMargin text-center">
-                                                            <h5>Engineer Information:</h5>
-                                                            <p id="depData"></p>
-                                                            <p id="branhData"></p>
+                                                        <h3 class="section-form-title">Confirm Details</h3>
+                                                        <div class="form-group2 row">
+                                                            <div class="col-sm-12 contentBoxMargin text-center">
+                                                                <div id="profile-Image">
+                                                                    <img alt="Prifile Image" id="userPhoto" src=#>
+                                                                </div>
 
-                                                            <p id="mangmetData"></p>
+                                                                <h3>Profile Image</h3>
+                                                            </div>
+                                                            <div class="col-sm-12 contentBoxMargin text-center">
+                                                                <h5>Account Information</h5>
+                                                                <p id="unameData"></p>
+                                                                <p id="emailData"></p>
+                                                                <p id="passData"></p>
+                                                            </div>
+                                                            <div class="col-sm-12 contentBoxMargin text-center">
+                                                                <h5>Personal Information:</h5>
+                                                                <p id="firstNameData"></p>
+                                                                <p id="lastNameData"></p>
+                                                                <p id="genderData"></p>
+                                                                <p id="birthdateData"></p>
+                                                                <p id="academicRankDat"></p>
+                                                                <p id ="yearData"></p>
+                                                                <p id="emailaddressData"></p>
+                                                                <p id="phoneData"></p>
+                                                                <p id="preferedcontactData"></p>
+                                                            </div>
+                                                            <div class="col-sm-12 contentBoxMargin text-center">
+                                                                <h5>Engineer Information:</h5>
+                                                                <p id="depData"></p>
+                                                                <p id="branhData"></p>
+                                                                <p id="mangmetData"></p>
 
-                                                        </div>
-                                                        <div class="help-block with-errors mandatory-error"></div>
-                                                        <div class="form-group col-sm-12">
-                                                            <div id="humanCheckCaptchaBox"></div>
-                                                            <div id="firstDigit"></div>+
-                                                            <div id="secondDigit"></div>=
-                                                            <input id="humanCheckCaptchaInput"
-                                                                   name="humanCheckCaptchaInput" class="form-control"
-                                                                   data-error="Please solve Captcha" placeholder=""
-                                                                   required maxlength="3">
-                                                            <div class="help-block with-errors"></div>
-                                                        </div>
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                <div id="AggreData">
-                                                                    <strong>Aggre with terms &conditions:</strong>
-                                                                    <input id="aggre2" name="aggre" type="checkbox"  value="1" checked disabled>
+                                                            </div>
+                                                            <div class="help-block with-errors mandatory-error"></div>
+                                                            <div class="form-group2 col-sm-12">
+                                                                <div id="humanCheckCaptchaBox"></div>
+                                                                <div id="firstDigit"></div>+
+                                                                <div id="secondDigit"></div>=
+                                                                <input id="humanCheckCaptchaInput" name="humanCheckCaptchaInput" class="form-control" data-error="Please solve Captcha" placeholder=""   required="" maxlength="3">
+                                                                <div class="help-block with-errors"></div>
+                                                            </div>
+                                                            <div class="form-group2 col-sm-12">
+                                                                <div class="form-group2">
+                                                                    <div id="AggreData">
+                                                                        <strong>Aggre with terms &conditions:</strong>
+                                                                        <input id="aggre2" name="aggre" type="checkbox"  value="1" checked disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="hidden" id="mgsFormSubmit"></div>
+                                                                <div class="form-group2 signUpForm-step-4" id="final-step-buttons">
+                                                                    <button class="btn btn-custom" type="button"   onclick="previousStep3()">
+                                                                        <span  class="fa fa-arrow-left"></span>
+                                                                        Back
+                                                                    </button>
+                                                                    <input class="btn btn-custom pull-right"  type="submit" id="Submit">
                                                                 </div>
                                                             </div>
-                                                            <div class="hidden" id="mgsFormSubmit"></div>
-                                                            <div class="form-group signUpForm-step-4"
-                                                                 id="final-step-buttons">
-                                                                <button class="btn btn-custom" type="button"   onclick=previousStep3()>
-                                                                    <span  class="fa fa-arrow-left"></span>
-                                                                    Back
-                                                                </button>
-                                                                <button class="btn btn-custom pull-right" type="submit" id="Submit">Submit</button>
-                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </fieldset>
                                                 </div>
                                             </div>
                                         </form>
@@ -467,11 +424,12 @@
                         </div>
                         <div class=row>
                             <div class="col-sm-12 footer-top">
-                                <p class="text-center copyright">© 2019 Education Engineer. <a
-                                        href="https://codecanyon.net/user/mgscoder?ref=mgscoder"
-                                        target=_blank>MGScoder</a> All rights reserved. <a
-                                        href="https://codecanyon.net/item/regform-advanced-multi-step-registration-html-ajax-form/20371902?ref=mgscoder"
-                                        class=footer-site-link>Buy RegForm Script</a>
+                                <p class="text-center copyright">© 2019 Education Engineer. 
+                                    <a  href="https://codecanyon.net/user/mgscoder?ref=mgscoder" target=_blank> MGScoder</a> 
+                                    All rights reserved. 
+                                    <a  href="https://codecanyon.net/item/regform-advanced-multi-step-registration-html-ajax-form/20371902?ref=mgscoder" class="footer-site-link">Buy RegForm Script</a>
+
+
                             </div>
                         </div>
                     </div>
@@ -491,11 +449,11 @@
 
 
         <script>
-                                                                    !function (e, a, t, n, g, c, o) {
-                                                                        e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
-                                                                            (e.ga.q = e.ga.q || []).push(arguments)
-                                                                        }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
-                                                                    }(window, document, "script", 0, "ga"), ga("create", "UA-93541536-2", "auto"), ga("send", "pageview")
+                                                                        !function (e, a, t, n, g, c, o) {
+                                                                            e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
+                                                                                (e.ga.q = e.ga.q || []).push(arguments)
+                                                                            }, e.ga.l = 1 * new Date, c = a.createElement(t), o = a.getElementsByTagName(t)[0], c.async = 1, c.src = "https://www.google-analytics.com/analytics.js", o.parentNode.insertBefore(c, o)
+                                                                        }(window, document, "script", 0, "ga"), ga("create", "UA-93541536-2", "auto"), ga("send", "pageview")
         </script>
 
 
@@ -626,7 +584,6 @@
             });
 
         </script>
-
         <script>
             $(document).ready(function () {
                 $("#dep").on('change', function () {

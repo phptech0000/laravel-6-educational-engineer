@@ -18,8 +18,8 @@ Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', 'RoleController');
-    Route::resource('users', 'UserController');
     Route::resource('deps', 'DepsController');
+    Route::get('user/index' , 'UserController@index')->name('users.index');
 });
 Route::get('registeruser/ceate', 'UserController@create')->name('registeruser.create');
 Route::post('registeruser/store', 'UserController@store')->name('registeruser.store');

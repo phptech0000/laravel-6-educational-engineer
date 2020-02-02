@@ -362,13 +362,13 @@
                                                 <h3>1. Basic info</h3>
                                             </div>
                                         </div>
-                                        <div class="form-group col-6">
+                                        <div class="form-group2 col-6">
                                             <label class="col-form-label">Department Name</label>
                                             <div>
                                                 <input class="form-control"  name="name" required=""  type="text" value="">
                                             </div>
                                         </div>
-                                        <div class="form-group col-6">
+                                        <div class="form-group2 col-6">
                                             <label class="col-form-label">Year Founded</label>
                                             <div>
                                                 <input class="form-control" type="text"  required="" name="year_found" value="">
@@ -382,7 +382,7 @@
                                                 <h3>2. Description</h3>
                                             </div>
                                         </div>
-                                        <div class="form-group col-12">
+                                        <div class="form-group2 col-12">
                                             <label class="col-form-label">Department Description</label>
                                             <div>
                                                 <textarea name="descirptions" required="" class="form-control"> </textarea>
@@ -393,7 +393,7 @@
                                                 <h3 class="m-form__section">3. Add Branch</h3>
                                             </div>
                                         </div>
-                                        <div class=" form-group col-12">
+                                        <div class=" form-group2 col-12">
                                             <table id="item-add" style="width:100%;">
                                                 <tr class="list-item">
                                                     <td>
@@ -407,7 +407,7 @@
 
                                                             <div class="col-md-2">
                                                                 <label class="col-form-label">Close</label>
-                                                                <div class="form-group">
+                                                                <div class="form-group2">
                                                                     <a class="delete" href="#"><i class="fa fa-close"></i></a>
                                                                 </div>
                                                             </div>
@@ -416,14 +416,14 @@
                                                 </tr>
                                             </table>
                                         </div>
-                                        <div class="form-group col-12 ">
+                                        <div class="form-group2 col-12 ">
                                             <button type="button" class="btn-secondry add-item m-r5"><i class="fa fa-fw fa-plus-circle"></i>Add Item</button>
                                             <button type="submit" class="btn">Save changes</button>
                                         </div>
 
 
                                         <!--Main container start -->
-                                        <div class="form-group mail-list-container">
+                                        <div class="form-group2 mail-list-container">
                                             <div class=" col-12">
                                                 <input type="file" accept="image/*,video/*" name="media[]" multiple>
                                             </div>

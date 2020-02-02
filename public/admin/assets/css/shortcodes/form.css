@@ -88,7 +88,7 @@ label {
 .panel-default > .panel-heading + .panel-collapse > .panel-body {
     border-top-color: #e7ecf1;
 }
-.form-group {
+.form-group2 {
     margin-bottom: 25px;
 }
 .form-control {
@@ -114,8 +114,8 @@ textarea.form-control {
 .form-control.kv-fileinput-caption {
     height: 39px;
 }
-.form-group.form-inline .radio,
-.form-group.form-inline .checkbox {
+.form-group2.form-inline .radio,
+.form-group2.form-inline .checkbox {
     margin-right: 15px;
 }
 /*input group*/

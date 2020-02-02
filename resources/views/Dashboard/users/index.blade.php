@@ -377,7 +377,7 @@
                             </div>
 
                             <div class="pull-left">
-                                <a class="btn btn-success" href="{{route('users.create')}}"> Create New User</a>
+                                <a class="btn btn-success" href=""> Create New User</a>
                             </div>
                         </div>
                     </div>
@@ -396,7 +396,7 @@
                         <?php foreach ($data as $user): ?>
                             <tr> 
                                 <td><?= ++$i ?></td>
-                                <td><?= $user->name ?></td>
+                                <td><?= $user->firstname . ' ' . $user->lastname ?></td>
                                 <td><?= $user->email ?></td>
                                 <td>
                                     <?php if (!empty($user->getRoleNames())): ?> 

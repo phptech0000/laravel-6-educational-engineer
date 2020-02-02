@@ -409,7 +409,7 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12  text-left">
-                        <div class=" form-group col-12">
+                        <div class=" form-group2 col-12">
 
                             <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
 

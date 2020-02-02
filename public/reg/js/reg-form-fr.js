@@ -21,45 +21,43 @@ document.addEventListener("touchstart", function () { }, false);
             autoclose: true
         });
     });
-    
-    $("#signUpForm").validator().on("submit", function (event) {
-        if (event.isDefaultPrevented() && $("#select_year").is(":visible") && $("#select_mangment").is(":visible")) {
-            formError();
-            submitMSG(false, "Please fill in the form properly!");
-        } else {
-            var mathPart_1 = parseInt($("#mathfirstnum").val(), 10);
-            var mathPart_2 = parseInt($("#mathsecondnum").val(), 10);
-            var correctMathSolution = parseInt((mathPart_1 + mathPart_2), 10);
-            var inputHumanAns = $("#humanCheckCaptchaInput").val();
-            if (inputHumanAns == correctMathSolution) {
-                event.preventDefault();
-                submitForm();
-            } else {
-                submitMSG(false, "Please solve Human Captcha!!!");
-                sweetAlert("Oops...", "Please solve Human Captcha!!!", "error");
-                return false;
-            }
-        }
-        // Make sure the form is submitted to the destination defined
-        // in the "action" attribute of the form when valid
-
-    });
+//    $("#signUpForm").validator().on("submit", function (event) {
+//        if (event.isDefaultPrevented() && $("#select_year").is(":visible") && $("#select_mangment").is(":visible")) {
+//            formError();
+//            submitMSG(false, "Please fill in the form properly!");
+//        } else {
+//            var mathPart_1 = parseInt($("#mathfirstnum").val(), 10);
+//            var mathPart_2 = parseInt($("#mathsecondnum").val(), 10);
+//            var correctMathSolution = parseInt((mathPart_1 + mathPart_2), 10);
+//            var inputHumanAns = $("#humanCheckCaptchaInput").val();
+//            if (inputHumanAns == correctMathSolution) {
+//                event.preventDefault();
+//                submitForm();
+//            } else {
+//                submitMSG(false, "Please solve Human Captcha!!!");
+//                sweetAlert("Oops...", "Please solve Human Captcha!!!", "error");
+//                return false;
+//            }
+//        }
+//    });
     function submitForm() {
         $.ajax({
-            url: 'registeruser/store',
             method: 'POST',
-            dataType: 'json',
-            delay: 250,
+            url: 'registeruser/store',
+            data: ("#signUpForm").serialize(),
             success: function (data) {
-                console.log(data);
                 $("#mgsFormSubmit").html('');
                 $("#final-step-buttons").html('<div class="h3 text-center text-success"> You have finished all steps successfully Pleas check your email box to verify your mail  </div>');
                 swal("Good job!", "You have finished all steps successfully!", "success");
+                return true;
             },
+            error: sweetAlert("fail", "please show error ", "error")
+
         });
 
-
     }
+
+
     $(function () {
         $(document).on('change', ':file', function () {
             var input = $(this),
