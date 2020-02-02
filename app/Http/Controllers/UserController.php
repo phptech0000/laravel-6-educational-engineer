@@ -6,15 +6,14 @@ use Illuminate\Http\Request;
 use App\User;
 use App\dep;
 use App\Year;
-use DB;
 use App\branch;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller {
-
-  
 
     /**
      * Display a listing of the resource.
@@ -95,6 +94,7 @@ class UserController extends Controller {
         $user->phone = $phone;
         event(new Registered($user->save()));
         $this->guard()->login($user);
+        $this->assignRouls($mangment, $academicrang, $is_admin, $user);
         $data = array();
         return $this->registered($request, $user) ?: response()->json($data);
     }
@@ -127,7 +127,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-       
+        
     }
 
     /**
@@ -139,7 +139,8 @@ class UserController extends Controller {
     public function destroy($id) {
         
     }
-        /**
+
+    /**
      * Get the guard to be used during registration.
      *
      * @return \Illuminate\Contracts\Auth\StatefulGuard
@@ -157,6 +158,16 @@ class UserController extends Controller {
      */
     protected function registered(Request $request, $user) {
         
+    }
+
+    protected function assignRouls($mangment, $acadmicrank, $is_admin, User $user) {
+        $role_admin = Role::create(['name' => 'Super Admin']);
+        $role_supervisor = Role::create(['name' => 'supervisor']);
+        if ($is_admin) {
+            $permissions = Permission::all();
+            $role_admin->syncPermissions($permissions);
+            $user->assignRole($role_admin);
+        }
     }
 
 }

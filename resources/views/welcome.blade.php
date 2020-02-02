@@ -347,7 +347,7 @@
                                     @auth
                                     <?php if (!empty($user->getRoleNames())): ?> 
                                         <?php foreach ($user->getRoleNames() as $value): ?>
-                                            <?php if ($value == "Admin"): ?>
+                                            <?php if ($value == "Admin" || $value=="Super Admin"): ?>
                                                 <li class="nav-dashboard"><a href="javascript:;">Dashboard <i class="fa fa-chevron-down"></i></a>
                                                     <ul class="sub-menu">
                                                         <li><a href="{{route('admin.home')}}">Dashboard</a></li>
