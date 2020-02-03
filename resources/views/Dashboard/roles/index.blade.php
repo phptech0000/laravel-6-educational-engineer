@@ -407,7 +407,7 @@
                             </div>
                          
                             <div class="col-xs-12 col-sm-12 col-md-12  text-left">
-                                <div class=" form-group2 col-12">
+                                <div class=" form-group col-12">
                                     @can('role-create')
                                     <a class="btn btn-success" href="{{route('roles.create')}}"> Create New Role</a>
                                     @endcan

@@ -16,7 +16,7 @@
         <link rel=stylesheet href="{{asset('reg/css/sweetalert.css ')}}">
         <link rel=stylesheet href="{{asset('reg/css/reg-form.css')}}" >
         <link rel=stylesheet href="{{asset('reg/css/reg-form-modern.css')}}">
-
+        <link rel=stylesheet href="{{asset('reg/image_upload/upload.css')}}">
         <link rel="stylesheet" href="{{asset('reg/u/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('reg/u/css/select2.min.css')}}">
         <link rel="stylesheet" href="{{asset('reg/u/css/select2-bootstrap.css')}}">
@@ -32,11 +32,11 @@
                             <div class=col-sm-12>
                                 <div class="clearfix form-wrap">
                                     <h2 class="form-title">Registration of Education Engineer</h2>
-                                    <div class="col-sm-6 col-sm-offset-3">
+                                    <div class="col-sm-12">
                                         <form id="signUpForm"  class="signUpForm" novalidate  action="{{route('registeruser.store')}}"  method="post" >
                                             @csrf
-                                            <div class="form-group2 signUpForm-step-holder  ">
-                                                <div class="signUpForm-step-wrap form-group2" id="section-1">
+                                            <div class="form-group signUpForm-step-holder  ">
+                                                <div class="signUpForm-step-wrap form-group-sm" id="section-1">
                                                     <h3 class="section-title">Step 1 of 4</h3>
                                                     <fieldset>
                                                         <div class="form-layer-steps form-layer-tolal-steps-4">
@@ -70,14 +70,14 @@
                                                         </div>
                                                         <h3 class="section-form-title">Account Information</h3>
                                                         <div class="help-block with-errors mandatory-error"></div>
-                                                        <div class="form-group2 validuname">
+                                                        <div class="form-group validuname">
                                                             <input id="uname" type="text" name="uname" class="form-control"  data-error="Please enter UserName" placeholder="UserName*"  required="">
                                                             <div class="input-group-icon">
                                                                 <i class="fa fa-user"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validemail">
+                                                        <div class="form-group validemail">
                                                             <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="Email*" required="" >
                                                             <div class=input-group-icon>
                                                                 <i class="fa fa-envelope"></i>
@@ -85,21 +85,21 @@
 
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validpass">
+                                                        <div class="form-group validpass">
                                                             <input id="pass" type="password" name="password"  class="form-control"   data-error="Please enter password"  placeholder="Password* at least 8 character" required="" >
                                                             <div class=input-group-icon>
                                                                 <i class="fa fa-key"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2">
+                                                        <div class="form-group">
                                                             <input id="cpass" type="password"  name="cpass" class="form-control" data-error="Please retype password" placeholder="Confirm Password*" required ="">
                                                             <div class="input-group-icon">
                                                                 <i class="fa fa-key"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 signUpForm-step-1">
+                                                        <div class="form-group signUpForm-step-1">
                                                             <button class="btn btn-danger" type="button">
                                                                 Are you ready!
                                                             </button>
@@ -110,7 +110,7 @@
                                                         </div>
                                                     </fieldset>
                                                 </div>
-                                                <div class="signUpForm-step-wrap slide-right form-group2" id="section-2">
+                                                <div class="signUpForm-step-wrap slide-right form-group-sm" id="section-2">
                                                     <h3 class="section-title">Step 2 of 4</h3>
                                                     <fieldset>
                                                         <div class="form-layer-steps form-layer-tolal-steps-4">
@@ -145,17 +145,17 @@
                                                         </div>
                                                         <h3 class="section-form-title">Personal Information</h3>
                                                         <div class="help-block with-errors mandatory-error"></div>
-                                                        <div class="form-group2 validfname">
+                                                        <div class="form-group validfname">
                                                             <input id="fname" type="text" name="fname" class="form-control" data-error="Please enter First Name"   placeholder="First Name*" required="">
                                                             <div class="input-group-icon"><i class="fa fa-user"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validlname">
+                                                        <div class="form-group validlname">
                                                             <input id="lname" type="text" name="lname" class="form-control"  data-error="Please enter Last Name" placeholder="Last Name*" required="">
                                                             <div class="input-group-icon"><i class="fa fa-user"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validgender">
+                                                        <div class="form-group validgender">
                                                             <select class="form-control select2-single" data-error="Please Select Gender" id="gender" name="gender"   required="">
                                                                 <option value="">Select Your Gender*</option>
                                                                 <option value=Male>Male</option>
@@ -164,13 +164,13 @@
                                                             <div class=input-group-icon><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validbirthdate" id="date-of-birth">
+                                                        <div class="form-group validbirthdate" id="date-of-birth">
                                                             <input id="birthdate" name="birthdate"  class="form-control" data-error="Please enter Date Of Birth"  placeholder="Date Of Birth*" required="">
                                                             <div class="input-group-icon"><i class="fa fa-calendar"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validAcademicRank">
+                                                        <div class="form-group validAcademicRank">
 
                                                             <select class="form-control select2-single"   data-error="Please Select  Academic Rank "  id="academicrank" name="academicrank" required="" onchange="show()">
                                                                 <option value="">Select Your Academic Rank *</option>
@@ -186,7 +186,7 @@
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validYear hidden" id="select_year">
+                                                        <div class="form-group validYear hidden" id="select_year">
                                                             <select class="form-control select2-single" data-error="Please Select  Year " id="year" name="year" required="">
                                                                 <option value="">Select Your Year *</option>
                                                                 <?php foreach ($years as $year): ?>
@@ -197,12 +197,12 @@
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validphone">
+                                                        <div class="form-group validphone">
                                                             <input id="phone" name="phone" class="form-control"  data-error="Please enter valid phone" placeholder="Phone*"  required="">
                                                             <div class="input-group-icon"><i class="fa fa-phone"></i> </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validpreferedcontact">
+                                                        <div class="form-group validpreferedcontact">
                                                             <strong>Contact Method*: </strong>
 
                                                             <label class="radio-inline">
@@ -216,16 +216,28 @@
                                                             <div class="help-block with-errors"></div>
                                                         </div>
                                                         <h3 class="section-form-title">Profile Image</h3>
-                                                        <div class="form-group2 attachmentFile">
-                                                            <label class="input-group-btn">
-                                                                <span class="btn">Browse… 
-                                                                    <input  id="userfile" name="userfile" type="file" >
-                                                                </span>     
+
+                                                        <!--Main container start -->
+                                                        <div id="file-upload-form" class="uploader form-group ">
+                                                            <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+
+                                                            <label class="fileUpload" for="file-upload" id="file-drag">
+                                                                <img id="file-image" src="#" alt="Preview" class="hidden">
+                                                                <div id="start">
+                                                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                                                    <div>Select a file or drag here</div>
+                                                                    <div id="notimage" class="hidden">Please select an image</div>
+                                                                    <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                                                                </div>
+                                                                <div id="response" class="hidden">
+                                                                    <div id="messages"></div>
+                                                                    <progress class="progress" id="file-progress" value="0">
+                                                                        <span>0</span>%
+                                                                    </progress>
+                                                                </div>
                                                             </label>
-                                                            <input id=attachedFile class=form-control
-                                                                   placeholder="Browse to select file" readonly>
                                                         </div>
-                                                        <div class="form-group2 signUpForm-step-2">
+                                                        <div class="form-group signUpForm-step-2">
                                                             <button class="btn btn-custom" type="button"  onclick="previousStep1()">
                                                                 <span class="fa fa-arrow-left"></span>
                                                                 Back
@@ -237,7 +249,7 @@
                                                         </div>
                                                     </fieldset>
                                                 </div>
-                                                <div class="signUpForm-step-wrap slide-right form-group2" id="section-3">
+                                                <div class="signUpForm-step-wrap slide-right form-group-sm" id="section-3">
                                                     <h3 class="section-title">Step 3 of 4</h3>
                                                     <fieldset>
                                                         <div class="form-layer-steps form-layer-tolal-steps-4">
@@ -271,7 +283,7 @@
                                                         </div>
                                                         <h3 class="section-title"> Engineer Details :</h3>
                                                         <div class="help-block with-errors mandatory-error"></div>
-                                                        <div class="form-group2 validdep">
+                                                        <div class="form-group validdep">
                                                             <select class="form-control select2-single"   data-error="Please Select Department" id="dep" name="dep" required="">
                                                                 <option value=""> Department*</option>
                                                                 <?php foreach ($deps as $dep): ?>
@@ -281,14 +293,14 @@
                                                             <div class="input-group-icon"><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validbranch">
+                                                        <div class="form-group validbranch">
                                                             <select class="form-control select2-single"  data-error="Please Select Branch" id="branch" name="branch" required="">
                                                                 <option value=""> Branch*</option>
                                                             </select>
                                                             <div class="input-group-icon"><i class="fa fa-mars"></i></div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validmangmet hidden"  id="select_mangment">
+                                                        <div class="form-group validmangmet hidden"  id="select_mangment">
                                                             <select class="form-control select2-single" id="mangment"  name="mangment" data-error="Please select a Mangment Level" required="">
                                                                 <option value="">Select Management Level *</option>
                                                                 <option value="Not under management">Not under management</option>
@@ -296,13 +308,13 @@
                                                                 <option value="general supervisor">General Supervisor</option>
                                                                 <option value="Vice Dean">Vice Dean</option>
                                                                 <option value="Vice Dean for Graduate Studies">Vice Dean  for Graduate Studies</option>
-                                                                <option value="Head of Departmentr"> Head of Department   </option>
+                                                                <option value="Head of Department"> Head of Department   </option>
                                                             </select>
                                                             <div class="input-group-icon"><i class="fa fa-map-marker"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
-                                                        <div class="form-group2 validagree">
+                                                        <div class="form-group validagree">
                                                             <div class="checkbox">
                                                                 <label>
                                                                     <input id="aggre" name="aggre" type="checkbox" value="1">
@@ -311,7 +323,7 @@
                                                                 <div class="help-block with-errors"></div>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group2 signUpForm-step-3">
+                                                        <div class="form-group signUpForm-step-3">
                                                             <button class="btn btn-custom" type="button" onclick="previousStep2()">
                                                                 <span class="fa fa-arrow-left"></span>
                                                                 Back
@@ -323,7 +335,7 @@
                                                         </div>
                                                     </fieldset>
                                                 </div>
-                                                <div class="signUpForm-step-wrap slide-right review-submit-section form-group2"  id="section-4">
+                                                <div class="signUpForm-step-wrap slide-right review-submit-section form-group-sm"  id="section-4">
                                                     <h3 class="ection-title">Step 4 of 4: Review & Submit</h3>
                                                     <fieldset>
                                                         <div class="form-layer-steps form-layer-tolal-steps-4">
@@ -356,7 +368,7 @@
                                                             </div>
                                                         </div>
                                                         <h3 class="section-form-title">Confirm Details</h3>
-                                                        <div class="form-group2 row">
+                                                        <div class="form-group row">
                                                             <div class="col-sm-12 contentBoxMargin text-center">
                                                                 <div id="profile-Image">
                                                                     <img alt="Prifile Image" id="userPhoto" src=#>
@@ -390,22 +402,22 @@
 
                                                             </div>
                                                             <div class="help-block with-errors mandatory-error"></div>
-                                                            <div class="form-group2 col-sm-12">
+                                                            <div class="form-group col-sm-12">
                                                                 <div id="humanCheckCaptchaBox"></div>
                                                                 <div id="firstDigit"></div>+
                                                                 <div id="secondDigit"></div>=
                                                                 <input id="humanCheckCaptchaInput" name="humanCheckCaptchaInput" class="form-control" data-error="Please solve Captcha" placeholder=""   required="" maxlength="3">
                                                                 <div class="help-block with-errors"></div>
                                                             </div>
-                                                            <div class="form-group2 col-sm-12">
-                                                                <div class="form-group2">
+                                                            <div class="form-group col-sm-12">
+                                                                <div class="form-group">
                                                                     <div id="AggreData">
                                                                         <strong>Aggre with terms &conditions:</strong>
                                                                         <input id="aggre2" name="aggre" type="checkbox"  value="1" checked disabled>
                                                                     </div>
                                                                 </div>
                                                                 <div class="hidden" id="mgsFormSubmit"></div>
-                                                                <div class="form-group2 signUpForm-step-4" id="final-step-buttons">
+                                                                <div class="form-group signUpForm-step-4" id="final-step-buttons">
                                                                     <button class="btn btn-custom" type="button"   onclick="previousStep3()">
                                                                         <span  class="fa fa-arrow-left"></span>
                                                                         Back
@@ -446,8 +458,7 @@
         <script src="{{asset('reg/u/js/select2.full.js')}}"></script>
         <script src="{{asset('reg/u/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('reg/u/js/anchor.min.js')}}"></script>
-
-
+        <script src="{{asset('reg/image_upload/imageupload.js')}}"></script>
         <script>
                                                                         !function (e, a, t, n, g, c, o) {
                                                                             e.GoogleAnalyticsObject = g, e.ga = e.ga || function () {
@@ -608,6 +619,7 @@
             });
 
         </script>
+
     </body>
 
 </html>

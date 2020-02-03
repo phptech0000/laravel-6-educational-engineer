@@ -35,7 +35,7 @@
 #signUpForm .btn.btn-custom {
     border-radius: 7px;
 }
-#signUpForm .form-group2 .input-group-icon {
+#signUpForm .form-group .input-group-icon {
     border-radius: 7px 0 0 7px;
 }
 #signUpForm .input-group-btn ~ .form-control {

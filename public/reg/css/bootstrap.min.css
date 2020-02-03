@@ -3229,7 +3229,7 @@ input[type=search] {
 	}
 }
 
-.form-group2 {
+.form-group {
 	margin-bottom: 15px
 }
 
@@ -3563,7 +3563,7 @@ textarea.input-lg {
 }
 
 @media (min-width:768px) {
-	.form-inline .form-group2 {
+	.form-inline .form-group {
 		display: inline-block;
 		margin-bottom: 0;
 		vertical-align: middle
@@ -3627,7 +3627,7 @@ textarea.input-lg {
 	min-height: 27px
 }
 
-.form-horizontal .form-group2 {
+.form-horizontal .form-group {
 	margin-right: -15px;
 	margin-left: -15px
 }
@@ -5261,7 +5261,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 @media (min-width:768px) {
-	.navbar-form .form-group2 {
+	.navbar-form .form-group {
 		display: inline-block;
 		margin-bottom: 0;
 		vertical-align: middle
@@ -5312,10 +5312,10 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 @media (max-width:767px) {
-	.navbar-form .form-group2 {
+	.navbar-form .form-group {
 		margin-bottom: 5px
 	}
-	.navbar-form .form-group2:last-child {
+	.navbar-form .form-group:last-child {
 		margin-bottom: 0
 	}
 }
@@ -7710,8 +7710,8 @@ button.close {
 .container:before,
 .dl-horizontal dd:after,
 .dl-horizontal dd:before,
-.form-horizontal .form-group2:after,
-.form-horizontal .form-group2:before,
+.form-horizontal .form-group:after,
+.form-horizontal .form-group:before,
 .modal-footer:after,
 .modal-footer:before,
 .modal-header:after,
@@ -7740,7 +7740,7 @@ button.close {
 .container-fluid:after,
 .container:after,
 .dl-horizontal dd:after,
-.form-horizontal .form-group2:after,
+.form-horizontal .form-group:after,
 .modal-footer:after,
 .modal-header:after,
 .nav:after,

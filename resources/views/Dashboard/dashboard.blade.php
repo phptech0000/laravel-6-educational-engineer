@@ -577,7 +577,7 @@
                                                         <img src="{{asset('assets/images/testimonials/pic1.jpg')}}" alt=""/>
                                                     </span>
                                                     <span class="new-users-text">
-                                                        <a href="#" class="new-users-name"><?= $user->name ?></a>
+                                                        <a href="#" class="new-users-name"><?= $user->firstname .' '.$user->lastname ?></a>
                                                         <span class="new-users-info">Visual Designer,Google Inc </span>
                                                     </span>
                                                     <span class="new-users-btn">

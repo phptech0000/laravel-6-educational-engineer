@@ -41,9 +41,14 @@ document.addEventListener("touchstart", function () { }, false);
 //        }
 //    });
     function submitForm() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $.ajax({
-            method: 'POST',
             url: 'registeruser/store',
+            method: 'POST',
             data: ("#signUpForm").serialize(),
             success: function (data) {
                 $("#mgsFormSubmit").html('');
@@ -54,28 +59,8 @@ document.addEventListener("touchstart", function () { }, false);
             error: sweetAlert("fail", "please show error ", "error")
 
         });
-
     }
 
-
-    $(function () {
-        $(document).on('change', ':file', function () {
-            var input = $(this),
-                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
-                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [numFiles, label]);
-        });
-        $(':file').on('fileselect', function (event, numFiles, label) {
-            var input = $(this).parents('.form-group').find(':text'),
-                    log = numFiles > 1 ? numFiles + ' files selected' : label;
-            if (input.length) {
-                input.val(log);
-            } else {
-                if (log)
-                    alert(log);
-            }
-        });
-    });
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -85,9 +70,11 @@ document.addEventListener("touchstart", function () { }, false);
             reader.readAsDataURL(input.files[0]);
         }
     }
-    $("#userfile").on('change', function () {
+    $("#file-upload").on('change', function () {
         readURL(this);
     });
+
+
     function formSuccess() {
         $("#signUpForm")[0].reset();
         submitMSG(true, "Registration Process Successfully!")

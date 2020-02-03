@@ -436,7 +436,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="form-group2">
+                                    <div class="form-group">
                                         <input class="form-control" type="text"  placeholder="Enter Name" name="role_name"/>
                                     </div>
                                 </div>
@@ -470,7 +470,7 @@
 
 
                                 <div class="col-xs-12 col-sm-12 col-md-12  text-right">
-                                    <div class=" form-group2 col-12">
+                                    <div class=" form-group col-12">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                         <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
 

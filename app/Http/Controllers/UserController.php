@@ -47,7 +47,6 @@ class UserController extends Controller {
         $username = $request->input('uname');
         $firstname = $request->input('fname');
         $lastname = $request->input('lname');
-        $image = $request->file('userfile');
         $gender = $request->input('gender');
         $birthdata = $request->input('birthdate');
         $academicrang = $request->input('academicrank');
@@ -60,9 +59,7 @@ class UserController extends Controller {
             $istaff = 0;
         }
         $password = Hash::make(request('password'));
-        if ($image) {
-            $path = $request->file('userfile')->store('Users/images');
-        }
+
 
         $year_id = $request->input('year');
         if ($mangment == 'Dean of the College') {
@@ -79,7 +76,13 @@ class UserController extends Controller {
         $user->username = $username;
         $user->firstname = $firstname;
         $user->lastname = $lastname;
-        $user->image = $image;
+        if ($request->hasFile('fileUpload')) {
+            $rules = ['fileUpload' => 'nullable|mimes:jpg,jpeg,png'];
+            $request->validate($rules);
+            $path = $request->file('fileUpload')->store('Users/images');
+            $image = $request->file('fileUpload');
+            $user->image = $image;
+        }
         $user->gender = $gender;
         $user->birthdata = $birthdata;
         $user->academicrang = $academicrang;
@@ -101,7 +104,7 @@ class UserController extends Controller {
 
     /**
      * Display the specified resource.
-     *
+     * user_profile
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -161,12 +164,12 @@ class UserController extends Controller {
     }
 
     protected function assignRouls($mangment, $acadmicrank, $is_admin, User $user) {
-        $role_admin = Role::create(['name' => 'Super Admin']);
-        $role_supervisor = Role::create(['name' => 'supervisor']);
-        if ($is_admin) {
+        if ($is_admin == 1) {
+            $role_admin = Role::create(['name' => 'Super Admin']);
             $permissions = Permission::all();
             $role_admin->syncPermissions($permissions);
             $user->assignRole($role_admin);
+            $user->syncPermissions($permissions);
         }
     }
 

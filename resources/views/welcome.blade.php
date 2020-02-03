@@ -51,7 +51,7 @@
         <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/revolution/css/layers.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/revolution/css/settings.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/revolution/css/navigation.css')}}">
-        
+
         <!-- REVOLUTION SLIDER END -->	
 
 
@@ -345,38 +345,35 @@
                                     </li>
 
                                     @auth
-                                    <?php if (!empty($user->getRoleNames())): ?> 
-                                        <?php foreach ($user->getRoleNames() as $value): ?>
-                                            <?php if ($value == "Admin" || $value=="Super Admin"): ?>
-                                                <li class="nav-dashboard"><a href="javascript:;">Dashboard <i class="fa fa-chevron-down"></i></a>
+                                    <?php if ($user->is_admin == 1): ?>
+                                        <li class="nav-dashboard"><a href="javascript:;">Dashboard <i class="fa fa-chevron-down"></i></a>
+                                            <ul class="sub-menu">
+                                                <li><a href="{{route('admin.home')}}">Dashboard</a></li>
+                                                <li><a href="admin/add-listing.html">Add Listing</a></li>
+                                                <li><a href="admin/bookmark.html">Bookmark</a></li>
+                                                <li><a href="admin/courses.html">Courses</a></li>
+                                                <li><a href="admin/review.html">Review</a></li>
+                                                <li><a href="admin/teacher-profile.html">Teacher Profile</a></li>
+                                                <li><a href="admin/user-profile.html">User Profile</a></li>
+                                                <li><a href="javascript:;">Calendar<i class="fa fa-angle-right"></i></a>
                                                     <ul class="sub-menu">
-                                                        <li><a href="{{route('admin.home')}}">Dashboard</a></li>
-                                                        <li><a href="admin/add-listing.html">Add Listing</a></li>
-                                                        <li><a href="admin/bookmark.html">Bookmark</a></li>
-                                                        <li><a href="admin/courses.html">Courses</a></li>
-                                                        <li><a href="admin/review.html">Review</a></li>
-                                                        <li><a href="admin/teacher-profile.html">Teacher Profile</a></li>
-                                                        <li><a href="admin/user-profile.html">User Profile</a></li>
-                                                        <li><a href="javascript:;">Calendar<i class="fa fa-angle-right"></i></a>
-                                                            <ul class="sub-menu">
-                                                                <li><a href="admin/basic-calendar.html">Basic Calendar</a></li>
-                                                                <li><a href="admin/list-view-calendar.html">List View Calendar</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li><a href="javascript:;">Mailbox<i class="fa fa-angle-right"></i></a>
-                                                            <ul class="sub-menu">
-                                                                <li><a href="admin/mailbox.html">Mailbox</a></li>
-                                                                <li><a href="admin/mailbox-compose.html">Compose</a></li>
-                                                                <li><a href="admin/mailbox-read.html">Mail Read</a></li>
-                                                            </ul>
-                                                        </li>
+                                                        <li><a href="admin/basic-calendar.html">Basic Calendar</a></li>
+                                                        <li><a href="admin/list-view-calendar.html">List View Calendar</a></li>
                                                     </ul>
                                                 </li>
-                                                
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
+                                                <li><a href="javascript:;">Mailbox<i class="fa fa-angle-right"></i></a>
+                                                    <ul class="sub-menu">
+                                                        <li><a href="admin/mailbox.html">Mailbox</a></li>
+                                                        <li><a href="admin/mailbox-compose.html">Compose</a></li>
+                                                        <li><a href="admin/mailbox-read.html">Mail Read</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
                                     <?php endif; ?>
-                                                @endauth
+
+
+                                    @endauth
                                 </ul>
                                 <div class="nav-social-link">
                                     <a href="javascript:;"><i class="fa fa-facebook"></i></a>

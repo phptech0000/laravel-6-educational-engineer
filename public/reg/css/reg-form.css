@@ -9,7 +9,7 @@
     font-size: 16px;
     margin: 0 auto;
     padding: 0;
-    
+
     width: 100%;
     z-index: 1;
 }
@@ -88,11 +88,11 @@
 
 .signUpForm-step-wrap {
     overflow: hidden;
-    -webkit-transition: all 0.23s ease-in-out 0s;
-    -moz-transition: all 0.23s ease-in-out 0s;
-    -ms-transition: all 0.23s ease-in-out 0s;
-    -o-transition: all 0.23s ease-in-out 0s;
-    transition: all 0.23s ease-in-out 0s;
+    -webkit-transition: all 1s ease-in-out 0s;
+    -moz-transition: all 1s ease-in-out 0s;
+    -ms-transition: all 1s ease-in-out 0s;
+    -o-transition: all 1s ease-in-out 0s;
+    transition: all 1s ease-in-out 0s;
 }
 
 #signUpForm .slide-right {
@@ -202,11 +202,13 @@ form#signUpForm {
     margin: 10px 0 15px;
 }
 
-#signUpForm .form-group2 {
+#signUpForm .form-group {
     margin: 0 0 30px;
     position: relative;
+}/* toolbar */
+.mail-list-container {
+    width: 100%;
 }
-
 #signUpForm .form-control {
     padding-left: 50px;
     border: 1px solid #3e3e3e;
@@ -279,7 +281,7 @@ form#signUpForm {
     max-width: 150px;
 }
 
-#signUpForm .form-group2.attachmentFile {
+#signUpForm .form-group.attachmentFile {
     display: table;
     margin: 15px 0 40px;
 }
