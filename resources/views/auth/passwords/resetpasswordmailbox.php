@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="join-content-bx text-white">
-                            <h2>Welcome <?= $user->name ?>  The Education Engineer  platform <br/> your time</h2>
+                            <h2>Welcome <?= $user->firstname ?>  The Education Engineer  platform <br/> your time</h2>
                             <h4><span class="counter">57,000 </span> Engineer and staff Education</h4>
                             <p>Education Engineer is a platform that aims to
                                 qualify the engineer to succeed 
@@ -33,9 +33,9 @@
                                 distinguished scientific level and a 
                                 training level. He can also follow his 
                                 case from his university from here to 
-                                It provides less effort, <?= $user->email ?> , Please click on the below link to verify your email account and to speak the path towards better knowledge
+                                It provides less effort, <?=$user->email ?> , Please click on the below link to verify your email account and to speak the path towards better knowledge
                                 </p>
-                            <a href="<?= route('user.verify', $user->verifyUser->token) ?>" class="btn button-md">Verify Email</a>
+                             <a href="<?= route('user.RestPassword' , $token) ?>" class="btn button-md">Reset Password </a>
                         </div>
                     </div>
                 </div>

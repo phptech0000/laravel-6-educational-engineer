@@ -21,6 +21,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('deps', 'DepsController');
     Route::get('user/index', 'UserController@index')->name('users.index');
 });
+
 Route::get('registeruser/ceate', 'UserController@create')->name('registeruser.create');
 Route::post('/registeruser/store', 'UserController@store')->name('registeruser.store');
 Route::get('/branch/get/{id}', 'UserController@getBranch')->name('branch');
@@ -29,5 +30,9 @@ Route::get('/user/verify/{token}' , 'UserController@verifyUser')->name('user.ver
 Auth::routes(['verify' => true]);
 Auth::routes();
 
+Route::get('/foregetpassowrd' , 'UserAuth\forgetpasswordController@index')->name('user.forgetpassword');
+Route::post('/resetpasssword' , 'UserAuth\forgetpasswordController@store')->name('user.restpassword');
+Route::get('/restpassword/{token}' , 'UserAuth\forgetpasswordController@dirctRestPasswordPage')->name('user.RestPassword');
+Route::post('/updatepasword','UserAuth\forgetpasswordController@RestPassword')->name('user.updatepassword');
 
 

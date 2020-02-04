@@ -108,7 +108,7 @@ class UserController extends Controller {
                     'token' => sha1(time()),
         ]);
         Mail::to($user->email)->send(new VerifyMail($user));
-        return $user;
+        return $this->authenticated($request, $user);
     }
 
     /**
@@ -204,7 +204,6 @@ class UserController extends Controller {
     public function verifyUser($token) {
         $verifyuser = VerifyUser::where('token', $token)->first();
         if (isset($verifyuser)) {
-            $user = $verifyuser->user();
             if (!$verifyuser->user->verified) {
                 $verifyuser->user->verified = 1;
                 $verifyuser->user->save();

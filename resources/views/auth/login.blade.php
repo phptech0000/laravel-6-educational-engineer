@@ -61,7 +61,7 @@
                             </div>
 
                             <div>
-                                <a href="" class="txt1">
+                                <a href="{{route('user.forgetpassword')}}" class="txt1">
                                     Forgot Password?
                                 </a>
                             </div>
