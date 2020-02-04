@@ -7,11 +7,14 @@ use App\User;
 use App\dep;
 use App\Year;
 use App\branch;
+use App\VerifyUser;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Mail;
+use App\Mail\VerifyMail;
 
 class UserController extends Controller {
 
@@ -70,6 +73,7 @@ class UserController extends Controller {
         $branch_id = $request->input('branch');
         $contact_methode = $request->input('preferedcontact');
         $phone = $request->input('phone');
+        $user = User::where('email', '=', $email)->first();
         $user = new User;
         $year = Year::find($year_id);
         $branch = branch::find($branch_id);
@@ -99,7 +103,12 @@ class UserController extends Controller {
         $this->guard()->login($user);
         $this->assignRouls($mangment, $academicrang, $is_admin, $user);
         $data = array();
-        return $this->registered($request, $user) ?: response()->json($data);
+        $verifyUser = VerifyUser::create([
+                    'user_id' => $user->id,
+                    'token' => sha1(time()),
+        ]);
+        Mail::to($user->email)->send(new VerifyMail($user));
+        return $user;
     }
 
     /**
@@ -152,6 +161,14 @@ class UserController extends Controller {
         return Auth::guard();
     }
 
+    public function authenticated(Request $request, $user) {
+        if (!$user->verified) {
+            auth()->logout();
+            return back()->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+        }
+        return redirect()->intended('/');
+    }
+
     /**
      * The user has been registered.
      *
@@ -160,7 +177,8 @@ class UserController extends Controller {
      * @return mixed
      */
     protected function registered(Request $request, $user) {
-        
+        $this->guard()->logout();
+        return redirect('/login')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
 
     protected function assignRouls($mangment, $acadmicrank, $is_admin, User $user) {
@@ -171,6 +189,33 @@ class UserController extends Controller {
             $user->assignRole($role_admin);
             $user->syncPermissions($permissions);
         }
+    }
+
+    public function getBranch($id) {
+        $branch = branch::where('dep_id', "=", $id)->pluck('branch', 'id');
+        return json_encode($branch);
+    }
+
+    public function getdep_name($id) {
+        $dep = dep::where('id', $id)->pluck('name', 'id');
+        return json_encode($dep);
+    }
+
+    public function verifyUser($token) {
+        $verifyuser = VerifyUser::where('token', $token)->first();
+        if (isset($verifyuser)) {
+            $user = $verifyuser->user();
+            if (!$verifyuser->user->verified) {
+                $verifyuser->user->verified = 1;
+                $verifyuser->user->save();
+                $status = "Your e-mail is verified. You can now login.";
+            } else {
+                $status = "Your e-mail is already verified. You can now login.";
+            }
+        } else {
+            return redirect()->route('login')->with('warning', "Sorry your email cannot be identified.");
+        }
+        return redirect()->route('index')->with('status', $status);
     }
 
 }

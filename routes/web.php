@@ -19,12 +19,14 @@ Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', 'RoleController');
     Route::resource('deps', 'DepsController');
-    Route::get('user/index' , 'UserController@index')->name('users.index');
+    Route::get('user/index', 'UserController@index')->name('users.index');
 });
 Route::get('registeruser/ceate', 'UserController@create')->name('registeruser.create');
-Route::post('registeruser/store', 'UserController@store')->name('registeruser.store');
-Route::get('/branch/get/{id}', 'HomeController@getBranch')->name('branch');
-Route::get('/dep/get/{id}', 'HomeController@getdep_name')->name('dep_name');
+Route::post('/registeruser/store', 'UserController@store')->name('registeruser.store');
+Route::get('/branch/get/{id}', 'UserController@getBranch')->name('branch');
+Route::get('/dep/get/{id}', 'UserController@getdep_name')->name('dep_name');
+Route::get('/user/verify/{token}' , 'UserController@verifyUser')->name('user.verify');
+Auth::routes(['verify' => true]);
 Auth::routes();
 
 

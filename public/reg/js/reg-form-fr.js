@@ -20,7 +20,10 @@ document.addEventListener("touchstart", function () { }, false);
             todayHighlight: true,
             autoclose: true
         });
+
     });
+
+
 //    $("#signUpForm").validator().on("submit", function (event) {
 //        if (event.isDefaultPrevented() && $("#select_year").is(":visible") && $("#select_mangment").is(":visible")) {
 //            formError();
@@ -61,6 +64,8 @@ document.addEventListener("touchstart", function () { }, false);
         });
     }
 
+
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -73,8 +78,6 @@ document.addEventListener("touchstart", function () { }, false);
     $("#file-upload").on('change', function () {
         readURL(this);
     });
-
-
     function formSuccess() {
         $("#signUpForm")[0].reset();
         submitMSG(true, "Registration Process Successfully!")
@@ -317,10 +320,10 @@ function show() {
         $("#select_mangment").addClass("hidden");
         $("#select_year").removeClass("hidden");
     } else if (
-            AcademicRank == 'Assistant Professor' ||
-            AcademicRank == 'Associate Professor' ||
-            AcademicRank == 'Professor'
-            ) {
+        AcademicRank == 'Assistant Professor' ||
+        AcademicRank == 'Associate Professor' ||
+        AcademicRank == 'Professor'
+    ) {
 
         $("#select_mangment").removeClass("hidden");
         $("#mangmetData").removeClass("hidden");

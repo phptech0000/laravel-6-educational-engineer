@@ -2,12 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/welcome.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/public/reg/css/reg-form-modern.css</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/Dashboard/add_deps.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/public/reg/css/reg-form.css</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/auth/register.blade.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

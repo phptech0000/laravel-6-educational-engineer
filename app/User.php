@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use App\dep;
 use App\branch;
 use App\Year;
+use App\VerifyUser;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
@@ -90,6 +91,7 @@ class User extends Authenticatable {
         'password',
         'is_admin',
         'Contact_method',
+        'verified'
         
     ];
 
@@ -122,5 +124,9 @@ class User extends Authenticatable {
     public function year() {
         return $this->belongsTo(Year::class, 'year_id');
     }
+    public function verifyUser()
+{
+  return $this->hasOne(VerifyUser::class);
+}
 
 }

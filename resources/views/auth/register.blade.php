@@ -33,7 +33,8 @@
                                 <div class="clearfix form-wrap">
                                     <h2 class="form-title">Registration of Education Engineer</h2>
                                     <div class="col-sm-12">
-                                        <form id="signUpForm"  class="signUpForm" novalidate  action="{{route('registeruser.store')}}"  method="post" >
+                                        <form id="signUpForm"  class="signUpForm" novalidate  action="{{route('registeruser.store')}}"  method="post" 
+                                              enctype="multipart/form-data" >
                                             @csrf
                                             <div class="form-group signUpForm-step-holder  ">
                                                 <div class="signUpForm-step-wrap form-group-sm" id="section-1">
@@ -78,7 +79,7 @@
                                                             <div class="help-block with-errors"></div>
                                                         </div>
                                                         <div class="form-group validemail">
-                                                            <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="Email*" required="" >
+                                                            <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="mail@example.com*" required="">
                                                             <div class=input-group-icon>
                                                                 <i class="fa fa-envelope"></i>
                                                             </div>
