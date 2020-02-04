@@ -114,10 +114,6 @@ class forgetpasswordController extends Controller {
     }
 
     public function RestPassword(Request $request) {
-        $request->validate([
-            'email' => 'required|exists:users,email',
-            'password' => 'required|confirmed'
-        ]);
         $password = $request->input('password');
         $retypePassword = $request->input('retypepassword');
         $token = $request->input('token');
@@ -131,7 +127,6 @@ class forgetpasswordController extends Controller {
                 return 'Email not found';
             }
             $user->password = Hash::make($password);
-            return $user;
             $user->update();
             Auth::login($user);
             DB::table('password_resets')->where('email', $user->email)->delete();
