@@ -15,7 +15,7 @@
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('assets/css/color/color-1.css')}}"media="all"/>
     </head>
     <body>
-        <div class="section-area section-sp2 bg-fix ovbl-dark join-bx text-center" style="background-image:url({{asset('assets/images/background/bg1.jpg')}});">
+        <div class="section-area section-sp2 bg-fix ovbl-dark join-bx text-center" style="background-image:url({{$message->embed(public_path().'assets/images/background/bg1.jpg')}});">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">

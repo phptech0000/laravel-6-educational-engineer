@@ -167,7 +167,9 @@ class UserController extends Controller {
     public function authenticated(Request $request, $user) {
         if (!$user->verified) {
             auth()->logout();
-            return 'warning You need to confirm your account. We have sent you an activation meesage, please check your email.';
+            $is_found = 1;
+            $message = 'warning You need to confirm your account. We have sent you an activation meesage, please check your email.';
+            return view('auth.passwords.RestMessage', compact('user', 'message', 'is_found'));
         }
         return redirect()->intended('/');
     }
@@ -204,6 +206,7 @@ class UserController extends Controller {
     }
 
     public function verifyUser($token) {
+        $user = null;
         $verifyuser = VerifyUser::where('token', $token)->first();
         if (isset($verifyuser)) {
             if (!$verifyuser->user->verified) {
@@ -214,7 +217,9 @@ class UserController extends Controller {
                 $status = "Your e-mail is already verified. You can now login.";
             }
         } else {
-            return redirect()->route('login')->with('warning', "Sorry your email cannot be identified.");
+            $message = 'Sorry your email cannot be identified.';
+            $is_found = 2;
+            return view('auth.passwords.RestMessage', compact('user', 'message', 'is_found'));
         }
         $this->guard()->login($verifyuser->user);
         return redirect()->route('index')->with('status', $status);

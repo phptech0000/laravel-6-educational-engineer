@@ -49,11 +49,25 @@ class forgetpasswordController extends Controller {
             'created_at' => Carbon::now(),
         ]);
         $tokenData = DB::table('password_resets')->where('email', $request->input('email'))->first();
-        if ($this->sendMail($request->input('email'), $tokenData->token)) {
-            return 'A reset link has been sent to your email address Please check now ';
-        } else {
-            return 'A mail not Recode in a Database Please Enter a valid your Email';
+        $this->sendMail($request->input('email'), $tokenData->token);
+        $token = $tokenData->token;
+        return redirect()->route('user.restmessage' , $token);
+    }
+
+    public function RestMessage($token) {
+        $tokenData = DB::table('password_resets')->where('token' , $token)->first();
+        $user = null;
+        if ($tokenData) {
+            $user = User::where('email', $tokenData->email)->first();
+            if ($user) {
+                $is_found = 1; //About User
+                $message = 'Please review your mail box to reset the password via the link that was sent to this email';
+            } else {
+                $is_found = 0;  //Enter a valid Email or  Registration 
+                $message = 'this email not exist in your acount please Enter a valid mail';
+            }
         }
+        return view('auth.passwords.RestMessage', compact('user', 'message','is_found'));
     }
 
     private function sendMail($email, $token) {
@@ -68,72 +82,35 @@ class forgetpasswordController extends Controller {
 
     public function dirctRestPasswordPage($token) {
         $tokenData = DB::table('password_resets')->where('token', $token)->first();
-        $tokencompact = $tokenData->token;
-        return view('auth.passwords.RestPassword', compact('tokencompact'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id) {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id) {
-        //
+        if ($tokenData) {
+            $tokencompact = $tokenData->token;
+            return view('auth.passwords.RestPassword', compact('tokencompact'));
+        } else {
+            $is_found = 2;  //Index(Home Page)
+            $user = Auth::user();
+            $message = 'Password has be Resets';
+            return view('auth.passwords.RestMessage', compact('user', 'message' ,'is_found'));
+        }
     }
 
     public function RestPassword(Request $request) {
         $password = $request->input('password');
         $retypePassword = $request->input('retypepassword');
         $token = $request->input('token');
-        if ($password == $retypePassword) {
-            $tokenData = DB::table('password_resets')->where('token', $token)->first();
-            if (!$tokenData) {
-                return view('auth.passwords.email');
-            }
-            $user = User::where('email', $tokenData->email)->first();
-            if (!$user) {
-                return 'Email not found';
-            }
-            $user->password = Hash::make($password);
-            $user->update();
-            Auth::login($user);
-            DB::table('password_resets')->where('email', $user->email)->delete();
-            return redirect()->route('index');
-        } else {
-            return 'password not Math';
+
+        $tokenData = DB::table('password_resets')->where('token', $token)->first();
+        if (!$tokenData) {
+            return view('auth.passwords.email');
         }
+        $user = User::where('email', $tokenData->email)->first();
+        if (!$user) {
+            return 'Email not found';
+        }
+        $user->password = Hash::make($password);
+        $user->update();
+        Auth::login($user);
+        DB::table('password_resets')->where('email', $user->email)->delete();
+        return redirect()->route('index');
     }
 
 }
