@@ -13,6 +13,8 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RegistertionNotication;
 use Mail;
 use App\Mail\VerifyMail;
 
@@ -102,6 +104,7 @@ class UserController extends Controller {
         event(new Registered($user->save()));
         $this->guard()->login($user);
         $this->assignRouls($mangment, $academicrang, $is_admin, $user);
+        $this->notifyRegistration($user);
         $data = array();
         $verifyUser = VerifyUser::create([
                     'user_id' => $user->id,
@@ -164,7 +167,7 @@ class UserController extends Controller {
     public function authenticated(Request $request, $user) {
         if (!$user->verified) {
             auth()->logout();
-            return back()->with('warning', 'You need to confirm your account. We have sent you an activation code, please check your email.');
+            return 'warning You need to confirm your account. We have sent you an activation meesage, please check your email.';
         }
         return redirect()->intended('/');
     }
@@ -177,8 +180,7 @@ class UserController extends Controller {
      * @return mixed
      */
     protected function registered(Request $request, $user) {
-        $this->guard()->logout();
-        return redirect('/login')->with('status', 'We sent you an activation code. Check your email and click on the link to verify.');
+        
     }
 
     protected function assignRouls($mangment, $acadmicrank, $is_admin, User $user) {
@@ -214,7 +216,15 @@ class UserController extends Controller {
         } else {
             return redirect()->route('login')->with('warning', "Sorry your email cannot be identified.");
         }
+        $this->guard()->login($verifyuser->user);
         return redirect()->route('index')->with('status', $status);
+    }
+
+    protected function notifyRegistration(User $user) {
+        $admins = User::where('is_admin', '1')->get();
+        foreach ($admins as $admin) {
+            $admin->notify(new RegistertionNotication($user));
+        }
     }
 
 }

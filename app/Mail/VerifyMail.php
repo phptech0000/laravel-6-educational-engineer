@@ -29,7 +29,7 @@ class VerifyMail extends Mailable {
      * @return $this
      */
     public function build() {
-        return $this->view('auth\verify');
+        return $this->markdown('auth\verify');
     }
 
 }

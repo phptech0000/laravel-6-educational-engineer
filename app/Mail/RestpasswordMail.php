@@ -30,7 +30,7 @@ class RestpasswordMail extends Mailable {
      * @return $this
      */
     public function build() {
-        return $this->view('auth.passwords.resetpasswordmailbox');
+        return $this->markdown('auth.passwords.resetpasswordmailbox');
     }
 
 }

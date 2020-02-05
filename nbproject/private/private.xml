@@ -3,12 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/auth/passwords/email.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/auth/passwords/RestPassword.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/routes/web.php</file>
-            <file>file:/E:/Project/laravel/Engineering/app/Http/Controllers/UserController.php</file>
-            <file>file:/E:/Project/laravel/Engineering/resources/views/auth/verify.blade.php</file>
-            <file>file:/E:/Project/laravel/Engineering/app/Http/Controllers/UserAuth/forgetpasswordController.php</file>
+            <file>file:/E:/Project/laravel/Engineering/.env</file>
         </group>
     </open-files>
 </project-private>

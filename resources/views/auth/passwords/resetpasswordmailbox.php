@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Education Engineer Verification Email adderess</title>
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/assets.css')}}">
+        <title>Education Engineer Reset  Password</title>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/assets.css')}}"media="all">
 
         <!-- TYPOGRAPHY ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/typography.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/typography.css')}}"media="all">
 
         <!-- SHORTCODES ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/shortcodes/shortcodes.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/shortcodes/shortcodes.css')}}"media="all">
 
         <!-- STYLESHEETS ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
-        <link class="skin" rel="stylesheet" type="text/css" href="{{asset('assets/css/color/color-1.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css')}}"media="all">
+        <link class="skin" rel="stylesheet" type="text/css" href="{{asset('assets/css/color/color-1.css')}}"media="all"/>
     </head>
     <body>
         <div class="section-area section-sp2 bg-fix ovbl-dark join-bx text-center" style="background-image:url({{asset('assets/images/background/bg1.jpg')}});">

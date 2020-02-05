@@ -13,7 +13,6 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 
-
 /**
  * App\User
  *
@@ -68,7 +67,6 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable {
 
-    
     use HasRoles;
     use Notifiable;
 
@@ -86,13 +84,12 @@ class User extends Authenticatable {
         'birthdata',
         'academicrang',
         'mangment',
-        'email', 
+        'email',
         'is_staff',
         'password',
         'is_admin',
         'Contact_method',
         'verified'
-        
     ];
 
     /**
@@ -124,9 +121,18 @@ class User extends Authenticatable {
     public function year() {
         return $this->belongsTo(Year::class, 'year_id');
     }
-    public function verifyUser()
-{
-  return $this->hasOne(VerifyUser::class);
-}
+
+    public function verifyUser() {
+        return $this->hasOne(VerifyUser::class);
+    }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail() {
+        return $this->email;
+    }
 
 }
