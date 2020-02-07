@@ -19,12 +19,15 @@ class UsersTableSeeder extends Seeder {
                     'firstname' => 'Hassan',
                     'lastname' => 'Elsaied',
                     'gender' => 'male',
+                    'verified' => '1',
+                    'email_verified_at' => now(),
                     'birthdata' => '1_7_1996',
                     'academicrang' => 'Profssor',
                     'email' => 'admin@gmail.com',
                     'is_staff' => '0',
                     'password' => bcrypt('123456'),
-                     'is_admin' =>'1',
+                    'is_admin' => '1',
+                    'approved_at' => now(),
         ]);
 
 

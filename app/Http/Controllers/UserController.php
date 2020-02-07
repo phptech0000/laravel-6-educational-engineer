@@ -104,7 +104,6 @@ class UserController extends Controller {
         event(new Registered($user->save()));
         $this->guard()->login($user);
         $this->assignRouls($mangment, $academicrang, $is_admin, $user);
-        $this->notifyRegistration($user);
         $data = array();
         $verifyUser = VerifyUser::create([
                     'user_id' => $user->id,
@@ -211,8 +210,9 @@ class UserController extends Controller {
         if (isset($verifyuser)) {
             if (!$verifyuser->user->verified) {
                 $verifyuser->user->verified = 1;
-                $verifyuser->user->save();
-                $status = "Your e-mail is verified. You can now login.";
+                $verifyuser->email_verified_at = now();
+               
+                $status = $verifyuser->user->save(); "Your e-mail is verified. You can now login.";
             } else {
                 $status = "Your e-mail is already verified. You can now login.";
             }
@@ -222,14 +222,10 @@ class UserController extends Controller {
             return view('auth.passwords.RestMessage', compact('user', 'message', 'is_found'));
         }
         $this->guard()->login($verifyuser->user);
-        return redirect()->route('index')->with('status', $status);
+        $email = $verifyuser->user->email;
+        return redirect()->route('admin.approve' , $email)->with('status', $status);
     }
 
-    protected function notifyRegistration(User $user) {
-        $admins = User::where('is_admin', '1')->get();
-        foreach ($admins as $admin) {
-            $admin->notify(new RegistertionNotication($user));
-        }
-    }
+
 
 }

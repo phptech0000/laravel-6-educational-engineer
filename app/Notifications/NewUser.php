@@ -6,11 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\User;
-class RegistertionNotication extends Notification
+use App\User ;
+class NewUser extends Notification
 {
     use Queueable;
-    private $user;
+     private $user;
     /**
      * Create a new notification instance.
      *
@@ -29,7 +29,7 @@ class RegistertionNotication extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -41,7 +41,7 @@ class RegistertionNotication extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
+                    ->line('New user has registered with email.' , $this->user->email)
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
     }
@@ -55,7 +55,7 @@ class RegistertionNotication extends Notification
     public function toArray($notifiable)
     {
         return [
-            'data'=>$this->user->firstname.' '.$this->user->lastname.' now registration ',  
+            //
         ];
     }
 }

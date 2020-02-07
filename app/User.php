@@ -89,7 +89,8 @@ class User extends Authenticatable {
         'password',
         'is_admin',
         'Contact_method',
-        'verified'
+        'verified',
+        'approved_at'
     ];
 
     /**

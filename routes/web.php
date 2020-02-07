@@ -12,14 +12,24 @@
  */
 
 Route::get('/', 'HomeController@index')->name('index');
-Route::get('/dashboard', 'HomeController@adminHome')->name('admin.home');
-Route::get('/CreateDeps', 'DepsController@create')->name('add_deps');
-Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
+
+
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', 'RoleController');
-    Route::resource('deps', 'DepsController');
-    Route::get('user/index', 'UserController@index')->name('users.index');
+    Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
+   
+    //Dashboard 
+    Route::group(['middleware' => ['admin']], function () {
+        Route::resource('roles', 'RoleController');
+        Route::resource('deps', 'DepsController');
+        
+        Route::get('/CreateDeps', 'DepsController@create')->name('add_deps');
+        Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
+        Route::get('user/index', 'UserController@index')->name('users.index');
+        Route::get('/dashboard', 'HomeController@adminHome')->name('admin.home');
+        //maibox 
+        Route::get('mailbox/{user_id}/inbox', 'UserAurh\MailController@inbox')->name('inbox');
+    });
 });
 
 Route::get('registeruser/ceate', 'UserController@create')->name('registeruser.create');

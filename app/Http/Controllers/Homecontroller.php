@@ -9,13 +9,12 @@ use App\dep;
 use App\branch;
 
 class HomeController extends Controller {
-
     /**
      * Create a new controller instance.
      *
      * @return void
      */
- 
+
     /**
      * Show the application dashboard.
      *
@@ -30,7 +29,5 @@ class HomeController extends Controller {
         $allusers = User::all();
         return view('Dashboard.dashboard', compact('allusers'));
     }
-
-
 
 }
