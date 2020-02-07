@@ -544,5 +544,10 @@ and open the template in the editor.
                             $('input[type="file"]').imageuploadify();
                             });
         </script>
-    </body>
-</html>
+
+        <script>
+                            $(document).ready(function () {
+                            $('[data-toggle="tooltip"]').tooltip();
+                            });
+                            </script
+                                        

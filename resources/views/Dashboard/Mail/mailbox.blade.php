@@ -530,32 +530,5 @@
         <!-- Your Profile Views Chart END-->
     </div>
 </div>
-
-<div class="ttr-overlay"></div>
-
-<!-- External JavaScripts -->
-<script src="{{asset('admin/assets/js/jquery.min.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/bootstrap/js/popper.min.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/bootstrap-select/bootstrap-select.min.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/magnific-popup/magnific-popup.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/counter/waypoints-min.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/counter/counterup.min.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/imagesloaded/imagesloaded.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/masonry/masonry.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/masonry/filter.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/owl-carousel/owl.carousel.js')}}"></script>
-<script src='{{asset('admin/assets/vendors/scroll/scrollbar.min.js')}}'></script>
-<script src="{{asset('admin/assets/js/functions.js')}}"></script>
-<script src="{{asset('admin/assets/vendors/chart/chart.min.js')}}"></script>
-<script src="{{asset('admin/assets/js/admin.js')}}"></script>
-<script src='{{asset('admin/assets/vendors/switcher/switcher.js')}}'></script>
-<script>
-        $(document).ready(function(){
-$('[data-toggle="tooltip"]').tooltip();
-});
-</script>
 @endsection
 
-<!-- Mirrored from educhamp.themetrades.com/demo/admin/mailbox.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Feb 2019 13:11:35 GMT -->
