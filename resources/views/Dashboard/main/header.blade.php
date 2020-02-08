@@ -147,13 +147,17 @@ and open the template in the editor.
                         <li>
                             <a href="#" class="ttr-material-button ttr-search-toggle"><i class="fa fa-search"></i></a>
                         </li>
-                        <li>
-                            <a href="#" class="ttr-material-button ttr-submenu-toggle"><i class="fa fa-bell"></i></a>
-                            <div class="ttr-header-submenu noti-menu">
+                        <li id="bell_notification">
+                            <a href="#" class="ttr-material-button ttr-submenu-toggle">
+                                <i class="fa fa-bell"></i>
+                            </a>
+                            <div class="ttr-header-submenu noti-menu"  id="notificationlist">
+
                                 <div class="ttr-notify-header">
-                                    <span class="ttr-notify-text-top">9 New</span>
-                                    <span class="ttr-notify-text">User Notifications</span>
+                                    <span class="ttr-notify-text-top">0 New</span>
+                                    <span class="ttr-notify-text"> User Notifications</span>
                                 </div>
+
                                 <div class="noti-box-list">
                                     <ul>
                                         <li>
@@ -161,59 +165,10 @@ and open the template in the editor.
                                                 <i class="fa fa-check"></i>
                                             </span>
                                             <span class="notification-text">
-                                                <span>Sneha Jogi</span> sent you a message.
-                                            </span>
+                                                <span> username </span><br> 'Can be Registration by hassanelsaied80@gmail.com </span>
                                             <span class="notification-time">
                                                 <a href="#" class="fa fa-close"></a>
                                                 <span> 02:14</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-yellow">
-                                                <i class="fa fa-shopping-cart"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <a href="#">Your order is placed</a> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 7 Min</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-red">
-                                                <i class="fa fa-bullhorn"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <span>Your item is shipped</span> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 2 May</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-green">
-                                                <i class="fa fa-comments-o"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <a href="#">Sneha Jogi</a> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 14 July</span>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="notification-icon dashbg-primary">
-                                                <i class="fa fa-file-word-o"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <span>Sneha Jogi</span> sent you a message.
-                                            </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 15 Min</span>
                                             </span>
                                         </li>
                                     </ul>
@@ -226,7 +181,7 @@ and open the template in the editor.
                                 <ul>
                                     <li><a href="user-profile.html">My profile</a></li>
                                     <li><a href="list-view-calendar.html">Activity</a></li>
-                                    <li><a href="mailbox.html">Messages</a></li>
+                                    <li><a href="{{route('admin.mailbox')}}">Messages</a></li>
                                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
@@ -323,13 +278,13 @@ and open the template in the editor.
                             </a>
                             <ul>
                                 <li>
-                                    <a href="mailbox.html" class="ttr-material-button"><span class="ttr-label">Mail Box</span></a>
+                                    <a href="<?= route('admin.mailbox') ?>" class="ttr-material-button"><span class="ttr-label">Mail Box</span></a>
                                 </li>
                                 <li>
-                                    <a href="mailbox-compose.html" class="ttr-material-button"><span class="ttr-label">Compose</span></a>
+                                    <a href="{{route('admin.mailcompose')}}" class="ttr-material-button"><span class="ttr-label">Compose</span></a>
                                 </li>
                                 <li>
-                                    <a href="mailbox-read.html" class="ttr-material-button"><span class="ttr-label">Mail Read</span></a>
+                                    <a href="<?= route('admin.readmail') ?>" class="ttr-material-button"><span class="ttr-label">Mail Read</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -416,6 +371,7 @@ and open the template in the editor.
         <div class="ttr-overlay"></div>
 
         <!-- External JavaScripts -->
+        <script src="{{asset('js/Pusher.js')}}"></script>
         <script src="{{asset('admin/assets/js/jquery.min.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/bootstrap/js/popper.min.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -549,5 +505,24 @@ and open the template in the editor.
                             $(document).ready(function () {
                             $('[data-toggle="tooltip"]').tooltip();
                             });
-                            </script
-                                        
+        </script>
+        <script>
+                            Pusher.logToConsole = true;
+                            var pusher = new Pusher('1d6f254f7d90913925d8', {
+                            cluster: 'eu',
+                                    forceTLS: true,
+                            });
+                            // Subscribe to the channel we specified in our Laravel Event
+                            var channel = pusher.subscribe('newuser-notification');
+                            // Bind a function to a Event (the full Laravel class)
+                            channel.bind('newuser-event', function(data) {
+                            alert(JSON.stringify(data));
+                            });
+                            
+
+
+        </script>
+
+
+    </body>
+</html>

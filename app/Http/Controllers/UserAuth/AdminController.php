@@ -16,4 +16,7 @@ class AdminController extends Controller
         $is_found = 1;
         return view('auth.passwords.RestMessage' , compact('user' , 'message' ,'is_found'));
     }
+    
+
+
 }

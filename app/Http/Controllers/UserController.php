@@ -13,8 +13,10 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\RegistertionNotication;
+use App\Notifications\NewUserNotification;
+use App\Events\UserRegistrationEvent;
+use Notification;
+use Pusher\Pusher;
 use Mail;
 use App\Mail\VerifyMail;
 
@@ -109,6 +111,11 @@ class UserController extends Controller {
                     'user_id' => $user->id,
                     'token' => sha1(time()),
         ]);
+        $data['name'] = $user->firstname . ' ' . $user->lastname;
+        $data['message'] = 'Can be Registration by <br> ' . $user->email;
+        $data['time'] = $user->created_at;
+        event(new UserRegistrationEvent($data));
+        $this->sendnotificationNewUser($user);
         Mail::to($user->email)->send(new VerifyMail($user));
         return $this->authenticated($request, $user);
     }
@@ -211,8 +218,9 @@ class UserController extends Controller {
             if (!$verifyuser->user->verified) {
                 $verifyuser->user->verified = 1;
                 $verifyuser->email_verified_at = now();
-               
-                $status = $verifyuser->user->save(); "Your e-mail is verified. You can now login.";
+
+                $status = $verifyuser->user->save();
+                "Your e-mail is verified. You can now login.";
             } else {
                 $status = "Your e-mail is already verified. You can now login.";
             }
@@ -223,9 +231,16 @@ class UserController extends Controller {
         }
         $this->guard()->login($verifyuser->user);
         $email = $verifyuser->user->email;
-        return redirect()->route('admin.approve' , $email)->with('status', $status);
+        return redirect()->route('admin.approve', $email)->with('status', $status);
     }
 
-
+    public function sendnotificationNewUser(User $user) {
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true
+        );
+        $admins = User::where('is_admin', '1')->get();
+        Notification::send($admins, new NewUserNotification($user));
+    }
 
 }

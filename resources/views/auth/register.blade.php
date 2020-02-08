@@ -598,11 +598,13 @@
         </script>
         <script>
             $(document).ready(function () {
+                //'/branch/get/' + depId,
                 $("#dep").on('change', function () {
                     var depId = $(this).val();
+                    var url = '<?= route("branch" ,":id")?>';
                     if (depId) {
                         $.ajax({
-                            url: '/branch/get/' + depId,
+                            url:url.replace(':id' , depId) ,
                             method: 'GET',
                             dataType: 'json',
                             delay: 250,

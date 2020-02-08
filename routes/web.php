@@ -17,18 +17,20 @@ Route::get('/', 'HomeController@index')->name('index');
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
-   
+
     //Dashboard 
     Route::group(['middleware' => ['admin']], function () {
         Route::resource('roles', 'RoleController');
         Route::resource('deps', 'DepsController');
-        
+
         Route::get('/CreateDeps', 'DepsController@create')->name('add_deps');
         Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
         Route::get('user/index', 'UserController@index')->name('users.index');
         Route::get('/dashboard', 'HomeController@adminHome')->name('admin.home');
         //maibox 
-        Route::get('mailbox/{user_id}/inbox', 'UserAurh\MailController@inbox')->name('inbox');
+        Route::get('mailbox/mailbox', 'UserAuth\MailController@mailbox')->name('admin.mailbox');
+        Route::get('mailbox/readmail', 'UserAuth\MailController@readmail')->name('admin.readmail');
+        Route::get('mailbox/mailcompse', 'UserAuth\MailController@mailcompse')->name('admin.mailcompose');
     });
 });
 

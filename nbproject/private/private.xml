@@ -3,9 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Project/laravel/Engineering/app/Http/Controllers/Homecontroller.php</file>
-            <file>file:/E:/Project/laravel/Engineering/routes/web.php</file>
-            <file>file:/E:/Project/laravel/Engineering/app/Notifications/RegistertionNotication.php</file>
+            <file>file:/E:/Project/laravel/Engineering/app/Events/UserRegistrationEvent.php</file>
+            <file>file:/E:/Project/laravel/Engineering/config/broadcasting.php</file>
+            <file>file:/E:/Project/laravel/Engineering/database/seeds/UsersTableSeeder.php</file>
+            <file>file:/E:/Project/laravel/Engineering/resources/views/Dashboard/main/header.blade.php</file>
+            <file>file:/E:/Project/laravel/Engineering/.env</file>
             <file>file:/E:/Project/laravel/Engineering/app/Http/Controllers/UserController.php</file>
         </group>
     </open-files>
