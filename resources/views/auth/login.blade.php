@@ -37,13 +37,13 @@
                             Sign In
                         </span>
                     </div>
-
+                    <div id="app">
+                        @include('layouts.flash-message')
+                    </div>
                     <form class="login100-form validate-form" action="{{route('login')}}" method="POST">
                         @csrf
 
-                        <div id="app">
-                            @include('layouts.flash-message')
-                        </div>
+
                         <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                             <span class="label-input100">Email</span>
                             <input class="input100" type="email" name="email" placeholder="Enter Email">

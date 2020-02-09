@@ -157,6 +157,20 @@ and open the template in the editor.
                                 </div>
                                 <div class="noti-box-list">
                                     <ul id="notify">
+                                        <?php foreach (auth()->user()->unreadNotifications as $notification): ?>
+                                            <li>
+                                                <span class="notification-icon dashbg-gray">
+                                                    <i class="fa fa-check"></i>
+                                                </span>
+                                                <span class="notification-text">
+                                                    <span><?= $notification->data['name'] ?> </span> <br>`
+                                                    <?= $notification->data['message'] ?>
+                                                </span>
+                                                <span class="notification-time">
+                                                    <a href="#" class="fa fa-close"></a>
+                                                    <span> 02:14</span></span>
+                                            </li>
+                                        <?php endforeach; ?>
                                     </ul>
                                 </div>
                             </div>
@@ -496,10 +510,8 @@ and open the template in the editor.
                             var notificationsWrapper = $('#notification_list');
                             var att = document.createAttribute("data-count");
                             att.value = "0";
-                            .setAttributeNode(att);
                             var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
                             var notificationsCountElem = notificationsToggle.find('#count');
-                            notificationsCountElem.setAttributeNode(att);
                             var notificationsCount = parseInt(notificationsCountElem.data('count'));
                             var notifications = notificationsWrapper.find('#notify');
                             Pusher.logToConsole = true;

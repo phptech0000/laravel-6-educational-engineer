@@ -19,6 +19,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <div id="app">
+                            @include('layouts.flash-message')
+                        </div>
                         <div class="join-content-bx text-white">
                             <h2>Thank you 
                                 <?php if ($user): ?>
@@ -33,8 +36,8 @@
                                                 <h3><i class="ti-user"></i><span class="counter"></span>Message</h3>
                                             </div>
                                             <span class="cours-search-text">
-                                                <?= $message?>
-                                                   <?php if ($user): ?>
+                                                <?= $message ?>
+                                                <?php if ($user): ?>
                                                     <?= $user->email ?>
                                                 <?php endif; ?> </span>
                                         </div>
@@ -42,14 +45,14 @@
                                 </div>
                             </div>
                             <div class="section-sp2">
-                                <?php if($is_found==0):?>
-                                <a href="{{route('user.forgetpassword')}}" class="btn button-md">Enter a Valid Email</a>
-                                <a href="{{route('registeruser.create')}}" class="btn button-md">Registration</a>
-                                <?php elseif($is_found==1) : ?>
-                                <a href="#" class="btn button-md">About Us</a>
-                                <?php elseif($is_found==2) : ?>
-                                <a href="{{route('index')}}" class="btn button-md">Home</a>
-                                <?php endif;?>
+                                <?php if ($is_found == 0): ?>
+                                    <a href="{{route('user.forgetpassword')}}" class="btn button-md">Enter a Valid Email</a>
+                                    <a href="{{route('registeruser.create')}}" class="btn button-md">Registration</a>
+                                <?php elseif ($is_found == 1) : ?>
+                                    <a href="#" class="btn button-md">About Us</a>
+                                <?php elseif ($is_found == 2) : ?>
+                                    <a href="{{route('index')}}" class="btn button-md">Home</a>
+                                <?php endif; ?>
                             </div>
 
                         </div>

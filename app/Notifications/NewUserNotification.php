@@ -35,9 +35,9 @@ class NewUserNotification extends Notification {
 
     public function toDatabase() {
         return [
-            'id' => $this->user->id,
-            'email' => $this->user->email,
-            'date' => Carbon::now()
+            'name' => $this->user->firstname .' ' . $this->user->lastname,
+            'message' => '<br> Can be Registration by '. $this->user->email,
+            'date' => $this->user->created_at,
         ];
     }
 

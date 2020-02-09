@@ -76,7 +76,7 @@
                                                             @include('layouts.flash-message')
                                                         </div>
                                                         <div class="form-group validuname">
-                                                            <input id="uname" type="text" name="uname" class="form-control"  data-error="Please enter UserName" placeholder="UserName*"  required="">
+                                                            <input id="uname" type="text" name="uname" class="form-control"  data-error="Please enter UserName" placeholder="UserName*"  required="" value="<?= old('uname') ?>">
                                                             <div class="input-group-icon">
                                                                 <i class="fa fa-user"></i>
                                                             </div>
@@ -84,7 +84,7 @@
 
                                                         </div>
                                                         <div class="form-group validemail">
-                                                            <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="mail@example.com*" required="">
+                                                            <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="mail@example.com*" required="" value="<?= old('email')?>" >
                                                             <div class=input-group-icon>
                                                                 <i class="fa fa-envelope"></i>
                                                             </div>
@@ -92,14 +92,14 @@
                                                             <div class="help-block with-errors"></div>
                                                         </div>
                                                         <div class="form-group validpass">
-                                                            <input id="pass" type="password" name="password"  class="form-control"   data-error="Please enter password"  placeholder="Password* at least 8 character" required="" >
+                                                            <input id="pass" type="password" name="password"  class="form-control"   data-error="Please enter password"  placeholder="Password* at least 8 character" required="" value="<?= old('password')?>" >
                                                             <div class=input-group-icon>
                                                                 <i class="fa fa-key"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <input id="cpass" type="password"  name="cpass" class="form-control" data-error="Please retype password" placeholder="Confirm Password*" required ="">
+                                                            <input id="cpass" type="password"  name="cpass" class="form-control" data-error="Please retype password" placeholder="Confirm Password*" required ="" value="<?= old('cpass')?>">
                                                             <div class="input-group-icon">
                                                                 <i class="fa fa-key"></i>
                                                             </div>

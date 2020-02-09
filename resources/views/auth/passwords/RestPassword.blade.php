@@ -30,29 +30,31 @@ and open the template in the editor.
 
         <!-- PAGE TITLE HERE ============================================= -->
         <title>Reset Password </title>
+    <div id="app">
+        @include('layouts.flash-message')
+    </div>
+    <!-- MOBILE SPECIFIC ============================================= -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- MOBILE SPECIFIC ============================================= -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
 
-        <!--[if lt IE 9]>
-        <script src="assets/js/html5shiv.min.js"></script>
-        <script src="assets/js/respond.min.js"></script>
-        <![endif]-->
+    <!-- All PLUGINS CSS ============================================= -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/assets.css')}}">
 
-        <!-- All PLUGINS CSS ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/assets.css')}}">
+    <!-- TYPOGRAPHY ============================================= -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/typography.css')}}">
 
-        <!-- TYPOGRAPHY ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/typography.css')}}">
+    <!-- SHORTCODES ============================================= -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/shortcodes/shortcodes.css')}}">
 
-        <!-- SHORTCODES ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/shortcodes/shortcodes.css')}}">
+    <!-- STYLESHEETS ============================================= -->
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
+    <link class="skin" rel="stylesheet" type="text/css" href="{{asset('assets/css/color/color-1.css')}}">
 
-        <!-- STYLESHEETS ============================================= -->
-        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
-        <link class="skin" rel="stylesheet" type="text/css" href="{{asset('assets/css/color/color-1.css')}}">
-
-    </head>
+</head>
 </head>
 <body>
     <div class="tab-pane"">
@@ -83,14 +85,14 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-             <div class="col-lg-12">
-            <div class="form-group row">
-                <label class="col-12 col-sm-4 col-md-4 col-lg-3 col-form-label">Re Type New Password</label>
-                <div class="col-12 col-sm-8 col-md-8 col-lg-7">
-                    <input name="retypepassword" class="form-control" type="password" value="">
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label class="col-12 col-sm-4 col-md-4 col-lg-3 col-form-label">Re Type New Password</label>
+                    <div class="col-12 col-sm-8 col-md-8 col-lg-7">
+                        <input name="retypepassword" class="form-control" type="password" value="">
+                    </div>
                 </div>
             </div>
-             </div>
             <div class="row">
                 <div class="col-12 col-sm-4 col-md-4 col-lg-3"></div>
 

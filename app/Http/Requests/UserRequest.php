@@ -22,27 +22,30 @@ class UserRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'username' => 'required|string|max:255',
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'image' => 'nullable|mimes:jpeg,jpg,png,gif|required|max:10000',
-            'gender' => 'required|string|max:255',
-            'birthdata' => 'required|string|max:255',
-            'academicrang' => 'required|string|max:255',
-            'mangment' => 'nullable|string|max:255',
+            'uname' => 'required|string|min:5|max:35',
+            'fname' => 'required|string|min:5|max:35',
+            'lname' => 'required|string|min:5|max:35',
+            'fileUpload' => 'nullable|image|mimes:jpeg,png|max:100',
+            'gender' => 'required|string',
+            'birthdate' => 'required|string',
+            'academicrank' => 'required|string',
+            'mangment' => 'nullable|string',
             'email' => 'required | string | email | max:255 | unique:users',
-            'is_staff' => 'boolean',
-            'password' => 'required| string|min:8, confirmed',
-            'is_admin' => 'boolean',
+            'password' => 'required|string|min:8|max:20',
+            'cpass'=>'required|string|min:8|max:20|same:password',
             'phone' => 'required|regex:/(01)[0-9]{9}/',
-            'Contact_method' => 'required|string|max:255',
-            'verified' => 'boolean',
+            'preferedcontact' => 'required|string|max:255',
         ];
     }
 
     public function messages() {
         return [
-            
+            'lname.required' => ' The first name field is required.',
+            'fname.min' => ' The first name must be at least 8 characters.',
+            'fname.max' => ' The first name may not be greater than 35 characters.',
+            'lname.required' => ' The last name field is required.',
+            'lname.min' => ' The last name must be at least 8 characters.',
+            'lname.max' => ' The last name may not be greater than 35 characters.',
         ];
     }
 

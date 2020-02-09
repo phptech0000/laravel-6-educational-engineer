@@ -36,7 +36,11 @@ and open the template in the editor.
 <?php if ($errors->any()): ?>
     <div class="alert alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>	
-        Please check the form below for errors
+        <?php foreach($errors->all() as $error):?>
+        <div class="alert alert-danger">
+            <?=$error?>
+        </div>
+        <?php endforeach;?>
     </div>
 <?php endif; ?>
 

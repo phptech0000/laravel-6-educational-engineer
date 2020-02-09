@@ -51,6 +51,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request) {
+       
         $username = $request->input('uname');
         $firstname = $request->input('fname');
         $lastname = $request->input('lname');
@@ -66,8 +67,6 @@ class UserController extends Controller {
             $istaff = 0;
         }
         $password = Hash::make(request('password'));
-
-
         $year_id = $request->input('year');
         if ($mangment == 'Dean of the College') {
             $is_admin = 1;
