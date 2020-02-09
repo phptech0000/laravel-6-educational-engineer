@@ -24,6 +24,7 @@
     </head>
 
     <body>
+
         <div class="signupForm-section wrapper">
             <div class=display-table>
                 <div class=display-table-cell>
@@ -71,12 +72,16 @@
                                                         </div>
                                                         <h3 class="section-form-title">Account Information</h3>
                                                         <div class="help-block with-errors mandatory-error"></div>
+                                                        <div id="app">
+                                                            @include('layouts.flash-message')
+                                                        </div>
                                                         <div class="form-group validuname">
                                                             <input id="uname" type="text" name="uname" class="form-control"  data-error="Please enter UserName" placeholder="UserName*"  required="">
                                                             <div class="input-group-icon">
                                                                 <i class="fa fa-user"></i>
                                                             </div>
                                                             <div class="help-block with-errors"></div>
+
                                                         </div>
                                                         <div class="form-group validemail">
                                                             <input id="email"  type="email" name="email" class="form-control"  data-error="Please enter valid email" placeholder="mail@example.com*" required="">
@@ -601,10 +606,10 @@
                 //'/branch/get/' + depId,
                 $("#dep").on('change', function () {
                     var depId = $(this).val();
-                    var url = '<?= route("branch" ,":id")?>';
+                    var url = '<?= route("branch", ":id") ?>';
                     if (depId) {
                         $.ajax({
-                            url:url.replace(':id' , depId) ,
+                            url: url.replace(':id', depId),
                             method: 'GET',
                             dataType: 'json',
                             delay: 250,

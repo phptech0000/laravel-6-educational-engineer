@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use App\Notifications\NewUserNotification;
 use App\Events\UserHasRegistered;
+use App\Http\Requests\UserRequest;
 use Notification;
 use Mail;
 use App\Mail\VerifyMail;
@@ -49,7 +50,7 @@ class UserController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(UserRequest $request) {
         $username = $request->input('uname');
         $firstname = $request->input('fname');
         $lastname = $request->input('lname');
@@ -171,9 +172,9 @@ class UserController extends Controller {
             auth()->logout();
             $is_found = 1;
             $message = 'warning You need to confirm your account. We have sent you an activation meesage, please check your email.';
-            return view('auth.passwords.RestMessage', compact('user', 'message', 'is_found'));
+            return view('auth.passwords.RestMessage', compact('user', 'message', 'is_found'))->with('warning', $message);
         }
-        return redirect()->intended('/');
+        return redirect()->intended('/')->with('success', 'Verified Email Ok ');
     }
 
     /**
@@ -239,6 +240,6 @@ class UserController extends Controller {
         event(new UserHasRegistered($user));
     }
 
-  
+ 
 
 }

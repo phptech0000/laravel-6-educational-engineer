@@ -147,7 +147,7 @@ and open the template in the editor.
                         </li>
                         <li id="notification_list">
                             <a href="#" class="ttr-material-button ttr-submenu-toggle" >
-                                <i data-count="0" class="fa fa-bell"></i>
+                                <i data-count="0" id ="count" class="fa fa-bell"></i>
                             </a>
                             <div class="ttr-header-submenu noti-menu"  id="notificationlist">
 
@@ -494,8 +494,12 @@ and open the template in the editor.
         </script>
         <script>
                             var notificationsWrapper = $('#notification_list');
+                            var att = document.createAttribute("data-count");
+                            att.value = "0";
+                            .setAttributeNode(att);
                             var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
-                            var notificationsCountElem = notificationsToggle.find('i[data-count]');
+                            var notificationsCountElem = notificationsToggle.find('#count');
+                            notificationsCountElem.setAttributeNode(att);
                             var notificationsCount = parseInt(notificationsCountElem.data('count'));
                             var notifications = notificationsWrapper.find('#notify');
                             Pusher.logToConsole = true;
