@@ -14,7 +14,7 @@ return [
       |
      */
 
-    'default' => env('BROADCAST_DRIVER', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
     /*
       |--------------------------------------------------------------------------
       | Broadcast Connections
@@ -33,9 +33,7 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => 'eu',
-                'useTLS' => true,
-                'encrypted' => true,
-                'debug' => true,
+                'useTLS' => true
             ],
         ],
         'redis' => [

@@ -11,25 +11,28 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\User;
 
-class UserRegistrationEvent implements ShouldBroadcast{
+class UserHasRegistered implements ShouldBroadcast {
 
     use Dispatchable,
         InteractsWithSockets,
         SerializesModels;
 
-    public $name;
-    public $message;
-    public $time;
+    public $user;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($data) {
-        $this->name = $data['name'];
-        $this->message = $data['message'];
-        $this->time = $data['time'];
+    public function __construct(User $user) {
+        $this->user = $user;
+    }
+
+    public function broadcastWith() {
+        return [
+        'name' => $this->user->firstname .' ' . $this->user->lastname ,
+        'message' => 'can be register by ' . $this->user->email,
+        ];
     }
 
     /**
@@ -38,11 +41,7 @@ class UserRegistrationEvent implements ShouldBroadcast{
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn() {
-        return new PrivateChannel('newuser-notification');
-    }
-
-    public function broadcastAs() {
-        return 'newuser-event';
+        return ['new_user'];
     }
 
 }

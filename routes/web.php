@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\UserHasRegistered;
+
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -47,4 +49,7 @@ Route::post('/resetpasssword', 'UserAuth\forgetpasswordController@store')->name(
 Route::get('/restpassword/{token}', 'UserAuth\forgetpasswordController@dirctRestPasswordPage')->name('user.RestPassword');
 Route::post('/updatepasword', 'UserAuth\forgetpasswordController@RestPassword')->name('user.updatepassword');
 Route::get('/resetmessage/{token}', 'UserAuth\forgetpasswordController@RestMessage')->name('user.restmessage');
-
+Route::get('notify', function () {
+    $user = auth()->user();
+    event(new UserHasRegistered($user));
+});

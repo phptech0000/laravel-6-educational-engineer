@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f12b3232aa70e4e05dbf35234aa6a524",
+    "content-hash": "196c89399e1cee60a35e22e652ac9bd3",
     "packages": [
         {
             "name": "5dmatweb/streamlab",

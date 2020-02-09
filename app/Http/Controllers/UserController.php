@@ -14,9 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use App\Notifications\NewUserNotification;
-use App\Events\UserRegistrationEvent;
+use App\Events\UserHasRegistered;
 use Notification;
-use Pusher\Pusher;
 use Mail;
 use App\Mail\VerifyMail;
 
@@ -111,11 +110,8 @@ class UserController extends Controller {
                     'user_id' => $user->id,
                     'token' => sha1(time()),
         ]);
-        $data['name'] = $user->firstname . ' ' . $user->lastname;
-        $data['message'] = 'Can be Registration by <br> ' . $user->email;
-        $data['time'] = $user->created_at;
-        event(new UserRegistrationEvent($data));
         $this->sendnotificationNewUser($user);
+        $this->PusherNotications($user);
         Mail::to($user->email)->send(new VerifyMail($user));
         return $this->authenticated($request, $user);
     }
@@ -235,12 +231,14 @@ class UserController extends Controller {
     }
 
     public function sendnotificationNewUser(User $user) {
-        $options = array(
-            'cluster' => 'eu',
-            'useTLS' => true
-        );
         $admins = User::where('is_admin', '1')->get();
         Notification::send($admins, new NewUserNotification($user));
     }
+
+    public function PusherNotications(User $user) {
+        event(new UserHasRegistered($user));
+    }
+
+  
 
 }

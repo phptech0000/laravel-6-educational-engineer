@@ -82,8 +82,6 @@ and open the template in the editor.
                 text-indent: 0;
             }
 
-
-
         </style>
 
         <style>
@@ -147,9 +145,9 @@ and open the template in the editor.
                         <li>
                             <a href="#" class="ttr-material-button ttr-search-toggle"><i class="fa fa-search"></i></a>
                         </li>
-                        <li id="bell_notification">
-                            <a href="#" class="ttr-material-button ttr-submenu-toggle">
-                                <i class="fa fa-bell"></i>
+                        <li id="notification_list">
+                            <a href="#" class="ttr-material-button ttr-submenu-toggle" >
+                                <i data-count="0" class="fa fa-bell"></i>
                             </a>
                             <div class="ttr-header-submenu noti-menu"  id="notificationlist">
 
@@ -157,20 +155,8 @@ and open the template in the editor.
                                     <span class="ttr-notify-text-top">0 New</span>
                                     <span class="ttr-notify-text"> User Notifications</span>
                                 </div>
-
                                 <div class="noti-box-list">
-                                    <ul>
-                                        <li>
-                                            <span class="notification-icon dashbg-gray">
-                                                <i class="fa fa-check"></i>
-                                            </span>
-                                            <span class="notification-text">
-                                                <span> username </span><br> 'Can be Registration by hassanelsaied80@gmail.com </span>
-                                            <span class="notification-time">
-                                                <a href="#" class="fa fa-close"></a>
-                                                <span> 02:14</span>
-                                            </span>
-                                        </li>
+                                    <ul id="notify">
                                     </ul>
                                 </div>
                             </div>
@@ -507,18 +493,44 @@ and open the template in the editor.
                             });
         </script>
         <script>
+                            var notificationsWrapper = $('#notification_list');
+                            var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
+                            var notificationsCountElem = notificationsToggle.find('i[data-count]');
+                            var notificationsCount = parseInt(notificationsCountElem.data('count'));
+                            var notifications = notificationsWrapper.find('#notify');
                             Pusher.logToConsole = true;
                             var pusher = new Pusher('1d6f254f7d90913925d8', {
                             cluster: 'eu',
                                     forceTLS: true,
+                                    encrypted: true
                             });
                             // Subscribe to the channel we specified in our Laravel Event
-                            var channel = pusher.subscribe('newuser-notification');
+                            var channel = pusher.subscribe('new_user');
                             // Bind a function to a Event (the full Laravel class)
-                            channel.bind('newuser-event', function(data) {
-                            alert(JSON.stringify(data));
+                            console.log(channel);
+                            channel.bind('App\\Events\\UserHasRegistered', function(data) {
+                            var existingNotifications = notifications.html();
+                            var newNotificationHtml = `
+                    <li>
+                         <span class="notification-icon dashbg-gray">
+                                <i class="fa fa-check"></i>
+                          </span>
+                         <span class="notification-text">
+                              <span>` + data.name + `</span> <br>`
+                                    + data.message +
+                                    `</span>
+                        <span class="notification-time">
+                        <a href="#" class="fa fa-close"></a>
+                        <span> 02:14</span></span>
+                  </li>`;
+                            notifications.html(newNotificationHtml + existingNotifications);
+                            notificationsCount += 1;
+                            notificationsCountElem.attr('data-count', notificationsCount);
+                            notificationsWrapper.find('.ttr-notify-text-top').text(notificationsCount);
+                            notificationsWrapper.show();
                             });
-                            
+
+
 
 
         </script>
@@ -526,3 +538,22 @@ and open the template in the editor.
 
     </body>
 </html>
+
+`
+<li class="notification active">
+    <div class="media">
+        <div class="media-left">
+            <div class="media-object">
+                <img src="https://api.adorable.io/avatars/71/`+avatar+`.png" class="img-circle" alt="50x50" style="width: 50px; height: 50px;">
+            </div>
+        </div>
+        <div class="media-body">
+            <strong class="notification-title">`+data.message+`</strong>
+            <!--p class="notification-desc">Extra description can go here</p-->
+            <div class="notification-meta">
+                <small class="timestamp">about a minute ago</small>
+            </div>
+        </div>
+    </div>
+</li>
+`;

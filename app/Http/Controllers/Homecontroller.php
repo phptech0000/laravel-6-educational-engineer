@@ -7,6 +7,7 @@ use App\User;
 use DB;
 use App\dep;
 use App\branch;
+
 class HomeController extends Controller {
     /**
      * Create a new controller instance.
