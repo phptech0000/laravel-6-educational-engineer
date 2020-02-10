@@ -22,9 +22,9 @@ class UserRequest extends FormRequest {
      */
     public function rules() {
         return [
-            'uname' => 'required|string|min:5|max:35',
-            'fname' => 'required|string|min:5|max:35',
-            'lname' => 'required|string|min:5|max:35',
+            'uname' => 'required|string|min:3|max:35',
+            'fname' => 'required|string|min:3|max:35',
+            'lname' => 'required|string|min:3|max:35',
             'fileUpload' => 'nullable|image|mimes:jpeg,png|max:100',
             'gender' => 'required|string',
             'birthdate' => 'required|string',
@@ -41,7 +41,7 @@ class UserRequest extends FormRequest {
     public function messages() {
         return [
             'lname.required' => ' The first name field is required.',
-            'fname.min' => ' The first name must be at least 8 characters.',
+            'fname.min' => ' The first name must be at least 3 characters.',
             'fname.max' => ' The first name may not be greater than 35 characters.',
             'lname.required' => ' The last name field is required.',
             'lname.min' => ' The last name must be at least 8 characters.',

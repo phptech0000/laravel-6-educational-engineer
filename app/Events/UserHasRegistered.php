@@ -30,8 +30,8 @@ class UserHasRegistered implements ShouldBroadcast {
 
     public function broadcastWith() {
         return [
-        'name' => $this->user->firstname .' ' . $this->user->lastname ,
-        'message' => 'can be register by ' . $this->user->email,
+            'name' => $this->user->firstname . ' ' . $this->user->lastname,
+            'message' => 'can be register by ' . $this->user->email,
         ];
     }
 
@@ -41,7 +41,8 @@ class UserHasRegistered implements ShouldBroadcast {
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn() {
-        return ['new_user'];
+        return ['newuser'];
     }
+
 
 }

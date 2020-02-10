@@ -97,6 +97,8 @@ and open the template in the editor.
                 font-size: 30px;
                 text-align: center;
             }
+         
+
         </style>
 
     </head>
@@ -114,7 +116,7 @@ and open the template in the editor.
                 <div class="ttr-logo-box">
                     <div>
                         <a href="{{route('index')}}" class="ttr-logo">
-                            <img class="ttr-logo-mobile" alt="" src="{{asset('assets/images/logo-mobile.png')}}" width="30" height="30">
+                            <img class="ttr-logo-mobile" alt="" src="{{asset('assets/images/logo-white.png')}}" width="30" height="30">
                             <img class="ttr-logo-desktop" alt="" src="{{asset('assets/images/logo-white.png')}}" width="160" height="27">
                         </a>
                     </div>
@@ -145,9 +147,11 @@ and open the template in the editor.
                         <li>
                             <a href="#" class="ttr-material-button ttr-search-toggle"><i class="fa fa-search"></i></a>
                         </li>
+                      
                         <li id="notification_list">
-                            <a href="#" class="ttr-material-button ttr-submenu-toggle" >
-                                <i data-count="0" id ="count" class="fa fa-bell"></i>
+                            <a href="#" class="ttr-material-button ttr-submenu-toggle">
+                                <i class="fa fa-bell"></i>
+                                <span id="count" class="badge" data-count="0" >0</span>
                             </a>
                             <div class="ttr-header-submenu noti-menu"  id="notificationlist">
 
@@ -155,20 +159,22 @@ and open the template in the editor.
                                     <span class="ttr-notify-text-top">0 New</span>
                                     <span class="ttr-notify-text"> User Notifications</span>
                                 </div>
-                                <div class="noti-box-list">
+                                <div class="noti-box-list scrollbar sytel-8">
                                     <ul id="notify">
                                         <?php foreach (auth()->user()->unreadNotifications as $notification): ?>
-                                            <li>
+                                            <li>                                               
                                                 <span class="notification-icon dashbg-gray">
-                                                    <i class="fa fa-check"></i>
+                                                    <a href="#" ><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}"></a>
                                                 </span>
                                                 <span class="notification-text">
-                                                    <span><?= $notification->data['name'] ?> </span> <br>`
+                                                    <span><?= $notification->data['name'] ?> </span>
                                                     <?= $notification->data['message'] ?>
-                                                </span>
+                                                </span> 
                                                 <span class="notification-time">
                                                     <a href="#" class="fa fa-close"></a>
-                                                    <span> 02:14</span></span>
+                                                    <span> 02:14</span>
+                                                </span>
+
                                             </li>
                                         <?php endforeach; ?>
                                     </ul>
@@ -365,6 +371,7 @@ and open the template in the editor.
         <!-- Left sidebar menu end -->
         <main class="ttr-wrapper">
             @yield('content')
+
         </main>
 
 
@@ -506,70 +513,52 @@ and open the template in the editor.
                             $('[data-toggle="tooltip"]').tooltip();
                             });
         </script>
+
         <script>
+
                             var notificationsWrapper = $('#notification_list');
-                            var att = document.createAttribute("data-count");
-                            att.value = "0";
                             var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
                             var notificationsCountElem = notificationsToggle.find('#count');
                             var notificationsCount = parseInt(notificationsCountElem.data('count'));
                             var notifications = notificationsWrapper.find('#notify');
                             Pusher.logToConsole = true;
+
                             var pusher = new Pusher('1d6f254f7d90913925d8', {
                             cluster: 'eu',
                                     forceTLS: true,
                                     encrypted: true
                             });
                             // Subscribe to the channel we specified in our Laravel Event
-                            var channel = pusher.subscribe('new_user');
+                            var channel = pusher.subscribe('newuser');
                             // Bind a function to a Event (the full Laravel class)
                             console.log(channel);
                             channel.bind('App\\Events\\UserHasRegistered', function(data) {
+                                
                             var existingNotifications = notifications.html();
                             var newNotificationHtml = `
-                    <li>
-                         <span class="notification-icon dashbg-gray">
-                                <i class="fa fa-check"></i>
-                          </span>
-                         <span class="notification-text">
-                              <span>` + data.name + `</span> <br>`
+                     <li>
+                          <span class="notification-icon dashbg-gray">
+                                <a href="#" ><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}"></a>
+                           </span>
+                          <span class="notification-text">
+                               <span>` + data.name + `</span> <br>`
                                     + data.message +
                                     `</span>
-                        <span class="notification-time">
-                        <a href="#" class="fa fa-close"></a>
-                        <span> 02:14</span></span>
-                  </li>`;
+                         <span class="notification-time">
+                         <a href="#" class="fa fa-close"></a>
+                         <span> 02:14</span></span>
+                   </li>`;
                             notifications.html(newNotificationHtml + existingNotifications);
                             notificationsCount += 1;
+                            var text = notificationsCount + ' New';
                             notificationsCountElem.attr('data-count', notificationsCount);
-                            notificationsWrapper.find('.ttr-notify-text-top').text(notificationsCount);
+                            notificationsWrapper.find('.ttr-notify-text-top').text(text);
+                            notificationsWrapper.find('#count').text(notificationsCount);
                             notificationsWrapper.show();
                             });
 
-
-
-
         </script>
-
 
     </body>
 </html>
 
-`
-<li class="notification active">
-    <div class="media">
-        <div class="media-left">
-            <div class="media-object">
-                <img src="https://api.adorable.io/avatars/71/`+avatar+`.png" class="img-circle" alt="50x50" style="width: 50px; height: 50px;">
-            </div>
-        </div>
-        <div class="media-body">
-            <strong class="notification-title">`+data.message+`</strong>
-            <!--p class="notification-desc">Extra description can go here</p-->
-            <div class="notification-meta">
-                <small class="timestamp">about a minute ago</small>
-            </div>
-        </div>
-    </div>
-</li>
-`;

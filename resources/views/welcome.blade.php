@@ -131,79 +131,39 @@
                                 <div class="ttr-header-right ttr-with-seperator">
                                     <!-- header right menu start -->
                                     <ul class="ttr-header-navigation">
-                                        <li>
-                                            <a href="#" class="ttr-material-button ttr-submenu-toggle"><i class="fa fa-bell"></i></a>
-                                            <div class="ttr-header-submenu noti-menu">
-                                                <div class="ttr-notify-header">
-                                                    <span class="ttr-notify-text-top">9 New</span>
-                                                    <span class="ttr-notify-text">User Notifications</span>
-                                                </div>
-                                                <div class="noti-box-list">
-                                                    <ul>
-                                                        <li>
-                                                            <span class="notification-icon dashbg-gray">
-                                                                <i class="fa fa-check"></i>
-                                                            </span>
-                                                            <span class="notification-text">
-                                                                <span>Sneha Jogi</span> sent you a message.
-                                                            </span>
-                                                            <span class="notification-time">
-                                                                <a href="#" class="fa fa-close"></a>
-                                                                <span> 02:14</span>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="notification-icon dashbg-yellow">
-                                                                <i class="fa fa-shopping-cart"></i>
-                                                            </span>
-                                                            <span class="notification-text">
-                                                                <a href="#">Your order is placed</a> sent you a message.
-                                                            </span>
-                                                            <span class="notification-time">
-                                                                <a href="#" class="fa fa-close"></a>
-                                                                <span> 7 Min</span>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="notification-icon dashbg-red">
-                                                                <i class="fa fa-bullhorn"></i>
-                                                            </span>
-                                                            <span class="notification-text">
-                                                                <span>Your item is shipped</span> sent you a message.
-                                                            </span>
-                                                            <span class="notification-time">
-                                                                <a href="#" class="fa fa-close"></a>
-                                                                <span> 2 May</span>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="notification-icon dashbg-green">
-                                                                <i class="fa fa-comments-o"></i>
-                                                            </span>
-                                                            <span class="notification-text">
-                                                                <a href="#">Sneha Jogi</a> sent you a message.
-                                                            </span>
-                                                            <span class="notification-time">
-                                                                <a href="#" class="fa fa-close"></a>
-                                                                <span> 14 July</span>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="notification-icon dashbg-primary">
-                                                                <i class="fa fa-file-word-o"></i>
-                                                            </span>
-                                                            <span class="notification-text">
-                                                                <span>Sneha Jogi</span> sent you a message.
-                                                            </span>
-                                                            <span class="notification-time">
-                                                                <a href="#" class="fa fa-close"></a>
-                                                                <span> 15 Min</span>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
+                                        <li id="notification_list">
+                            <a href="#" class="ttr-material-button ttr-submenu-toggle">
+                                <i class="fa fa-bell"></i>
+                                <span id="count" class="badge" data-count="0" >0</span>
+                            </a>
+                            <div class="ttr-header-submenu noti-menu"  id="notificationlist">
+
+                                <div class="ttr-notify-header">
+                                    <span class="ttr-notify-text-top">0 New</span>
+                                    <span class="ttr-notify-text"> User Notifications</span>
+                                </div>
+                                <div class="noti-box-list scrollbar sytel-8">
+                                    <ul id="notify">
+                                        <?php foreach (auth()->user()->unreadNotifications as $notification): ?>
+                                            <li>                                               
+                                                <span class="notification-icon dashbg-gray">
+                                                    <a href="#" ><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}"></a>
+                                                </span>
+                                                <span class="notification-text">
+                                                    <span><?= $notification->data['name'] ?> </span>
+                                                    <?= $notification->data['message'] ?>
+                                                </span> 
+                                                <span class="notification-time">
+                                                    <a href="#" class="fa fa-close"></a>
+                                                    <span> 02:14</span>
+                                                </span>
+
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
                                         <li>
                                             <a href="#" class="ttr-material-button ttr-submenu-toggle"><span class="ttr-user-avatar"><img alt="" src="assets/images/testimonials/pic3.jpg" width="32" height="32"></span></a>
                                             <div class="ttr-header-submenu">
@@ -1261,6 +1221,8 @@
         </div>
 
         <!-- External JavaScripts -->
+
+        <script src="{{asset('js/Pusher.js')}}"></script>
         <script src="{{asset('assets/js/jquery.min.js')}}"></script>
         <script src="{{asset('assets/vendors/bootstrap/js/popper.min.js')}}"></script>
         <script src="{{asset('assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -1394,9 +1356,55 @@
         <script src="{{asset('admin/assets/js/functions.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/chart/chart.min.js')}}"></script>
         <script src="{{asset('admin/assets/js/admin.js')}}"></script>
-        <script src='{{asset('admin/assets/vendors/switcher/switcher.js')}}'></script>
+        <script src="{{asset('admin/assets/vendors/switcher/switcher.js')}}"></script>
+        @auth
+        <?php if (auth()->user()->is_admin == 1): ?>  
+            <script>
 
+                            var notificationsWrapper = $('#notification_list');
+                            var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
+                            var notificationsCountElem = notificationsToggle.find('#count');
+                            var notificationsCount = parseInt(notificationsCountElem.data('count'));
+                            var notifications = notificationsWrapper.find('#notify');
+                            Pusher.logToConsole = true;
 
+                            var pusher = new Pusher('1d6f254f7d90913925d8', {
+                            cluster: 'eu',
+                                    forceTLS: true,
+                                    encrypted: true
+                            });
+                            // Subscribe to the channel we specified in our Laravel Event
+                            var channel = pusher.subscribe('newuser');
+                            // Bind a function to a Event (the full Laravel class)
+                            console.log(channel);
+                            channel.bind('App\\Events\\UserHasRegistered', function(data) {
+                                
+                            var existingNotifications = notifications.html();
+                            var newNotificationHtml = `
+                     <li>
+                          <span class="notification-icon dashbg-gray">
+                                <a href="#" ><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}"></a>
+                           </span>
+                          <span class="notification-text">
+                               <span>` + data.name + `</span> <br>`
+                                    + data.message +
+                                    `</span>
+                         <span class="notification-time">
+                         <a href="#" class="fa fa-close"></a>
+                         <span> 02:14</span></span>
+                   </li>`;
+                            notifications.html(newNotificationHtml + existingNotifications);
+                            notificationsCount += 1;
+                            var text = notificationsCount + ' New';
+                            notificationsCountElem.attr('data-count', notificationsCount);
+                            notificationsWrapper.find('.ttr-notify-text-top').text(text);
+                            notificationsWrapper.find('#count').text(notificationsCount);
+                            notificationsWrapper.show();
+                            });
+
+        </script>
+        <?php endif; ?>
+        @endauth
     </body>
 
 </html>
