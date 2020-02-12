@@ -185,7 +185,7 @@ and open the template in the editor.
                             <a href="#" class="ttr-material-button ttr-submenu-toggle"><span class="ttr-user-avatar"><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}" width="32" height="32"></span></a>
                             <div class="ttr-header-submenu">
                                 <ul>
-                                    <li><a href="user-profile.html">My profile</a></li>
+                                    <li><a href="<?= route('users.user.profile' ,$user->id)?>">My profile</a></li>
                                     <li><a href="list-view-calendar.html">Activity</a></li>
                                     <li><a href="{{route('admin.mailbox')}}">Messages</a></li>
                                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

@@ -7,21 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\User;
-use Carbon\Carbon;
 
-class NewUserNotification extends Notification implements ShouldQueue {
+class UserFollowed extends Notification implements ShouldQueue {
 
     use Queueable;
 
-    private $user;
+    public $follower;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $user) {
-        $this->user = $user;
+    public function __construct(User $follower) {
+        $this->follower = $follower;
     }
 
     /**
@@ -42,10 +41,10 @@ class NewUserNotification extends Notification implements ShouldQueue {
      */
     public function toArray($notifiable) {
         return [
-            'user_id' => $this->user->id,
-            'user_name' => $this->user->firstname . ' ' . $this->user->lastname,
-            'user_email' => $this->user->email,
-            'date' => now(), //
+            'follower_id' => $this->follower->id,
+            'follower_name' => $this->follower->firstname . ' ' . $this->follower->lastname,
+            'follower_email' => $this->follower->email,
+            'date' => now(),
         ];
     }
 
@@ -57,11 +56,11 @@ class NewUserNotification extends Notification implements ShouldQueue {
     public function toBroadcast($notifiable) {
         return [
             'id' => $this->id,
-            'read_at'=> null,
+            'read_at' => null,
             'data' => [
-                'user_id' => $this->user->id,
-                'user_name' => $this->user->firstname . ' ' . $this->user->lastname,
-                'user_email' => $this->user->email,
+                'follower_id' => $this->follower->id,
+                'follower_name' => $this->follower->firstname . ' ' . $this->follower->lastname,
+                'follower_email' => $this->follower->email,
                 'date' => now(),
             ],
         ];

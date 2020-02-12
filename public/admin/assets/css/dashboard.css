@@ -907,11 +907,13 @@
 .noti-box-list ul li{
     display: flex;
     position: relative;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding-right: 35px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     padding-bottom: 15px;
 }
+
+
 .orders-list ul li:last-child,
 .new-user-list ul li:last-child,
 .noti-box-list ul li:last-child{
@@ -919,7 +921,21 @@
     border-bottom: 0;
     padding-bottom: 0;
 }
-.noti-box-list ul li .notification-icon{
+
+
+.noti-box-list ul li a{
+    display: flex;
+    padding-right: 35px;
+     padding-bottom: 15px;
+     position: relative;
+}
+
+.noti-box-list ul li a:hover{
+    background-color: #f2f2f2;
+    text-decoration: none;
+}
+
+.noti-box-list ul li a .notification-icon{
     min-width: 40px;
     width: 40px;
     height: 40px;
@@ -932,33 +948,33 @@
 .dashbg-gray{
     background: #f2f2f2;
 }
-.noti-box-list ul li .notification-text{
+.noti-box-list ul li a .notification-text{
     font-size: 14px;
     line-height: 20px;
     color: #909090;
 }
-.noti-box-list ul li .notification-text span{
+.noti-box-list ul li  a .notification-text span{
     color: #333;
 }
-.noti-box-list ul li .notification-text a{
+.noti-box-list ul li a .notification-text a{
     color:var(--primary);
 }
-.noti-box-list ul li .notification-time{
+.noti-box-list ul li a .notification-time{
     position: absolute;
     right: 0;
     top: 0;
 }
-.noti-box-list ul li .notification-time a{
-    position: absolute;
+.noti-box-list ul li a .notification-time a{
+    position: block;
     color: #C0C0C0;
     right: 0;
     top: 0;
     font-size: 14px;
 }
-.noti-box-list ul li .notification-time a:hover{
+.noti-box-list ul li a .notification-time a:hover{
     color:#000;	
 }
-.noti-box-list ul li .notification-time span{
+.noti-box-list ul li a  .notification-time span{
     font-size: 12px;
     margin-top: 20px;
     display: block;

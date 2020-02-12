@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
 use App\Notifications\NewUserNotification;
+use App\Notifications\UserFollowed;
 use App\Events\UserHasRegistered;
 use App\Http\Requests\UserRequest;
 use Notification;
@@ -51,7 +52,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request) {
-       
+
         $username = $request->input('uname');
         $firstname = $request->input('fname');
         $lastname = $request->input('lname');
@@ -133,7 +134,8 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        
+        $user = User::find($id);
+        return view('user.user_profile', compact('user'));
     }
 
     /**
@@ -235,10 +237,48 @@ class UserController extends Controller {
         Notification::send($admins, new NewUserNotification($user));
     }
 
-    public function PusherNotications(User $user) {
-        event(new UserHasRegistered($user));
+    
+
+    public function Staff_index() {
+        $user = auth()->user();
+        $users_staff = User::where('is_staff', '1')->get();
+        return view('user.staff_chat_following', compact('users_staff', 'user'));
     }
 
- 
+    public function follow(User $user) {
+        //store id and 
+        $name = $user->firstname .' '. $user->lastname;
+        $follower = auth()->user();
+        if ($follower->id == $user->id) {
+            return back()->with('error', 'Can`t follow yourself');
+        }
+        if (!$follower->isFollowing($user->id)) {
+            $follower->follow($user->id);
+            //send notifiy
+            $user->notify(new UserFollowed($follower));
+            
+            return back()->with('success', 'you can follow ' . $name);
+        }
+        return back()->with('warning' , 'You are already following'. $name);
+    }
 
+    public function unfollow(User $user) {
+        $name = $user->firstname .' '. $user->lastname;
+        $follower = auth()->user();
+        if($follower->isFollowing($user->id)){
+            $follower->unfollow($user->id);
+             return back()->with('success', 'you  unfollow ' . $name);
+        }
+        return back()->with('warning' , 'You are not following'. $name);
+    }
+    public function notifications(){
+        return 
+                 auth()
+                ->user()
+                ->unreadNotifications()
+                ->limit(10)
+                ->get()
+                ->toArray();
+    }
+   
 }

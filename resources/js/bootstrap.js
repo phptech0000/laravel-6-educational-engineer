@@ -12,6 +12,7 @@ try {
 } catch (e) {
 }
 
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -33,5 +34,8 @@ window.Echo = new Echo({
     key: '1d6f254f7d90913925d8',
     cluster: 'eu',
     forceTLS: true,
-    encrypted: true
+    encrypted: true,
+    authEndpoint: '/broadcast',
+    csrfToken:window.Laravel,
+
 });

@@ -24,10 +24,14 @@ class HomeController extends Controller {
         $user = auth()->user();
         return view('welcome', compact('user'));
     }
-
+   public function home() {
+        $user = auth()->user();
+        return view('home', compact('user'));
+    }
     public function adminHome() {
         $allusers = User::all();
-        return view('Dashboard.dashboard', compact('allusers'));
+        $user = auth()->user();
+        return view('Dashboard.dashboard', compact('allusers', 'user'));
     }
 
 }
