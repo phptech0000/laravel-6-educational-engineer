@@ -51,7 +51,20 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
- 
+  <script>
+            window.Laravel = <?php
+         echo json_encode([
+         'csrfToken' => csrf_token(),
+]);
+?>
+        </script>
+        <!-- This makes the current user's id available in javascript -->
+        <?php if (!auth()->guest()): ?>
+            <script>
+                window.Laravel.userId = <?= auth()->user()->id; ?>;
+                 window.Laravel.url = '<?= route('notification')?>';
+            </script>
+        <?php endif; ?>
     </head>
     <body class="ttr-opened-sidebar ttr-pinned-sidebar">
         <!-- header start -->
@@ -112,22 +125,7 @@ and open the template in the editor.
                                 </div>
                                 <div class="noti-box-list scrollbar sytel-8">
                                     <ul id="notify">
-                                        <?php foreach (auth()->user()->unreadNotifications as $notification): ?>
-                                            <li>                                               
-                                                <span class="notification-icon dashbg-gray">
-                                                    <a href="#" ><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}"></a>
-                                                </span>
-                                                <span class="notification-text">
-                                                    <span><?= $notification->data['name'] ?> </span>
-                                                    <?= $notification->data['message'] ?>
-                                                </span> 
-                                                <span class="notification-time">
-                                                    <a href="#" class="fa fa-close"></a>
-                                                    <span> 02:14</span>
-                                                </span>
-
-                                            </li>
-                                        <?php endforeach; ?>
+                                        
                                     </ul>
                                 </div>
                             </div>
@@ -199,14 +197,12 @@ and open the template in the editor.
         <!-- header end -->
         <main class="ttr-wrapper">
             @yield('content')
-
         </main>
 
 
         <div class="ttr-overlay"></div>
-
         <!-- External JavaScripts -->
-        <script src="{{asset('js/Pusher.js')}}"></script>
+         <script src="{{asset('js/app.js')}}"></script>
         <script src="{{asset('admin/assets/js/jquery.min.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/bootstrap/js/popper.min.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>
@@ -223,52 +219,6 @@ and open the template in the editor.
         <script src="{{asset('admin/assets/js/functions.js')}}"></script>
         <script src="{{asset('admin/assets/js/admin.js')}}"></script>
         <script src='{{asset('admin/assets/vendors/switcher/switcher.js')}}'></script>
- 
-        <script>
-
-                            var notificationsWrapper = $('#notification_list');
-                            var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
-                            var notificationsCountElem = notificationsToggle.find('#count');
-                            var notificationsCount = parseInt(notificationsCountElem.data('count'));
-                            var notifications = notificationsWrapper.find('#notify');
-                            Pusher.logToConsole = true;
-
-                            var pusher = new Pusher('1d6f254f7d90913925d8', {
-                            cluster: 'eu',
-                                    forceTLS: true,
-                                    encrypted: true
-                            });
-                            // Subscribe to the channel we specified in our Laravel Event
-                            var channel = pusher.subscribe('newuser');
-                            // Bind a function to a Event (the full Laravel class)
-                            console.log(channel);
-                            channel.bind('App\\Events\\UserHasRegistered', function(data) {
-                                
-                            var existingNotifications = notifications.html();
-                            var newNotificationHtml = `
-                     <li>
-                          <span class="notification-icon dashbg-gray">
-                                <a href="#" ><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}"></a>
-                           </span>
-                          <span class="notification-text">
-                               <span>` + data.name + `</span> <br>`
-                                    + data.message +
-                                    `</span>
-                         <span class="notification-time">
-                         <a href="#" class="fa fa-close"></a>
-                         <span> 02:14</span></span>
-                   </li>`;
-                            notifications.html(newNotificationHtml + existingNotifications);
-                            notificationsCount += 1;
-                            var text = notificationsCount + ' New';
-                            notificationsCountElem.attr('data-count', notificationsCount);
-                            notificationsWrapper.find('.ttr-notify-text-top').text(text);
-                            notificationsWrapper.find('#count').text(notificationsCount);
-                            notificationsWrapper.show();
-                            });
-
-        </script>
-
     </body>
 </html>
 

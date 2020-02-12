@@ -59415,6 +59415,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 var app = new Vue({
   el: '#app'
 });
+var notifications = [];
 var NOTIFICATIONS_TYPE = {
   newuser: 'App\\Notifications\\NewUserNotification',
   follow: "App\\Notifications\\UserFollowed"
@@ -59431,31 +59432,34 @@ $(document).ready(function () {
     window.console.log(channel);
     channel.notification(function (notification) {
       console.log(notification.type);
-      addNotification(notification);
+      addNotification([notification]);
     });
   }
 });
 
 function addNotification(newNotification) {
-  var notifications = newNotification; // show only last 5 notifications
+  notifications = newNotification; // show only last 5 notifications
 
   window.console.log('notifications:' + notifications);
+  notifications.slice(0, 5);
   showNotification(notifications);
 }
 
-function showNotification(notification) {
+function showNotification(notifications) {
   var notificationsWrapper = $('#notification_list');
   var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
   var notificationsCountElem = notificationsToggle.find('#count');
   var notificationsCount = parseInt(notificationsCountElem.data('count'));
   var notificationsList = notificationsWrapper.find('#notify');
 
-  if (notifications) {
-    var oldnotifiction = notificationsList.html();
-    var htmllist = makeNotification(notification);
+  if (notifications.length) {
+    var htmllist = notifications.map(function (notification) {
+      window.console.log('notification:' + notification);
+      return makeNotification(notification);
+    });
     window.console.log('htmllist' + htmllist);
-    notificationsList.html(htmllist + oldnotifiction);
-    notificationsCount += 1;
+    notificationsList.html(htmllist);
+    notificationsCount = notifications.length;
     var text = notificationsCount + ' New';
     notificationsCountElem.attr('data-count', notificationsCount);
     notificationsWrapper.find('.ttr-notify-text-top').text(text);
