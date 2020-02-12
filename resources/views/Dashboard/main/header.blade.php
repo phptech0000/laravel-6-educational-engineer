@@ -113,6 +113,7 @@ and open the template in the editor.
             <script>
                 window.Laravel.userId = <?= auth()->user()->id; ?>;
                  window.Laravel.url = '<?= route('notification')?>';
+                 window.Laravel.broadcast = '<?=route('broadcast')?>';
             </script>
         <?php endif; ?>
     </head>

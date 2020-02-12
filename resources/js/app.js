@@ -37,22 +37,27 @@ var NOTIFICATIONS_TYPE = {
 }
 
 $(document).ready(function () {
-    Pusher.logToConsole = true;
+
+
     if (window.Laravel.userId) {
+
         $.get('' + window.Laravel.url + '', function (data) {
             window.console.log(data);
             addNotification(data);
+
         });
-        var channel = window.Echo.private(`App.User.${window.Laravel.userId}`);
+
+        var channel = window.Echo.private(`App.User.${Laravel.userId}`);
+        Pusher.logToConsole = true;
         window.console.log(channel);
         channel.notification((notification) => {
-            console.log(notification.type);
+            window.console.log(notification);
             addNotification([notification]);
         });
     }
 });
 function addNotification(newNotification) {
-    notifications = newNotification + notifications;
+    notifications = newNotification;
     // show only last 5 notifications
     window.console.log('notifications:' + notifications);
     notifications.slice(0, 5);
@@ -72,9 +77,10 @@ function showNotification(notifications) {
             window.console.log('notification:' + notification);
             return  makeNotification(notification);
         });
+        var oldnotifictions = notificationsList.html();
         window.console.log('htmllist' + htmllist);
-        notificationsList.html(htmllist);
-        notificationsCount = notifications.length;
+        notificationsList.html(htmllist+oldnotifictions);
+        notificationsCount = notificationsCount+1 ;
         var text = notificationsCount + ' New';
         notificationsCountElem.attr('data-count', notificationsCount);
         notificationsWrapper.find('.ttr-notify-text-top').text(text);

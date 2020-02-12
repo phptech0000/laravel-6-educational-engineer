@@ -59421,17 +59421,16 @@ var NOTIFICATIONS_TYPE = {
   follow: "App\\Notifications\\UserFollowed"
 };
 $(document).ready(function () {
-  Pusher.logToConsole = true;
-
   if (window.Laravel.userId) {
     $.get('' + window.Laravel.url + '', function (data) {
       window.console.log(data);
       addNotification(data);
     });
-    var channel = window.Echo["private"]("App.User.".concat(window.Laravel.userId));
+    var channel = window.Echo["private"]("App.User.".concat(Laravel.userId));
+    Pusher.logToConsole = true;
     window.console.log(channel);
     channel.notification(function (notification) {
-      console.log(notification.type);
+      window.console.log(notification);
       addNotification([notification]);
     });
   }
@@ -59457,9 +59456,10 @@ function showNotification(notifications) {
       window.console.log('notification:' + notification);
       return makeNotification(notification);
     });
+    var oldnotifictions = notificationsList.html();
     window.console.log('htmllist' + htmllist);
-    notificationsList.html(htmllist);
-    notificationsCount = notifications.length;
+    notificationsList.html(htmllist + oldnotifictions);
+    notificationsCount += 1;
     var text = notificationsCount + ' New';
     notificationsCountElem.attr('data-count', notificationsCount);
     notificationsWrapper.find('.ttr-notify-text-top').text(text);
@@ -59551,7 +59551,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: 'eu',
   forceTLS: true,
   encrypted: true,
-  authEndpoint: '/broadcast',
+  authEndpoint: window.Laravel.broadcast,
   csrfToken: window.Laravel
 });
 

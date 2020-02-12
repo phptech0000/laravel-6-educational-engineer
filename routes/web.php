@@ -3,6 +3,7 @@
 use App\Events\UserHasRegistered;
 use App\User;
 use Illuminate\Http\Request;
+
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -19,26 +20,31 @@ Route::get('/', 'HomeController@index')->name('index');
 
 
 Route::group(['middleware' => ['auth']], function() {
-Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
-Route::get('/users/{id}/user_profile', 'UserController@edit')->name('users.user.profile');
-Route::get('/users/staff', 'UserController@Staff_index')->name('users.staff');
-Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
-Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');
-Route::get('/notification', 'UserController@notifications')->name('notification');
-//Dashboard 
-Route::group(['middleware' => ['admin']], function () {
-Route::resource('roles', 'RoleController');
-Route::resource('deps', 'DepsController');
+    Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
+    Route::get('/users/{id}/user_profile', 'UserController@edit')->name('users.user.profile');
+    Route::get('/users/staff', 'UserController@Staff_index')->name('users.staff');
+    Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
+    Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');
+    Route::get('/notification', 'UserController@notifications')->name('notification');
+    Route::post('/broadcast', function (Request $request) {
+        $pusher = new Pusher\Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'));
+        return $pusher->socket_auth($request->request->get('channel_name'), $request->request->get('socket_id'));
+    })->name('broadcast');
 
-Route::get('/CreateDeps', 'DepsController@create')->name('add_deps');
-Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
-Route::get('user/index', 'UserController@index')->name('users.index');
-Route::get('/dashboard', 'HomeController@adminHome')->name('admin.home');
+//Dashboard 
+    Route::group(['middleware' => ['admin']], function () {
+        Route::resource('roles', 'RoleController');
+        Route::resource('deps', 'DepsController');
+
+        Route::get('/CreateDeps', 'DepsController@create')->name('add_deps');
+        Route::post('/storeDeps', 'DepsController@store')->name('store_deps');
+        Route::get('user/index', 'UserController@index')->name('users.index');
+        Route::get('/dashboard', 'HomeController@adminHome')->name('admin.home');
 //maibox 
-Route::get('mailbox/mailbox', 'UserAuth\MailController@mailbox')->name('admin.mailbox');
-Route::get('mailbox/readmail', 'UserAuth\MailController@readmail')->name('admin.readmail');
-Route::get('mailbox/mailcompse', 'UserAuth\MailController@mailcompse')->name('admin.mailcompose');
-});
+        Route::get('mailbox/mailbox', 'UserAuth\MailController@mailbox')->name('admin.mailbox');
+        Route::get('mailbox/readmail', 'UserAuth\MailController@readmail')->name('admin.readmail');
+        Route::get('mailbox/mailcompse', 'UserAuth\MailController@mailcompse')->name('admin.mailcompose');
+    });
 });
 
 Route::get('registeruser/ceate', 'UserController@create')->name('registeruser.create');
@@ -54,6 +60,4 @@ Route::post('/resetpasssword', 'UserAuth\forgetpasswordController@store')->name(
 Route::get('/restpassword/{token}', 'UserAuth\forgetpasswordController@dirctRestPasswordPage')->name('user.RestPassword');
 Route::post('/updatepasword', 'UserAuth\forgetpasswordController@RestPassword')->name('user.updatepassword');
 Route::get('/resetmessage/{token}', 'UserAuth\forgetpasswordController@RestMessage')->name('user.restmessage');
- Route::post('/broadcast',function (Request $request){ 
-     $pusher = new Pusher\Pusher(env('PUSHER_APP_KEY'),env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID')); return $pusher->socket_auth($request->request->get('channel_name'),$request->request->get('socket_id')); 
- });
+
