@@ -51,10 +51,10 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
-  <script>
+        <script>
             window.Laravel = <?php
-         echo json_encode([
-         'csrfToken' => csrf_token(),
+echo json_encode([
+    'csrfToken' => csrf_token(),
 ]);
 ?>
         </script>
@@ -62,8 +62,8 @@ and open the template in the editor.
         <?php if (!auth()->guest()): ?>
             <script>
                 window.Laravel.userId = <?= auth()->user()->id; ?>;
-                 window.Laravel.url = '<?= route('notification')?>';
-                 window.Laravel.broadcast = '<?=route('broadcast')?>';
+                window.Laravel.url = '<?= route('notification') ?>';
+                window.Laravel.broadcast = '<?= route('broadcast') ?>';
             </script>
         <?php endif; ?>
     </head>
@@ -112,7 +112,7 @@ and open the template in the editor.
                         <li>
                             <a href="#" class="ttr-material-button ttr-search-toggle"><i class="fa fa-search"></i></a>
                         </li>
-                      
+
                         <li id="notification_list">
                             <a href="#" class="ttr-material-button ttr-submenu-toggle">
                                 <i class="fa fa-bell"></i>
@@ -125,9 +125,13 @@ and open the template in the editor.
                                     <span class="ttr-notify-text"> User Notifications</span>
                                 </div>
                                 <div class="noti-box-list scrollbar sytel-8">
-                                    <ul id="notify">
-                                        
-                                    </ul>
+                                    <div class="widget-inner">
+                                        <div class="new-user-list">
+                                            <ul id="notify">
+
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -135,7 +139,7 @@ and open the template in the editor.
                             <a href="#" class="ttr-material-button ttr-submenu-toggle"><span class="ttr-user-avatar"><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}" width="32" height="32"></span></a>
                             <div class="ttr-header-submenu">
                                 <ul>
-                                    <li><a href="<?= route('users.user.profile' ,$user->id)?>">My profile</a></li>
+                                    <li><a href="<?= route('users.user.profile', $user->id) ?>">My profile</a></li>
                                     <li><a href="list-view-calendar.html">Activity</a></li>
                                     <li><a href="{{route('admin.mailbox')}}">Messages</a></li>
                                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -203,7 +207,7 @@ and open the template in the editor.
 
         <div class="ttr-overlay"></div>
         <!-- External JavaScripts -->
-         <script src="{{asset('js/app.js')}}"></script>
+        <script src="{{asset('js/app.js')}}"></script>
         <script src="{{asset('admin/assets/js/jquery.min.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/bootstrap/js/popper.min.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/bootstrap/js/bootstrap.min.js')}}"></script>

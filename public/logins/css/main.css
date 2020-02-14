@@ -34,11 +34,13 @@
 	margin: 0px; 
 	padding: 0px; 
 	box-sizing: border-box;
+       
 }
 
 body, html {
 	height: 100%;
 	font-family: Poppins-Regular, sans-serif;
+        background-image: url(../images/bg.jpg);
 }
 
 /*---------------------------------------------*/

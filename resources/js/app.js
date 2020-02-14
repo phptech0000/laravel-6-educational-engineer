@@ -46,7 +46,7 @@ $(document).ready(function () {
             addNotification(data);
 
         });
-
+       
         var channel = window.Echo.private(`App.User.${Laravel.userId}`);
         Pusher.logToConsole = true;
         window.console.log(channel);
@@ -78,9 +78,8 @@ function showNotification(notifications) {
             return  makeNotification(notification);
         });
         var oldnotifictions = notificationsList.html();
-        window.console.log('htmllist' + htmllist);
-        notificationsList.html(htmllist+oldnotifictions);
-        notificationsCount = notificationsCount+1 ;
+        notificationsList.html(htmllist + oldnotifictions);
+        notificationsCount = notificationsCount + 1;
         var text = notificationsCount + ' New';
         notificationsCountElem.attr('data-count', notificationsCount);
         notificationsWrapper.find('.ttr-notify-text-top').text(text);
@@ -88,7 +87,13 @@ function showNotification(notifications) {
 
 
     } else {
-        notificationsList.html('<li class="dropdown-header">No notifications</li>');
+        notificationsList.html(`
+                     <li> 
+                       <span class="new-users-top-text">
+                               <span>No Notifications</span>
+                         </span>
+                     </li>`
+                );
 
     }
 
@@ -96,8 +101,7 @@ function showNotification(notifications) {
 function makeNotification(notification) {
     var to = routeNotifiction(notification);
     var listitem = NotificationItem(notification);
-    window.console.log('listitem' + listitem);
-    return '<li><a href="' + to + '">' + listitem + '</a></li>';
+    return '<li>' + listitem + '</li>';
 
 }
 
@@ -117,37 +121,43 @@ function NotificationItem(notification) {
 
     if (notification.type === NOTIFICATIONS_TYPE.follow) {
         var message = 'followed You';
+        NotificationHtml = `
+                                                 <span class="new-users-top-text">
+                                                                <span>` + notification.data.date + `</span>
+                                                            </span>
+                                                            <span class="new-users-pic">
+                                                                <img src="assets/images/testimonials/pic1.jpg" alt=""/>
+                                                            </span>
+                                                            <span class="new-users-text">
+                                                                <a href="#" class="new-users-name">` + notification.data.follower_name + `</a>
+                                                                <span class="new-users-info">` + message + ` </span>
+                                                            </span>
+                                                            <span class="notification-time">
+                                                              <a href="#" class="fa fa-close"></a>
+                                                            </span>`;
+
+
+
+    } else if (notification.type === NOTIFICATIONS_TYPE.newuser) {
+        var message = 'Registration Now by ' + notification.data.user_email;
 
         NotificationHtml = `
-                            
-                                  <span class="notification-icon dashbg-gray">
-                                       <img alt="" src='{{asset('assets/images/testimonials/pic3.jpg')}}'>
-                                   </span>
-                                  <span class="notification-text">
-                                       <span>` + notification.data.follower_name + `</span> <br>`
-                + message +
-                `</span>
-                                 <span class="notification-time">
-                                 <a href="#" class="fa fa-close"></a>
-                                 <span> 02:14</span></span>
-                           `;
-    } else if (notification.type === NOTIFICATIONS_TYPE.newuser) {
-        var message = 'Registration Now by <br>' + notification.data.user_email;
-        NotificationHtml = `
-                             
-                                  <span class="notification-icon dashbg-gray">
-                                        <img alt="" src='{{asset('assets/images/testimonials/pic3.jpg')}}'>
-                                   </span>
-                                  <span class="notification-text">
-                                       <span>` + notification.data.user_name + `</span> <br>`
-                + message +
-                `</span>
-                                 <span class="notification-time">
-                                 <a href="#" class="fa fa-close"></a>
-                                 <span> 02:14</span></span>
-                           `;
+                   <span class="new-users-top-text">
+                       <span>` + notification.data.date + `</span>
+                    </span>
+                    <span class="new-users-pic">
+                       <img src="assets/images/testimonials/pic1.jpg" alt=""/>
+                    </span>
+                     <span class="new-users-text">
+                        <a href="#" class="new-users-name">` + notification.data.user_name + `</a>
+                        <span class="new-users-info">` + message + ` </span>
+                    </span>
+                    <span class="notification-time">
+                        <a href="#" class="fa fa-close"></a>
+                        <span> 02:14</span>
+                    </span>`;
     }
 
-    window.console.log('NotificationHtml' + NotificationHtml);
     return NotificationHtml;
 }
+

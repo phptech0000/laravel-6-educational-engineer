@@ -112,7 +112,6 @@ class UserController extends Controller {
                     'token' => sha1(time()),
         ]);
         $this->sendnotificationNewUser($user);
-        $this->PusherNotications($user);
         Mail::to($user->email)->send(new VerifyMail($user));
         return $this->authenticated($request, $user);
     }
@@ -237,8 +236,6 @@ class UserController extends Controller {
         Notification::send($admins, new NewUserNotification($user));
     }
 
-    
-
     public function Staff_index() {
         $user = auth()->user();
         $users_staff = User::where('is_staff', '1')->get();
@@ -247,7 +244,7 @@ class UserController extends Controller {
 
     public function follow(User $user) {
         //store id and 
-        $name = $user->firstname .' '. $user->lastname;
+        $name = $user->firstname . ' ' . $user->lastname;
         $follower = auth()->user();
         if ($follower->id == $user->id) {
             return back()->with('error', 'Can`t follow yourself');
@@ -256,29 +253,39 @@ class UserController extends Controller {
             $follower->follow($user->id);
             //send notifiy
             $user->notify(new UserFollowed($follower));
-            
+
             return back()->with('success', 'you can follow ' . $name);
         }
-        return back()->with('warning' , 'You are already following'. $name);
+        return back()->with('warning', 'You are already following' . $name);
     }
 
     public function unfollow(User $user) {
-        $name = $user->firstname .' '. $user->lastname;
+        $name = $user->firstname . ' ' . $user->lastname;
         $follower = auth()->user();
-        if($follower->isFollowing($user->id)){
+        if ($follower->isFollowing($user->id)) {
             $follower->unfollow($user->id);
-             return back()->with('success', 'you  unfollow ' . $name);
+            return back()->with('success', 'you  unfollow ' . $name);
         }
-        return back()->with('warning' , 'You are not following'. $name);
+        return back()->with('warning', 'You are not following' . $name);
     }
-    public function notifications(){
-        return 
-                 auth()
-                ->user()
-                ->unreadNotifications()
-                ->limit(10)
-                ->get()
-                ->toArray();
+
+    public function notifications() {
+        return
+                        auth()
+                        ->user()
+                        ->unreadNotifications()
+                        ->limit(10)
+                        ->get()
+                        ->toArray();
     }
-   
+
+    public function ReadNotification($notifiy_id, $user_id) {
+        
+    }
+
+    public function DeleteNotification($notification_id) {
+       $user = auth()->user();
+       
+    }
+
 }

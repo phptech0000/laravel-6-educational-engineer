@@ -31,7 +31,7 @@ class NewUserNotification extends Notification implements ShouldQueue {
      * @return array
      */
     public function via($notifiable) {
-        return ['database', 'broadcast'];
+         return ['database', 'broadcast'];
     }
 
     /**
@@ -45,7 +45,7 @@ class NewUserNotification extends Notification implements ShouldQueue {
             'user_id' => $this->user->id,
             'user_name' => $this->user->firstname . ' ' . $this->user->lastname,
             'user_email' => $this->user->email,
-            'date' => now(), //
+            'date' => $this->user->setTime(), //
         ];
     }
 
@@ -62,7 +62,7 @@ class NewUserNotification extends Notification implements ShouldQueue {
                 'user_id' => $this->user->id,
                 'user_name' => $this->user->firstname . ' ' . $this->user->lastname,
                 'user_email' => $this->user->email,
-                'date' => now(),
+                'date' => $this->user->setTime(),
             ],
         ];
     }

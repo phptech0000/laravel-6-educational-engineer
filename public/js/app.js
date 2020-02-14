@@ -59457,23 +59457,21 @@ function showNotification(notifications) {
       return makeNotification(notification);
     });
     var oldnotifictions = notificationsList.html();
-    window.console.log('htmllist' + htmllist);
     notificationsList.html(htmllist + oldnotifictions);
-    notificationsCount += 1;
+    notificationsCount = notificationsCount + 1;
     var text = notificationsCount + ' New';
     notificationsCountElem.attr('data-count', notificationsCount);
     notificationsWrapper.find('.ttr-notify-text-top').text(text);
     notificationsWrapper.find('#count').text(notificationsCount);
   } else {
-    notificationsList.html('<li class="dropdown-header">No notifications</li>');
+    notificationsList.html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
   }
 }
 
 function makeNotification(notification) {
   var to = routeNotifiction(notification);
   var listitem = NotificationItem(notification);
-  window.console.log('listitem' + listitem);
-  return '<li><a href="' + to + '">' + listitem + '</a></li>';
+  return '<li>' + listitem + '</li>';
 }
 
 function routeNotifiction(notification) {
@@ -59493,13 +59491,12 @@ function NotificationItem(notification) {
 
   if (notification.type === NOTIFICATIONS_TYPE.follow) {
     var message = 'followed You';
-    NotificationHtml = "\n                            \n                                  <span class=\"notification-icon dashbg-gray\">\n                                       <img alt=\"\" src='{{asset('assets/images/testimonials/pic3.jpg')}}'>\n                                   </span>\n                                  <span class=\"notification-text\">\n                                       <span>" + notification.data.follower_name + "</span> <br>" + message + "</span>\n                                 <span class=\"notification-time\">\n                                 <a href=\"#\" class=\"fa fa-close\"></a>\n                                 <span> 02:14</span></span>\n                           ";
+    NotificationHtml = "\n                                                 <span class=\"new-users-top-text\">\n                                                                <span>" + notification.data.date + "</span>\n                                                            </span>\n                                                            <span class=\"new-users-pic\">\n                                                                <img src=\"assets/images/testimonials/pic1.jpg\" alt=\"\"/>\n                                                            </span>\n                                                            <span class=\"new-users-text\">\n                                                                <a href=\"#\" class=\"new-users-name\">" + notification.data.follower_name + "</a>\n                                                                <span class=\"new-users-info\">" + message + " </span>\n                                                            </span>\n                                                            <span class=\"notification-time\">\n                                                              <a href=\"#\" class=\"fa fa-close\"></a>\n                                                            </span>";
   } else if (notification.type === NOTIFICATIONS_TYPE.newuser) {
-    var message = 'Registration Now by <br>' + notification.data.user_email;
-    NotificationHtml = "\n                             \n                                  <span class=\"notification-icon dashbg-gray\">\n                                        <img alt=\"\" src='{{asset('assets/images/testimonials/pic3.jpg')}}'>\n                                   </span>\n                                  <span class=\"notification-text\">\n                                       <span>" + notification.data.user_name + "</span> <br>" + message + "</span>\n                                 <span class=\"notification-time\">\n                                 <a href=\"#\" class=\"fa fa-close\"></a>\n                                 <span> 02:14</span></span>\n                           ";
+    var message = 'Registration Now by ' + notification.data.user_email;
+    NotificationHtml = "\n                   <span class=\"new-users-top-text\">\n                       <span>" + notification.data.date + "</span>\n                    </span>\n                    <span class=\"new-users-pic\">\n                       <img src=\"assets/images/testimonials/pic1.jpg\" alt=\"\"/>\n                    </span>\n                     <span class=\"new-users-text\">\n                        <a href=\"#\" class=\"new-users-name\">" + notification.data.user_name + "</a>\n                        <span class=\"new-users-info\">" + message + " </span>\n                    </span>\n                    <span class=\"notification-time\">\n                        <a href=\"#\" class=\"fa fa-close\"></a>\n                        <span> 02:14</span>\n                    </span>";
   }
 
-  window.console.log('NotificationHtml' + NotificationHtml);
   return NotificationHtml;
 }
 

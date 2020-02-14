@@ -44,7 +44,7 @@ class UserFollowed extends Notification implements ShouldQueue {
             'follower_id' => $this->follower->id,
             'follower_name' => $this->follower->firstname . ' ' . $this->follower->lastname,
             'follower_email' => $this->follower->email,
-            'date' => now(),
+            'date' => $this->follower->setTime(),
         ];
     }
 
@@ -61,7 +61,7 @@ class UserFollowed extends Notification implements ShouldQueue {
                 'follower_id' => $this->follower->id,
                 'follower_name' => $this->follower->firstname . ' ' . $this->follower->lastname,
                 'follower_email' => $this->follower->email,
-                'date' => now(),
+                'date' => $this->follower->setTime(),
             ],
         ];
     }

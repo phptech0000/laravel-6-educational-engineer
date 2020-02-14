@@ -113,7 +113,7 @@
     float: left;
     position: relative;
 }
-.ttr-header-navigation > li > a {
+.ttr-header-navigation > li > a{
     display: table-cell !important;
     vertical-align: middle;
     height: 60px;
@@ -122,7 +122,6 @@
     font-weight: 600;
     padding: 0 15px;
     text-decoration: none;
-
 }
 .ttr-header-navigation > li > a .material-icons{
     vertical-align: middle;
@@ -591,21 +590,6 @@
     overflow: hidden;
 }
 
-.ttr-material-button .badge {
-    position:absolute;
-    right:2px;
-    top:10px;
-    content: attr(data-count);
-    font-size:75%;
-    padding:.6em;
-    border-radius:999px;
-    line-height:.75em;
-    color: white;
-    background:rgba(255,0,0,.85);
-    text-align:center;
-    min-width:2em;
-    font-weight:bold;
-}
 .ttr-wave-effect {
     display: block;
     position: absolute;
@@ -907,13 +891,10 @@
 .noti-box-list ul li{
     display: flex;
     position: relative;
-    margin-bottom: 20px;
     padding-right: 35px;
     border-bottom: 1px solid rgba(0,0,0,0.05);
     padding-bottom: 15px;
 }
-
-
 .orders-list ul li:last-child,
 .new-user-list ul li:last-child,
 .noti-box-list ul li:last-child{
@@ -921,21 +902,7 @@
     border-bottom: 0;
     padding-bottom: 0;
 }
-
-
-.noti-box-list ul li a{
-    display: flex;
-    padding-right: 35px;
-     padding-bottom: 15px;
-     position: relative;
-}
-
-.noti-box-list ul li a:hover{
-    background-color: #f2f2f2;
-    text-decoration: none;
-}
-
-.noti-box-list ul li a .notification-icon{
+.noti-box-list ul li .notification-icon{
     min-width: 40px;
     width: 40px;
     height: 40px;
@@ -948,33 +915,33 @@
 .dashbg-gray{
     background: #f2f2f2;
 }
-.noti-box-list ul li a .notification-text{
+.noti-box-list ul li .notification-text{
     font-size: 14px;
     line-height: 20px;
     color: #909090;
 }
-.noti-box-list ul li  a .notification-text span{
+.noti-box-list ul li .notification-text span{
     color: #333;
 }
-.noti-box-list ul li a .notification-text a{
+.noti-box-list ul li .notification-text a{
     color:var(--primary);
 }
-.noti-box-list ul li a .notification-time{
+.noti-box-list ul li .notification-time{
     position: absolute;
     right: 0;
     top: 0;
 }
-.noti-box-list ul li a .notification-time a{
-    position: block;
+.noti-box-list ul li .notification-time a{
+    position: absolute;
     color: #C0C0C0;
     right: 0;
     top: 0;
     font-size: 14px;
 }
-.noti-box-list ul li a .notification-time a:hover{
+.noti-box-list ul li .notification-time a:hover{
     color:#000;	
 }
-.noti-box-list ul li a  .notification-time span{
+.noti-box-list ul li .notification-time span{
     font-size: 12px;
     margin-top: 20px;
     display: block;
@@ -1030,6 +997,42 @@
 .new-user-list ul li .new-users-text{
     margin-right: 10px;
 }
+.new-user-list ul li .new-users-top-text{
+    
+}
+.new-user-list ul li .new-users-top-text span{
+    position:absolute;
+    
+    color: #C0C0C0;
+    right: 40%;
+    top: -14px;
+    font-size: 10px;
+}
+.new-user-list ul li .background_item{
+   ;
+}
+.new-user-list ul li .notification-time{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.new-user-list ul li .notification-time a{
+    position: absolute;
+    color: #C0C0C0;
+    right: 0;
+    top: 0;
+    font-size: 14px;
+}
+.new-user-list ul li .notification-time a:hover{
+    color:#000;	
+}
+.new-user-list ul li .notification-time span{
+    font-size: 12px;
+    margin-top: 20px;
+    display: block;
+    color: #B0B0B0;
+}
+
 .orders-list ul li .orders-btn,
 .new-user-list ul li .new-users-btn{
     margin-left:auto;
@@ -1042,7 +1045,7 @@
     line-height: 20px;
 }
 .ttr-header-submenu.noti-menu{
-    width: 320px;
+    width: 450px;
 }
 .ttr-header-submenu.noti-menu .noti-box-list{
     padding:20px;
@@ -1818,43 +1821,4 @@
     .admin-review .card-courses-list-bx {
         margin-bottom: 10px;
     }
-
-}
-
-
-.noti-menu .scrollbar{
-
-
-    height: 400px;
-    background: #fff;
-    overflow-y: scroll;
-    margin-bottom: 5px;
-}
-.noti-menu .scrollbar .sytel-8{
-
-}/*
-*  STYLE 8
-*/
-
-.sytel-8::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color: #F5F5F5;
-    border-radius: 10px;
-}
-
-.sytel-8::-webkit-scrollbar
-{
-    width: 1px;
-    background-color: #F5F5F5;
-}
-
-.sytel-8::-webkit-scrollbar-thumb
-{
-    background-image: -webkit-gradient(linear,
-        left bottom,
-        left top,
-        color-stop(0.44, rgb(122,153,217)),
-        color-stop(0.72, rgb(73,125,189)),
-        color-stop(0.86, rgb(28,58,148)));	
 }

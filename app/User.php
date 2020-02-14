@@ -12,6 +12,7 @@ use App\VerifyUser;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
+use Carbon\Carbon;
 
 /**
  * App\User
@@ -155,10 +156,16 @@ class User extends Authenticatable {
         return $this;
     }
 
-
-       public function isFollowing($userId) 
-    {
+    public function isFollowing($userId) {
         return (boolean) $this->follows()->where('follows_id', $userId)->first();
+    }
+
+    public function setTime(){
+        $date = now()->timezone('egypt');
+        $format = "D , j M  \A\T H:i ";
+        $dateFormat = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format($format);
+        $DateTime = strtoupper($dateFormat);
+        return $DateTime;
     }
 
 }

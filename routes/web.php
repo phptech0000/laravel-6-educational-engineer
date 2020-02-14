@@ -16,9 +16,6 @@ use Illuminate\Http\Request;
  */
 
 Route::get('/', 'HomeController@index')->name('index');
-
-
-
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
     Route::get('/users/{id}/user_profile', 'UserController@edit')->name('users.user.profile');

@@ -46,7 +46,7 @@ and open the template in the editor.
 
         <!-- SHORTCODES ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/shortcodes/shortcodes.css')}}">
-   <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
         <!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('assets/css/style.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('assets/css/color/color-1.css')}}">
@@ -76,8 +76,8 @@ and open the template in the editor.
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
         <script>
             window.Laravel = <?php
-         echo json_encode([
-         'csrfToken' => csrf_token(),
+echo json_encode([
+    'csrfToken' => csrf_token(),
 ]);
 ?>
         </script>
@@ -86,8 +86,8 @@ and open the template in the editor.
         <?php if (!auth()->guest()): ?>
             <script>
                 window.Laravel.userId = <?= auth()->user()->id; ?>;
-                window.Laravel.url = '<?= route('notification')?>';
-                window.Laravel.broadcast = '<?=route('broadcast')?>';
+                window.Laravel.url = '<?= route('notification') ?>';
+                window.Laravel.broadcast = '<?= route('broadcast') ?>';
             </script>
         <?php endif; ?>
     </head>
@@ -163,10 +163,13 @@ and open the template in the editor.
                                                     <span class="ttr-notify-text"> User Notifications</span>
                                                 </div>
                                                 <div class="noti-box-list scrollbar sytel-8">
-                                                    <ul id="notify">
+                                                    <div class="widget-inner">
+                                                        <div class="new-user-list">
+                                                            <ul id="notify">
 
-
-                                                    </ul>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>
@@ -796,7 +799,7 @@ and open the template in the editor.
             <button class="back-to-top fa fa-chevron-up" ></button> 
 
         </div>
-        
+
         <script src="{{asset('js/app.js')}}"></script>
         <script src="{{asset('assets/js/jquery.min.js')}}"></script>
         <script src="{{asset('assets/vendors/bootstrap/js/popper.min.js')}}"></script>
