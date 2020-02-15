@@ -59421,11 +59421,14 @@ var NOTIFICATIONS_TYPE = {
   follow: "App\\Notifications\\UserFollowed"
 };
 $(document).ready(function () {
+  window.Vue.config.devtools = true;
+
   if (window.Laravel.userId) {
     $.get('' + window.Laravel.url + '', function (data) {
       window.console.log(data);
       addNotification(data);
     });
+    window.console.log(window.Laravel.deleteNotification);
     var channel = window.Echo["private"]("App.User.".concat(Laravel.userId));
     Pusher.logToConsole = true;
     window.console.log(channel);
@@ -59437,7 +59440,7 @@ $(document).ready(function () {
 });
 
 function addNotification(newNotification) {
-  notifications = newNotification; // show only last 5 notifications
+  notifications = window._.concat(newNotification, notifications); // show only last 5 notifications
 
   window.console.log('notifications:' + notifications);
   notifications.slice(0, 5);
@@ -59450,28 +59453,30 @@ function showNotification(notifications) {
   var notificationsCountElem = notificationsToggle.find('#count');
   var notificationsCount = parseInt(notificationsCountElem.data('count'));
   var notificationsList = notificationsWrapper.find('#notify');
+  var oldnotifictions = notificationsList.html();
 
   if (notifications.length) {
     var htmllist = notifications.map(function (notification) {
       window.console.log('notification:' + notification);
       return makeNotification(notification);
     });
-    var oldnotifictions = notificationsList.html();
-    notificationsList.html(htmllist + oldnotifictions);
-    notificationsCount = notificationsCount + 1;
+    notificationsList.html(htmllist);
+    notificationsCount = notifications.length;
     var text = notificationsCount + ' New';
+    notificationsCountElem.show();
     notificationsCountElem.attr('data-count', notificationsCount);
     notificationsWrapper.find('.ttr-notify-text-top').text(text);
     notificationsWrapper.find('#count').text(notificationsCount);
   } else {
     notificationsList.html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
+    notificationsCountElem.hide();
   }
 }
 
 function makeNotification(notification) {
   var to = routeNotifiction(notification);
   var listitem = NotificationItem(notification);
-  return '<li>' + listitem + '</li>';
+  return '<li id="item">' + listitem + '</li>';
 }
 
 function routeNotifiction(notification) {
@@ -59491,14 +59496,39 @@ function NotificationItem(notification) {
 
   if (notification.type === NOTIFICATIONS_TYPE.follow) {
     var message = 'followed You';
-    NotificationHtml = "\n                                                 <span class=\"new-users-top-text\">\n                                                                <span>" + notification.data.date + "</span>\n                                                            </span>\n                                                            <span class=\"new-users-pic\">\n                                                                <img src=\"assets/images/testimonials/pic1.jpg\" alt=\"\"/>\n                                                            </span>\n                                                            <span class=\"new-users-text\">\n                                                                <a href=\"#\" class=\"new-users-name\">" + notification.data.follower_name + "</a>\n                                                                <span class=\"new-users-info\">" + message + " </span>\n                                                            </span>\n                                                            <span class=\"notification-time\">\n                                                              <a href=\"#\" class=\"fa fa-close\"></a>\n                                                            </span>";
+    NotificationHtml = "\n                                                 <span class=\"new-users-top-text\">\n                                                                <span>" + notification.data.date + "</span>\n                                                                <span id= \"notification_id\" style=\" display: none;\"\">" + notification.id + "</span>\n                                                            </span>\n                                                            <span class=\"new-users-pic\">\n                                                                <img src=\"assets/images/testimonials/pic1.jpg\" alt=\"\"/>\n                                                            </span>\n                                                            <span class=\"new-users-text\">\n                                                                <a href=\"#\" class=\"new-users-name\">" + notification.data.follower_name + "</a>\n                                                                <span class=\"new-users-info\">" + message + " </span>\n                                                            </span>\n                                                            <span class=\"notification-time\">\n                                                             <a id=\"delete\" href=\"#\"><i class=\"fa fa-close\"></i></a>\n                                                            </span>";
   } else if (notification.type === NOTIFICATIONS_TYPE.newuser) {
     var message = 'Registration Now by ' + notification.data.user_email;
-    NotificationHtml = "\n                   <span class=\"new-users-top-text\">\n                       <span>" + notification.data.date + "</span>\n                    </span>\n                    <span class=\"new-users-pic\">\n                       <img src=\"assets/images/testimonials/pic1.jpg\" alt=\"\"/>\n                    </span>\n                     <span class=\"new-users-text\">\n                        <a href=\"#\" class=\"new-users-name\">" + notification.data.user_name + "</a>\n                        <span class=\"new-users-info\">" + message + " </span>\n                    </span>\n                    <span class=\"notification-time\">\n                        <a href=\"#\" class=\"fa fa-close\"></a>\n                        <span> 02:14</span>\n                    </span>";
+    NotificationHtml = "\n                   <span class=\"new-users-top-text\">\n                       <span>" + notification.data.date + "</span>\n                       <span id = \"notification_id\" style=\" display: none;\"\">" + notification.id + "</span>\n                    </span>\n                    <span class=\"new-users-pic\">\n                       <img src=\"assets/images/testimonials/pic1.jpg\" alt=\"\"/>\n                    </span>\n                     <span class=\"new-users-text\">\n                        <a href=\"#\" class=\"new-users-name\">" + notification.data.user_name + "</a>\n                        <span class=\"new-users-info\">" + message + " </span>\n                    </span>\n                    <span class=\"notification-time\">\n                        \t<a id=\"delete\" href=\"#\"><i class=\"fa fa-close\"></i></a>\n                    </span>";
   }
 
   return NotificationHtml;
 }
+
+$(document).on('click', '#notify  #delete', function (event) {
+  var item = $(event.currentTarget).parents('#item');
+  var id = item.find('#notification_id').text();
+  window.console.log('id:' + id);
+  var id_url = window.Laravel.deleteNotification.replace(':id', id);
+  window.console.log('url:' + id_url);
+  $.get('' + id_url + '', function () {
+    if (item) {
+      item.remove();
+      var notificationsWrapper = $('#notification_list');
+      var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
+      var notificationsCountElem = notificationsToggle.find('#count');
+      notificationsCountElem.show();
+    }
+
+    if (!item) {
+      var notificationsWrapper = $('#notification_list');
+      var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
+      var notificationsCountElem = notificationsToggle.find('#count');
+      notificationsCountElem.hide();
+      $('#notify').html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
+    }
+  });
+});
 
 /***/ }),
 

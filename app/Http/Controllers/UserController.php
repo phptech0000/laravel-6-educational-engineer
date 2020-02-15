@@ -279,13 +279,9 @@ class UserController extends Controller {
                         ->toArray();
     }
 
-    public function ReadNotification($notifiy_id, $user_id) {
-        
-    }
-
     public function DeleteNotification($notification_id) {
        $user = auth()->user();
-       
+       $user->notifications()->where('id' , $notification_id)->delete();
+       return redirect()->back();
     }
-
 }

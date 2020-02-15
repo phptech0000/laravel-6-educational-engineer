@@ -96,7 +96,7 @@ and open the template in the editor.
                 font-size: 30px;
                 text-align: center;
             }
-
+      
 
         </style>
         <script>

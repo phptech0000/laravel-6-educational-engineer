@@ -998,18 +998,18 @@
     margin-right: 10px;
 }
 .new-user-list ul li .new-users-top-text{
-    
+
 }
+
 .new-user-list ul li .new-users-top-text span{
     position:absolute;
-    
     color: #C0C0C0;
     right: 40%;
     top: -14px;
     font-size: 10px;
 }
 .new-user-list ul li .background_item{
-   ;
+    ;
 }
 .new-user-list ul li .notification-time{
     position: absolute;
@@ -1821,4 +1821,27 @@
     .admin-review .card-courses-list-bx {
         margin-bottom: 10px;
     }
+}
+
+
+
+  .badge
+  {
+    border-radius:50%;
+    background:red;
+    color: #fff;
+    height: 16px;
+    position: absolute;
+    right: 8px;
+    text-align: center;
+    top: 12px;
+    width: 16px;
+  }
+.new-user-list ul li .dismissed
+{
+  -webkit-transform: translateX(100%);
+  -moz-transform: translateX(100%);
+  -ms-transform: translateX(100%);
+  -o-transform: translateX(100%);
+  transform: translateX(100%);
 }
