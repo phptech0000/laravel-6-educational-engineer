@@ -274,7 +274,6 @@ class UserController extends Controller {
                         auth()
                         ->user()
                         ->unreadNotifications()
-                        ->limit(10)
                         ->get()
                         ->toArray();
     }
@@ -283,5 +282,9 @@ class UserController extends Controller {
        $user = auth()->user();
        $user->notifications()->where('id' , $notification_id)->delete();
        return redirect()->back();
+    }
+    
+    public function MarkAllRead(){
+        
     }
 }

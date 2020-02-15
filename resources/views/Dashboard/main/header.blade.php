@@ -96,7 +96,7 @@ and open the template in the editor.
                 font-size: 30px;
                 text-align: center;
             }
-      
+
 
         </style>
         <script>
@@ -105,16 +105,18 @@ echo json_encode([
     'csrfToken' => csrf_token(),
 ]);
 ?>
+
         </script>
 
         <!-- This makes the current user's id available in javascript -->
-        <?php if (!auth()->guest()): ?>
+<?php if (!auth()->guest()): ?>
             <script>
                 window.Laravel.userId = <?= auth()->user()->id; ?>;
                 window.Laravel.url = '<?= route('notification') ?>';
                 window.Laravel.broadcast = '<?= route('broadcast') ?>';
+                window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
             </script>
-        <?php endif; ?>
+<?php endif; ?>
     </head>
     <body class="ttr-opened-sidebar ttr-pinned-sidebar">
         <!-- header start -->
@@ -177,7 +179,7 @@ echo json_encode([
                                     <div class="widget-inner">
                                         <div class="new-user-list">
                                             <ul id="notify">
-                                           
+
                                             </ul>
                                         </div>
                                     </div>
