@@ -289,13 +289,13 @@ class UserController extends Controller {
     }
 
     public function showNotification($notification_id) {
-        $user = auth()->user();
-        if ($user) {
-            if ($user->notifications()) {
-                $user->notifications()->where('id', $notification_id)->get();
-            }
-        }
-        return redirect()->back();
+
+        $data = auth()
+                ->user()
+                ->notifications()
+                ->where('id', $notification_id)
+                ->get();
+        return $data; 
     }
 
 }

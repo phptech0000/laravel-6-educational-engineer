@@ -25,7 +25,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
     Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');
     Route::get('/notification', 'UserController@notifications')->name('notification');
-    Route::get('/notification/{id}' ,'UserController@showNotification' )->name('notification.show');
+    Route::get('/notification/{id}/show' ,'UserController@showNotification' )->name('notification.show');
     Route::get('/deletenotifcation/{id}' , 'UserController@DeleteNotification')->name('notification.delete');
     Route::post('/broadcast', function (Request $request) {
         $pusher = new Pusher\Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'));

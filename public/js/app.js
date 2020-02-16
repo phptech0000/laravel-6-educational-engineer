@@ -59443,7 +59443,6 @@ function addNotification(newNotification) {
   notifications = window._.concat(newNotification, notifications); // show only last 5 notifications
 
   window.console.log('notifications:' + notifications);
-  notifications.slice(0, 5);
   showNotification(notifications);
 }
 
@@ -59514,17 +59513,13 @@ $(document).on('click', '#notify  #delete', function (event) {
   var item = $(event.currentTarget).parents('#item');
   var id = item.find('#notification_id').text();
   window.console.log('id:' + id);
-  var notification = window.Laravel.notifiction.replace(':id', id);
-  window.console.log('notification:' + notification);
-  window.console.log('notificationsLengrth:' + notifications.length);
-  $.get('' + notification + '', function (data) {
-    notifications = arrayRemove(notifications, data);
-    window.console.log('notificationsLengrth:' + notifications.length);
-  });
   var id_url = window.Laravel.deleteNotification.replace(':id', id);
   window.console.log('url:' + id_url);
   $.get('' + id_url + '', function () {
     if (item) {
+      window.console.log('befor notifications:' + notifications.length);
+      RemoveFromArray(notifications, id);
+      window.console.log('after notifications:' + notifications.length);
       item.remove();
       notificationsCount = notifications.length;
       var text = notificationsCount + ' New';
@@ -59532,25 +59527,25 @@ $(document).on('click', '#notify  #delete', function (event) {
       notificationsCountElem.attr('data-count', notificationsCount);
       notificationsWrapper.find('.ttr-notify-text-top').text(text);
       notificationsWrapper.find('#count').text(notificationsCount);
-    }
 
-    if (!item) {
-      notificationsCountElem.hide();
-      notificationsList.html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
+      if (notifications.length === 0) {
+        notificationsCountElem.hide();
+        notificationsList.html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
+      }
     }
   });
 });
 
-function arrayRemove(array, value) {
-  window.console.log('array' + array.length);
-  var index = array.indexOf(value);
+function RemoveFromArray(notificationArray, id) {
+  for (var i = 0; i < notificationArray.length; i++) {
+    window.console.log('id:' + notificationArray[i].id);
 
-  if (index !== -1) {
-    array.splice(index, 1);
+    if (notificationArray[i].id === id) {
+      window.console.log('index:' + i);
+      notificationArray.splice(i, 1);
+      break;
+    }
   }
-
-  window.console.log('array' + array.length);
-  return array;
 }
 
 /***/ }),
