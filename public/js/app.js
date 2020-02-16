@@ -59542,8 +59542,14 @@ $(document).on('click', '#notify  #delete', function (event) {
 });
 
 function arrayRemove(array, value) {
+  window.console.log('array' + array.length);
   var index = array.indexOf(value);
-  if (index !== -1) array.splice(index, 1);
+
+  if (index !== -1) {
+    array.splice(index, 1);
+  }
+
+  window.console.log('array' + array.length);
   return array;
 }
 
