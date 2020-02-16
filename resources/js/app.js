@@ -41,7 +41,7 @@ $(document).ready(function () {
     if (window.Laravel.userId) {
         $.get('' + window.Laravel.url + '', function (data) {
             window.console.log(data);
-            addNotification(data);
+            addNotification(data);  window.console.log(data);
         });
         window.console.log(window.Laravel.deleteNotification);
         var channel = window.Echo.private(`App.User.${Laravel.userId}`);
