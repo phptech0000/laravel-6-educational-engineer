@@ -279,12 +279,23 @@ class UserController extends Controller {
     }
 
     public function DeleteNotification($notification_id) {
-       $user = auth()->user();
-       $user->notifications()->where('id' , $notification_id)->delete();
-       return redirect()->back();
+        $user = auth()->user();
+        $user->notifications()->where('id', $notification_id)->delete();
+        return redirect()->back();
     }
-    
-    public function MarkAllRead(){
+
+    public function MarkAllRead() {
         
     }
+
+    public function showNotification($notification_id) {
+        $user = auth()->user();
+        if ($user) {
+            if ($user->notifications()) {
+                $user->notifications()->where('id', $notification_id)->get();
+            }
+        }
+        return redirect()->back();
+    }
+
 }

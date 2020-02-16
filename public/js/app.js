@@ -59506,29 +59506,46 @@ function NotificationItem(notification) {
 }
 
 $(document).on('click', '#notify  #delete', function (event) {
+  var notificationsWrapper = $('#notification_list');
+  var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
+  var notificationsCountElem = notificationsToggle.find('#count');
+  var notificationsCount = parseInt(notificationsCountElem.data('count'));
+  var notificationsList = notificationsWrapper.find('#notify');
   var item = $(event.currentTarget).parents('#item');
   var id = item.find('#notification_id').text();
   window.console.log('id:' + id);
+  var notification = window.Laravel.notifiction.replace(':id', id);
+  window.console.log('notification:' + notification);
+  window.console.log('notificationsLengrth:' + notifications.length);
+  $.get('' + notification + '', function (data) {
+    notifications = arrayRemove(notifications, data);
+    window.console.log('notificationsLengrth:' + notifications.length);
+  });
   var id_url = window.Laravel.deleteNotification.replace(':id', id);
   window.console.log('url:' + id_url);
   $.get('' + id_url + '', function () {
     if (item) {
       item.remove();
-      var notificationsWrapper = $('#notification_list');
-      var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
-      var notificationsCountElem = notificationsToggle.find('#count');
+      notificationsCount = notifications.length;
+      var text = notificationsCount + ' New';
       notificationsCountElem.show();
+      notificationsCountElem.attr('data-count', notificationsCount);
+      notificationsWrapper.find('.ttr-notify-text-top').text(text);
+      notificationsWrapper.find('#count').text(notificationsCount);
     }
 
     if (!item) {
-      var notificationsWrapper = $('#notification_list');
-      var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
-      var notificationsCountElem = notificationsToggle.find('#count');
       notificationsCountElem.hide();
-      $('#notify').html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
+      notificationsList.html("\n                     <li> \n                       <span class=\"new-users-top-text\">\n                               <span>No Notifications</span>\n                         </span>\n                     </li>");
     }
   });
 });
+
+function arrayRemove(array, value) {
+  var index = array.indexOf(value);
+  if (index !== -1) array.splice(index, 1);
+  return array;
+}
 
 /***/ }),
 
