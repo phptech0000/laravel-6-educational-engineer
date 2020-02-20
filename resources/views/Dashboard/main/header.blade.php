@@ -109,14 +109,14 @@ echo json_encode([
         </script>
 
         <!-- This makes the current user's id available in javascript -->
-<?php if (!auth()->guest()): ?>
+        <?php if (!auth()->guest()): ?>
             <script>
                 window.Laravel.userId = <?= auth()->user()->id; ?>;
                 window.Laravel.url = '<?= route('notification') ?>';
                 window.Laravel.broadcast = '<?= route('broadcast') ?>';
                 window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
             </script>
-<?php endif; ?>
+        <?php endif; ?>
     </head>
     <body class="ttr-opened-sidebar ttr-pinned-sidebar">
         <!-- header start -->
@@ -520,7 +520,5 @@ echo json_encode([
         </script>
 
 
-
     </body>
 </html>
-

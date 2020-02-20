@@ -55,9 +55,9 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/revolution/css/layers.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/revolution/css/settings.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/revolution/css/navigation.css')}}">
-
+        <link rel="stylesheet" type="text/css" href="{{asset('local/local.css')}}">
         <!-- REVOLUTION SLIDER END -->	
-
+        
 
 
         <!-- All PLUGINS CSS ============================================= -->
@@ -74,6 +74,9 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
+
+
+
         <script>
             window.Laravel = <?php
 echo json_encode([
@@ -106,6 +109,7 @@ echo json_encode([
                                     <li><a href="javascript:;"><i class="fa fa-envelope-o"></i>Support@website.com</a></li>
                                 </ul>
                             </div>
+
                             <div class="topbar-right">
                                 <ul>
                                     <li><a href="javascript:;" class="btn-link"><i class="fa fa-facebook"></i></a></li>
@@ -115,6 +119,7 @@ echo json_encode([
                                     <li><a id="quik-search-btn" href="javascript:;" class="btn-link"><i class="fa fa-search"></i></a></li>
 
                                 </ul>
+                          
                             </div>
                         </div>
                     </div>
@@ -175,7 +180,7 @@ echo json_encode([
                                             </div>
                                         </li>
                                         <li>
-                                            <a href="#" class="ttr-material-button ttr-submenu-toggle"><span class="ttr-user-avatar"><img alt="" src="assets/images/testimonials/pic3.jpg" width="32" height="32"></span></a>
+                                            <a href="#" class="ttr-material-button ttr-submenu-toggle"><span class="ttr-user-avatar"><img alt="" src="{{asset('assets/images/testimonials/pic3.jpg')}}" width="32" height="32"></span></a>
                                             <div class="ttr-header-submenu">
                                                 <ul>
                                                     <li><a href="<?= route('users.user.profile', $user->id) ?>">My profile</a></li>
@@ -935,7 +940,7 @@ echo json_encode([
         <script src="{{asset('admin/assets/vendors/chart/chart.min.js')}}"></script>
         <script src="{{asset('admin/assets/js/admin.js')}}"></script>
         <script src="{{asset('admin/assets/vendors/switcher/switcher.js')}}"></script>
-        <script>
+       
 
-                                                        </body>
-                                                                </html>
+    </body>
+</html>

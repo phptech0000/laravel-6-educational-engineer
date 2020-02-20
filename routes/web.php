@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
     Route::get('/users/{id}/user_profile', 'UserController@edit')->name('users.user.profile');
     Route::get('/users/staff', 'UserController@Staff_index')->name('users.staff');
-    
+    Route::get('/user/chat','ChatController@index')->name('chat.index');
     
     Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
     Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');
@@ -61,4 +61,3 @@ Route::post('/resetpasssword', 'UserAuth\forgetpasswordController@store')->name(
 Route::get('/restpassword/{token}', 'UserAuth\forgetpasswordController@dirctRestPasswordPage')->name('user.RestPassword');
 Route::post('/updatepasword', 'UserAuth\forgetpasswordController@RestPassword')->name('user.updatepassword');
 Route::get('/resetmessage/{token}', 'UserAuth\forgetpasswordController@RestMessage')->name('user.restmessage');
-

@@ -51,6 +51,14 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
+
+        <link rel="stylesheet" type="text/css" href="{{asset('userchat/style.css')}}">    
+       
+
+
+
+
+
         <script>
             window.Laravel = <?php
 echo json_encode([
@@ -226,6 +234,9 @@ echo json_encode([
         <script src="{{asset('admin/assets/js/functions.js')}}"></script>
         <script src="{{asset('admin/assets/js/admin.js')}}"></script>
         <script src='{{asset('admin/assets/vendors/switcher/switcher.js')}}'></script>
+        <script src="{{asset('userchat/app-chat.js')}}"></script>
+     
+
     </body>
 </html>
 

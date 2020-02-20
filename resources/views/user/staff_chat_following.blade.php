@@ -1,10 +1,5 @@
 @extends('user.header')
 @section('content')
-
-
-
-
-
 <div class="container-fluid">
     <div class="db-breadcrumb">
         <h4 class="breadcrumb-title">Staff</h4>
@@ -81,7 +76,7 @@
                                             </span>
                                         <?php endif; ?>
                                         <span class="new-users-btn">
-                                            <a href="#" class="btn button-sm outline">Message</a>
+                                            <a href="<?= route('chat.index')?>" class="btn button-sm outline">Message</a>
                                         </span>
                                     </div>
                                 </div>

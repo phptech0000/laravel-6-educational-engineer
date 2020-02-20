@@ -298,4 +298,9 @@ class UserController extends Controller {
         return $data; 
     }
 
+       public  function chat(){
+        return view('user.chat');
+    }
+ 
+    
 }
