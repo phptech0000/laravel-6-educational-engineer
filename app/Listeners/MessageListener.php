@@ -2,11 +2,11 @@
 
 namespace App\Listeners;
 
-use App\Events\UserFollowed ;
+use App\Events\UserMessageEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class Followed
+class MessageListener
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class Followed
     /**
      * Handle the event.
      *
-     * @param  UserFollowed   $event
+     * @param  UserMessageEvent  $event
      * @return void
      */
-    public function handle(UserFollowed  $event)
+    public function handle(UserMessageEvent $event)
     {
         //
     }

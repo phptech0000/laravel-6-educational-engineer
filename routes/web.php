@@ -20,7 +20,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
     Route::get('/users/{id}/user_profile', 'UserController@edit')->name('users.user.profile');
     Route::get('/users/staff', 'UserController@Staff_index')->name('users.staff');
+   
+    //chat
     Route::get('/user/chat','ChatController@index')->name('chat.index');
+    Route::post('user/chat/sendmessage' ,'ChatController@store')->name('sendmessage');
+    
     
     Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
     Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');

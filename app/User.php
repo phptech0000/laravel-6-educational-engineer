@@ -13,7 +13,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use Carbon\Carbon;
-
+use App\message;
 /**
  * App\User
  *
@@ -167,5 +167,7 @@ class User extends Authenticatable {
         $DateTime = strtoupper($dateFormat);
         return $DateTime;
     }
-
+    public function messages(){
+        $this->hasMany(message::class);
+    }
 }

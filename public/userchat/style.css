@@ -586,8 +586,8 @@
     height: 100%;
     width: 100%;
     top:60px;
-   
-    
+
+
 }
 
 .user-bar div {
@@ -601,13 +601,15 @@
 
 .user-bar .actions {
     float: right;
-    top: 5px;
+    top: 10px;
     position: relative;
-    margin: 0 0 0 20px;
+    margin:5px;
 }
 
 .user-bar .actions.more {
     margin: 0 12px 0 32px;
+    width: 25px;
+    height: 25px;
 
 }
 
@@ -807,16 +809,18 @@
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    border-radius: 22px;
     height: 50px;
-    width: 100%;
-    z-index: 2;
+
+
 }
 
 .conversation-compose div,
+.conversation-compose a,
 .conversation-compose input {
     background: #fff;
     height: 100%;
+    width: 100%;
+   
 
 }
 
@@ -825,7 +829,7 @@
     align-items: center;
     justify-content: center;
     background: white;
-    border-radius: 5px 0 0 5px;
+    border-radius: 25px 0 0 25px;
     flex: 0 0 auto;
     margin-left: 8px;
     width: 48px;
@@ -840,17 +844,45 @@
     min-width: 50px;
 }
 
-.conversation-compose .photo {
+.conversation-compose .link {
     flex: 0 0 auto;
-    border-radius: 0 0 5px 0;
     text-align: center;
     position: relative;
     width: 48px;
 }
+.conversation-compose .link:after {
+    border-width: 0px 0 10px 10px;
+    border-color: transparent transparent transparent transparent;
+    border-style: solid;
+    position: absolute;
+    width: 0;
+    height: 0;
+    content: "";
+    top: 0;
+    right: -10px;
+}
+.conversation-compose .link i {
+    display: block;
+    color: #7d8488;
+    font-size: 24px;
+    transform: translate(-50%, -50%);
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
 
+
+
+.conversation-compose .photo {
+    flex: 0 0 auto;
+    border-radius: 0 25px 25px 0;
+    text-align: center;
+    position: relative;
+    width: 48px;
+}
 .conversation-compose .photo:after {
     border-width: 0px 0 10px 10px;
-    border-color: transparent transparent transparent #fff;
+    border-color: transparent transparent transparent transparent;
     border-style: solid;
     position: absolute;
     width: 0;
@@ -877,6 +909,7 @@
     flex: 0 0 auto;
     margin-left: 8px;
     margin-right: 8px;
+    
     padding: 0;
     position: relative;
     outline: none;
@@ -1005,6 +1038,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
+    width: 100%;
     background-color: transparent;
 }
 

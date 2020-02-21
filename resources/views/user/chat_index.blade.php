@@ -44,49 +44,55 @@
                             <div class="chat chat_top" style="height: 1152px;">
                                 <div class="chat_" style="transition: none 0s ease 0s; height: 65px; transform: translateY(0px);">
                                     <div tabindex="-1">
-                                        <div class="chat_item">
-                                            <div class="chat_user_image">
-                                                <div class="_3RWII" style="height: 44px; width: 44px;">
-                                                    <img src="{{asset('assets/images/profile/next.jpg')}}">
-                                                </div>
-                                            </div>
-                                            <div class="_user_info" >
-                                                <div class="user_name_Chat">
-                                                    <div class="_user_name_chat_set">
-                                                        <span class="_user_name_chat_n">
-                                                            <span  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable">Hassan Elsaied</span>
-                                                            <div class="_2Ol0p"></div>
-                                                        </span>
-                                                    </div>
-                                                    <div class="_user_time">Yesterday</div>
-                                                </div>
-                                                <div class="user_message">
-                                                    <div class="user_message_text">
-                                                        <span class="user_message_text_flex"‬>
-                                                            <div class="user_message_text_flex2">
-                                                                <span data-icon="status-check" class="">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" 
-                                                                         viewBox="0 0 14 18" width="14" height="18">
-                                                                    <path fill="currentColor"
-                                                                          d="M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 
-                                                                          8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 
-                                                                          0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 
-                                                                          3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z">
+                                        <?php if ($users): ?>
+                                            <?php foreach ($users as $user): ?>
+                                                <div class="chat_item" id="user_sender">
+                                                    <span id= "user_id" style="display: none"><?= $user->id ?></span>
 
-                                                                    </path>
-                                                                    </svg>
+                                                    <div class="chat_user_image">
+                                                        <div class="_3RWII" style="height: 44px; width: 44px;">
+                                                            <img id="user_image" src="{{asset('assets/images/profile/next.jpg')}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="_user_info" >
+                                                        <div class="user_name_Chat">
+                                                            <div class="_user_name_chat_set">
+                                                                <span class="_user_name_chat_n">
+                                                                    <span id="user_name"  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable"><?= $user->firstname . ' ' . $user->lastname ?></span>
+                                                                    <div class="_2Ol0p"></div>
                                                                 </span>
                                                             </div>
-                                                            <span  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display">Hello</span>
-                                                        </span>
+                                                            <div class="_user_time">Yesterday</div>
+                                                        </div>
+                                                        <div class="user_message">
+                                                            <div class="user_message_text">
+                                                                <span class="user_message_text_flex"‬>
+                                                                    <div class="user_message_text_flex2">
+                                                                        <span data-icon="status-check" class="">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                                                                 viewBox="0 0 14 18" width="14" height="18">
+                                                                            <path fill="currentColor"
+                                                                                  d="M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 
+                                                                                  8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 
+                                                                                  0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 
+                                                                                  3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z">
+
+                                                                            </path>
+                                                                            </svg>
+                                                                        </span>
+                                                                    </div>
+                                                                    <span  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display">Hello</span>
+                                                                </span>
+                                                            </div>
+                                                            <div class="_user_time">
+                                                                <span></span>
+                                                                <span></span>
+                                                                <span></span>
+                                                            </div></div>
                                                     </div>
-                                                    <div class="_user_time">
-                                                        <span></span>
-                                                        <span></span>
-                                                        <span></span>
-                                                    </div></div>
-                                            </div>
-                                        </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -118,15 +124,15 @@
             <i class="fa back"></i>
         </div>
         <div class="avatar">
-            <img src="https://avatars2.githubusercontent.com/u/398893?s=128" alt="Avatar">
+            <img id="userimagebar" src="https://avatars2.githubusercontent.com/u/398893?s=128" alt="Avatar">
         </div>
         <div class="name">
-            <span>Zeno Rocha</span>
+            <span id="usernamebar">Hassan Elsaied</span>
             <span class="status">online</span>
         </div>
         <a class="actions more">
 
-            <i class="fa fa-caret-down"></i>
+            <i class="zmdi zmdi-more-vert"></i>
         </a>
         <a class="actions more">
             <i class="fa fa-phone"></i>
@@ -138,11 +144,11 @@
     <div class="page_chat">
 
         <div class="conversation content-scroll">
-            <div class="conversation-container">
+            <div class="conversation-container" id="messageTextShow">
                 <div class="message sent">
                     No I wasn't.
                     <span class="metadata">
-                        <span class="time"></span><span class="tick"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg></span>
+                        <span class="time">03:05PM</span><span class="tick"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg></span>
                     </span>
                 </div>
                 <div class="message received">
@@ -151,28 +157,33 @@
                 </div>
             </div>
         </div>
-        
+
 
     </div>
 
 
 </div>
 <div class="footer-bottom footer_chat">
-    <form class="conversation-compose">
-                <div class="emoji">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="smiley" x="3147" y="3209"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.153 11.603c.795 0 1.44-.88 1.44-1.962s-.645-1.96-1.44-1.96c-.795 0-1.44.88-1.44 1.96s.645 1.965 1.44 1.965zM5.95 12.965c-.027-.307-.132 5.218 6.062 5.55 6.066-.25 6.066-5.55 6.066-5.55-6.078 1.416-12.13 0-12.13 0zm11.362 1.108s-.67 1.96-5.05 1.96c-3.506 0-5.39-1.165-5.608-1.96 0 0 5.912 1.055 10.658 0zM11.804 1.01C5.61 1.01.978 6.034.978 12.23s4.826 10.76 11.02 10.76S23.02 18.424 23.02 12.23c0-6.197-5.02-11.22-11.216-11.22zM12 21.355c-5.273 0-9.38-3.886-9.38-9.16 0-5.272 3.94-9.547 9.214-9.547a9.548 9.548 0 0 1 9.548 9.548c0 5.272-4.11 9.16-9.382 9.16zm3.108-9.75c.795 0 1.44-.88 1.44-1.963s-.645-1.96-1.44-1.96c-.795 0-1.44.878-1.44 1.96s.645 1.963 1.44 1.963z" fill="#7d8489"/></svg>
-                </div>
-                <input class="input-msg" name="input" placeholder="Type a message" autocomplete="off" autofocus></input>
-                <div class="photo">
-                    <i class="zmdi zmdi-camera"></i>
-                </div>
-                <button class="send">
-                    <div class="circle">
-                        <i class="zmdi zmdi-mail-send"></i>
-                    </div>
-                </button>
-            </form>
-        </div>
+    <form class="conversation-compose" action="javascript:void(0)"id="messageForm">
+        <a class="emoji" href="#emoji">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="smiley" x="3147" y="3209"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.153 11.603c.795 0 1.44-.88 1.44-1.962s-.645-1.96-1.44-1.96c-.795 0-1.44.88-1.44 1.96s.645 1.965 1.44 1.965zM5.95 12.965c-.027-.307-.132 5.218 6.062 5.55 6.066-.25 6.066-5.55 6.066-5.55-6.078 1.416-12.13 0-12.13 0zm11.362 1.108s-.67 1.96-5.05 1.96c-3.506 0-5.39-1.165-5.608-1.96 0 0 5.912 1.055 10.658 0zM11.804 1.01C5.61 1.01.978 6.034.978 12.23s4.826 10.76 11.02 10.76S23.02 18.424 23.02 12.23c0-6.197-5.02-11.22-11.216-11.22zM12 21.355c-5.273 0-9.38-3.886-9.38-9.16 0-5.272 3.94-9.547 9.214-9.547a9.548 9.548 0 0 1 9.548 9.548c0 5.272-4.11 9.16-9.382 9.16zm3.108-9.75c.795 0 1.44-.88 1.44-1.963s-.645-1.96-1.44-1.96c-.795 0-1.44.878-1.44 1.96s.645 1.963 1.44 1.963z" fill="#7d8489"/></svg>
+        </a>
+        <input name="sender_id" type="hidden"  autocomplete="off" autofocus>
+
+        <input class="input-msg" name="message" placeholder="Type a message" autocomplete="off" autofocus></input>
+        <a href="#share" class="link">
+            <i class="zmdi zmdi-link"></i>
+        </a>
+        <a class="photo" href="#camera">
+            <i class="zmdi zmdi-camera"></i>
+        </a>
+        <button class="send">
+            <div class="circle">
+                <i class="zmdi zmdi-mail-send"></i>
+            </div>
+        </button>
+    </form>
+</div>
 
 <!-- contact area END -->
 @endsection
