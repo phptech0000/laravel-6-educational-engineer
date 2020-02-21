@@ -12,7 +12,7 @@ and open the template in the editor.
         <meta name="keywords" content="" />
         <meta name="author" content="" />
         <meta name="robots" content="" />
-
+        <meta charset="UTF-8">
         <!-- DESCRIPTION -->
         <meta name="description" content=" Education Engineer" />
 
@@ -38,23 +38,21 @@ and open the template in the editor.
 
         <!-- All PLUGINS CSS ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/assets.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/vendors/calendar/fullcalendar.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/vendors/summernote/summernote.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/vendors/file-upload/imageuploadify.min.css')}}">
+
         <!-- TYPOGRAPHY ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/typography.css')}}">
 
         <!-- SHORTCODES ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/shortcodes/shortcodes.css')}}">
-
-        <!-- STYLESHEETS ============================================= -->
+<link rel="stylesheet" type="text/css" href="{{asset('icons/css/material-design-iconic-font.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('icons/css/material-design-iconic-font.min.css')}}">
+<!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
-
-        <link rel="stylesheet" type="text/css" href="{{asset('userchat/style.css')}}">    
+ @yield('styles')
        
-
 
 
 
@@ -77,12 +75,12 @@ echo json_encode([
             </script>
         <?php endif; ?>
     </head>
-    <body class="ttr-opened-sidebar ttr-pinned-sidebar">
+    <body class="ttr-opened-sidebar ttr-pinned-sidebar" id="body">
         <!-- header start -->
         <header class="ttr-header">
             <div class="ttr-header-wrapper">
                 <!--sidebar menu toggler start -->
-                <div class="ttr-toggle-sidebar ttr-material-button">
+                <div class="ttr-toggle-sidebar ttr-material-button" id="toggle_button">
                     <i class="ti-close ttr-open-icon"></i>
                     <i class="ti-menu ttr-close-icon"></i>
                 </div>
@@ -210,12 +208,12 @@ echo json_encode([
             </div>
         </header>
         <!-- header end -->
-        <main class="ttr-wrapper">
+        <main id ="main" class="ttr-wrapper">
             @yield('content')
         </main>
 
 
-        <div class="ttr-overlay"></div>
+        <div class="ttr-overlay" id="overlay"></div>
         <!-- External JavaScripts -->
         <script src="{{asset('js/app.js')}}"></script>
         <script src="{{asset('admin/assets/js/jquery.min.js')}}"></script>
@@ -234,9 +232,7 @@ echo json_encode([
         <script src="{{asset('admin/assets/js/functions.js')}}"></script>
         <script src="{{asset('admin/assets/js/admin.js')}}"></script>
         <script src='{{asset('admin/assets/vendors/switcher/switcher.js')}}'></script>
-        <script src="{{asset('userchat/app-chat.js')}}"></script>
-     
-
+          @yield('scripts')
     </body>
 </html>
 
