@@ -46,51 +46,52 @@
                                     <div tabindex="-1">
                                         <?php if ($users): ?>
                                             <?php foreach ($users as $user): ?>
-                                                <div class="chat_item" id="user_sender">
-                                                    <span id= "user_id" style="display: none"><?= $user->id ?></span>
+                                                <?php if ($user != auth()->user()): ?>
+                                                    <div class="chat_item" id="user_sender">
+                                                        <span id= "user_id" style="display: none"><?= $user->id ?></span>   
+                                                        <div class="chat_user_image">
+                                                            <div class="_3RWII" style="height: 44px; width: 44px;">
+                                                                <img id="user_image" src="{{asset('assets/images/profile/next.jpg')}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="_user_info" >
+                                                            <div class="user_name_Chat">
+                                                                <div class="_user_name_chat_set">
+                                                                    <span class="_user_name_chat_n">
+                                                                        <span id="user_name"  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable"><?= $user->firstname . ' ' . $user->lastname ?></span>
+                                                                        <div class="_2Ol0p"></div>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="_user_time">Yesterday</div>
+                                                            </div>
+                                                            <div class="user_message">
+                                                                <div class="user_message_text">
+                                                                    <span class="user_message_text_flex"‬>
+                                                                        <div class="user_message_text_flex2">
+                                                                            <span data-icon="status-check" class="">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                                                                     viewBox="0 0 14 18" width="14" height="18">
+                                                                                <path fill="currentColor"
+                                                                                      d="M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 
+                                                                                      8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 
+                                                                                      0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 
+                                                                                      3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z">
 
-                                                    <div class="chat_user_image">
-                                                        <div class="_3RWII" style="height: 44px; width: 44px;">
-                                                            <img id="user_image" src="{{asset('assets/images/profile/next.jpg')}}">
+                                                                                </path>
+                                                                                </svg>
+                                                                            </span>
+                                                                        </div>
+                                                                        <span  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display">Hello</span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="_user_time">
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                    <span></span>
+                                                                </div></div>
                                                         </div>
                                                     </div>
-                                                    <div class="_user_info" >
-                                                        <div class="user_name_Chat">
-                                                            <div class="_user_name_chat_set">
-                                                                <span class="_user_name_chat_n">
-                                                                    <span id="user_name"  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable"><?= $user->firstname . ' ' . $user->lastname ?></span>
-                                                                    <div class="_2Ol0p"></div>
-                                                                </span>
-                                                            </div>
-                                                            <div class="_user_time">Yesterday</div>
-                                                        </div>
-                                                        <div class="user_message">
-                                                            <div class="user_message_text">
-                                                                <span class="user_message_text_flex"‬>
-                                                                    <div class="user_message_text_flex2">
-                                                                        <span data-icon="status-check" class="">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" 
-                                                                                 viewBox="0 0 14 18" width="14" height="18">
-                                                                            <path fill="currentColor"
-                                                                                  d="M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 
-                                                                                  8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 
-                                                                                  0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 
-                                                                                  3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z">
-
-                                                                            </path>
-                                                                            </svg>
-                                                                        </span>
-                                                                    </div>
-                                                                    <span  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display">Hello</span>
-                                                                </span>
-                                                            </div>
-                                                            <div class="_user_time">
-                                                                <span></span>
-                                                                <span></span>
-                                                                <span></span>
-                                                            </div></div>
-                                                    </div>
-                                                </div>
+                                                <?php endif; ?>
                                             <?php endforeach; ?>
                                         <?php endif; ?>
                                     </div>
@@ -165,6 +166,7 @@
 </div>
 <div class="footer-bottom footer_chat">
     <form class="conversation-compose" method="post" action="javascript:void(0)"id="messageForm">
+        @csrf
         <a class="emoji" href="#emoji">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="smiley" x="3147" y="3209"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.153 11.603c.795 0 1.44-.88 1.44-1.962s-.645-1.96-1.44-1.96c-.795 0-1.44.88-1.44 1.96s.645 1.965 1.44 1.965zM5.95 12.965c-.027-.307-.132 5.218 6.062 5.55 6.066-.25 6.066-5.55 6.066-5.55-6.078 1.416-12.13 0-12.13 0zm11.362 1.108s-.67 1.96-5.05 1.96c-3.506 0-5.39-1.165-5.608-1.96 0 0 5.912 1.055 10.658 0zM11.804 1.01C5.61 1.01.978 6.034.978 12.23s4.826 10.76 11.02 10.76S23.02 18.424 23.02 12.23c0-6.197-5.02-11.22-11.216-11.22zM12 21.355c-5.273 0-9.38-3.886-9.38-9.16 0-5.272 3.94-9.547 9.214-9.547a9.548 9.548 0 0 1 9.548 9.548c0 5.272-4.11 9.16-9.382 9.16zm3.108-9.75c.795 0 1.44-.88 1.44-1.963s-.645-1.96-1.44-1.96c-.795 0-1.44.878-1.44 1.96s.645 1.963 1.44 1.963z" fill="#7d8489"/></svg>
         </a>

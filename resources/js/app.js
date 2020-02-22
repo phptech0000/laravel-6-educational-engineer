@@ -45,18 +45,23 @@ $(document).ready(function () {
             addNotification(data);
             window.console.log(data);
         });
-        window.console.log(window.Laravel.deleteNotification);
-        window.console.log(window.Laravel.sendmessage);
-        var channel = window.Echo.private(`App.User.${Laravel.userId}`);
 
+
+        var channel = window.Echo.private(`App.User.${Laravel.userId}`);
         window.console.log(channel);
         channel.notification((notification) => {
-            window.console.log(notification);
+            window.console.log('notification:'+notification);
             addNotification([notification]);
+        });
+        var session_channel = window.Echo.private('chat');
+        window.console.log(session_channel);
+        session_channel.listen('App\\Events\\SessionEvent', function(data) {
+            window.console.log("user:" + data.user);
+            window.console.log("session:" + data.session);
         });
 
 
-       
+
         var form = document.querySelector('.conversation-compose');
         var item = $("#user_sender");
         var image = item.find("#user_image").attr('src');
@@ -64,7 +69,7 @@ $(document).ready(function () {
         var user_id = item.find("#user_id").text();
         var user_name_bar = $("#usernamebar");
         var user_image_bar = $("#userimagebar");
-        form.sender_id.value = user_id;
+        form.receiver_id.value = user_id;
         user_image_bar.attr("src", image);
         user_name_bar.text(user_name);
     }
@@ -232,15 +237,30 @@ $(document).on('click', "#user_sender", function (event) {
     var user_name_bar = $("#usernamebar");
     var user_image_bar = $("#userimagebar");
     var form = document.querySelector('.conversation-compose');
-    form.sender_id.value = user_id;
+    form.receiver_id.value = user_id;
     user_image_bar.attr("src", image);
     user_name_bar.text(user_name);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var createsession = window.Laravel.createsession;
+    $.post('' + createsession + '',
+            {
+                receiver_id: user_id,
+               
+            },
+            function (data) {
+                window.console.log('data:' + data);
+            });
 
 });
 
 $(document).on('submit', "#messageForm", function (event) {
+    
     newMessage(event);
-   
+
 });
 
 function newMessage(e) {
@@ -277,4 +297,13 @@ function animateMessage(message) {
         var tick = message.querySelector('.tick');
         tick.classList.remove('tick-animation');
     }, 500);
+}
+function buildMessagereceived(message) {
+    var element = document.createElement('div');
+    element.classList.add('message', 'received');
+    element.innerHTML =
+            `<span id="random">` + message + `</span>
+             <span class="metadata">
+                <span class="time">3:20PM</span>
+             </span>`;
 }

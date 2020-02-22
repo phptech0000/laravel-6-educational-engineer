@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessionsTable extends Migration
-{
+class CreateSessionsTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('sender_id')->unsigned()->unique();
-            $table->integer('receiver_id')->unsigned()->unique();
-             $table->timestamps();
+            $table->integer('sender_id')->unsigned();
+            $table->integer('receiver_id')->unsigned();
+         
+            $table->timestamps();
         });
     }
 
@@ -26,8 +26,8 @@ class CreateSessionsTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('sessions');
     }
+
 }

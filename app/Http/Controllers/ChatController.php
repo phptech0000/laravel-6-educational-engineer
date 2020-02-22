@@ -8,6 +8,8 @@ use App\Session;
 use App\message;
 use App\Events\UserMessageEvent;
 use App\Events\SessionEvent;
+use DB;
+
 class ChatController extends Controller {
 
     /**
@@ -27,15 +29,24 @@ class ChatController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    //open session
+//open session
     public function createSession(Request $request) {
-        $user  =auth()->user();
-        $session = new Session;
-        $session->sender_id =$user->id;
-        $session->receiver_id = $request->input('receiver_id');
-        event(new SessionEvent($session, $user));
-        $data = $session->save();
-        return response()->json($data);
+        $session = '';
+        $table = DB::table('sessions');
+        $user = auth()->user();
+        $collection_one = $table->where('sender_id', $user->id)->where('receiver_id', $request->receiver_id)
+                        ->orWhere('sender_id', $request->receiver_id)->where('receiver_id', $user->id)->get();
+        if ($collection_one->count() > 0) {
+            $session = $collection_one->first();
+            event(new SessionEvent($session, $user));
+        } else {
+            $session = new Session;
+            $session->sender_id = $user->id;
+            $session->receiver_id = $request->input('receiver_id');
+            event(new SessionEvent($session, $user));
+            $session->save();
+        }
+        return response()->json($session);
     }
 
     /**
@@ -51,7 +62,7 @@ class ChatController extends Controller {
         $message->messageTime = getTime();
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
-        $message->SessionForReceive($session->id,$user);
+        $message->SessionForReceive($session->id, $user);
         event(new UserMessageEvent($chat, $message));
         $session->messages()->save($message);
     }
@@ -71,7 +82,7 @@ class ChatController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+//
     }
 
     /**
@@ -81,7 +92,7 @@ class ChatController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+//
     }
 
     /**
@@ -92,7 +103,7 @@ class ChatController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+//
     }
 
     /**
@@ -102,7 +113,7 @@ class ChatController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+//
     }
 
 }

@@ -12,11 +12,12 @@ use Illuminate\Queue\SerializesModels;
 use App\Chat;
 use App\message;
 
-class UserMessageEvent {
+class UserMessageEvent implements ShouldBroadcast {
 
     use Dispatchable,
         InteractsWithSockets,
         SerializesModels;
+
     public $chat;
     public $message;
 
@@ -26,8 +27,15 @@ class UserMessageEvent {
      * @return void
      */
     public function __construct(Chat $chat, message $message) {
-        $this->chat=$chat;
-        $this->message= $message;
+        $this->chat = $chat;
+        $this->message = $message;
+    }
+
+    public function broadcastWith() {
+        return [
+           'message' => $this->message,
+            'chat' => $this->chat
+        ];
     }
 
     /**

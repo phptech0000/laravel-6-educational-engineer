@@ -21,7 +21,7 @@ and open the template in the editor.
         <meta property="og:description" content=" Education Engineer" />
         <meta property="og:image" content="" />
         <meta name="format-detection" content="telephone=no">
-
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- FAVICONS ICON ============================================= -->
         <link rel="icon" href="../error-404.html" type="image/x-icon" />
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.png')}}" />
@@ -45,14 +45,14 @@ and open the template in the editor.
 
         <!-- SHORTCODES ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/shortcodes/shortcodes.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('icons/css/material-design-iconic-font.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('icons/css/material-design-iconic-font.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('icons/css/material-design-iconic-font.min.css')}}">
-<!-- STYLESHEETS ============================================= -->
+        <!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/style.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/dashboard.css')}}">
         <link class="skin" rel="stylesheet" type="text/css" href="{{asset('admin/assets/css/color/color-1.css')}}">
- @yield('styles')
-       
+        @yield('styles')
+
 
 
 
@@ -72,7 +72,8 @@ echo json_encode([
                 window.Laravel.url = '<?= route('notification') ?>';
                 window.Laravel.broadcast = '<?= route('broadcast') ?>';
                 window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
-                window.Laravel.sendmessage = '<?= route('sendmessage')?>';
+                window.Laravel.createsession = '<?= route('createsession') ?>'
+                        window.Laravel.sendmessage = '<?= route('sendmessage', ':sessionid') ?>';
             </script>
         <?php endif; ?>
     </head>
@@ -233,7 +234,7 @@ echo json_encode([
         <script src="{{asset('admin/assets/js/functions.js')}}"></script>
         <script src="{{asset('admin/assets/js/admin.js')}}"></script>
         <script src='{{asset('admin/assets/vendors/switcher/switcher.js')}}'></script>
-          @yield('scripts')
+        @yield('scripts')
     </body>
 </html>
 
