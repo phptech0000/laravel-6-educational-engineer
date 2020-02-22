@@ -9,25 +9,23 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Chat;
-use App\message;
-
-class UserMessageEvent {
+use App\User;
+use App\Session;
+class SessionEvent {
 
     use Dispatchable,
         InteractsWithSockets,
         SerializesModels;
-    public $chat;
-    public $message;
-
+    public $user;
+    public $session;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Chat $chat, message $message) {
-        $this->chat=$chat;
-        $this->message= $message;
+    public function __construct(Session $session , User $user) {
+        $this->session = $session;
+        $this->user=$user;  
     }
 
     /**
@@ -36,7 +34,7 @@ class UserMessageEvent {
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn() {
-        return new PrivateChannel('chat.' + $this->chat->session_id);
+        return new PrivateChannel('chat');
     }
 
 }

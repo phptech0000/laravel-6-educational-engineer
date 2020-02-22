@@ -18,9 +18,11 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
        'App\Events\UserMessageEvent'=>[
-           'App\Listeners\MessageListener'
+           'App\Listeners\MessageListener',
+       ],
+        'App\Events\SessionEvent'=>[
+           'App\Listeners\SessionListener',
        ]
-        
     ];
 
     /**

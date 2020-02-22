@@ -72,6 +72,7 @@ echo json_encode([
                 window.Laravel.url = '<?= route('notification') ?>';
                 window.Laravel.broadcast = '<?= route('broadcast') ?>';
                 window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
+                window.Laravel.sendmessage = '<?= route('sendmessage')?>';
             </script>
         <?php endif; ?>
     </head>

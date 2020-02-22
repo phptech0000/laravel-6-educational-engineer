@@ -37,7 +37,7 @@ var NOTIFICATIONS_TYPE = {
 }
 
 $(document).ready(function () {
-     Pusher.logToConsole = true;
+    Pusher.logToConsole = true;
     window.Vue.config.devtools = true;
     if (window.Laravel.userId) {
         $.get('' + window.Laravel.url + '', function (data) {
@@ -46,8 +46,9 @@ $(document).ready(function () {
             window.console.log(data);
         });
         window.console.log(window.Laravel.deleteNotification);
+        window.console.log(window.Laravel.sendmessage);
         var channel = window.Echo.private(`App.User.${Laravel.userId}`);
-       
+
         window.console.log(channel);
         channel.notification((notification) => {
             window.console.log(notification);
@@ -55,53 +56,8 @@ $(document).ready(function () {
         });
 
 
-        var chatchannel = window.Echo.private('chat');
-          window.console.log(chatchannel);
-          chatchannel.listen((event)=>{
-                 window.console.log(event.message); 
-                 window.console.log(event.user); 
-          });
+       
         var form = document.querySelector('.conversation-compose');
-        var conversation = document.querySelector('.conversation-container');
-        form.addEventListener('submit', newMessage);
-        function newMessage(e) {
-            var input = e.target.message;
-
-            if (input.value) {
-                var message = buildMessage(input.value);
-                conversation.appendChild(message);
-                animateMessage(message);
-            }
-
-            input.value = '';
-            conversation.scrollTop = conversation.scrollHeight;
-
-            e.preventDefault();
-        }
-
-        function buildMessage(text) {
-            var element = document.createElement('div');
-            element.classList.add('message', 'sent');
-
-            element.innerHTML = text +
-                    '<span class="metadata">' +
-                    '<span class="time"> 2:25 </span>' +
-                    '<span class="tick tick-animation">' +
-                    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>' +
-                    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>' +
-                    '</span>' +
-                    '</span>';
-
-            return element;
-        }
-        
-
-        function animateMessage(message) {
-            setTimeout(function () {
-                var tick = message.querySelector('.tick');
-                tick.classList.remove('tick-animation');
-            }, 500);
-        }
         var item = $("#user_sender");
         var image = item.find("#user_image").attr('src');
         var user_name = item.find("#user_name").text();
@@ -126,7 +82,6 @@ function addNotification(newNotification) {
     showNotification(notifications);
 
 }
-
 function showNotification(notifications) {
     var notificationsWrapper = $('#notification_list');
     var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
@@ -168,7 +123,6 @@ function makeNotification(notification) {
     return '<li id="item">' + listitem + '</li>';
 
 }
-
 function routeNotifiction(notification) {
     var to = '?read' + notification.id;
     if (notification.type === NOTIFICATIONS_TYPE.follow) {
@@ -179,7 +133,6 @@ function routeNotifiction(notification) {
     }
     return '/' + to;
 }
-
 function NotificationItem(notification) {
     var NotificationHtml = '';
 
@@ -261,7 +214,6 @@ $(document).on('click', '#notify  #delete', function (event) {
         }
     });
 });
-
 function RemoveFromArray(notificationArray, id) {
     for (var i = 0; i < notificationArray.length; i++) {
         window.console.log('id:' + notificationArray[i].id);
@@ -272,7 +224,6 @@ function RemoveFromArray(notificationArray, id) {
         }
     }
 }
-
 $(document).on('click', "#user_sender", function (event) {
     var item = $(event.currentTarget);
     var image = item.find("#user_image").attr('src');
@@ -287,4 +238,43 @@ $(document).on('click', "#user_sender", function (event) {
 
 });
 
+$(document).on('submit', "#messageForm", function (event) {
+    newMessage(event);
+   
+});
 
+function newMessage(e) {
+    var conversation = document.querySelector('.conversation-container');
+    var input = e.target.message;
+    if (input.value) {
+        var message = buildMessage(input.value);
+        conversation.appendChild(message);
+        animateMessage(message);
+    }
+
+    input.value = '';
+    conversation.scrollTop = conversation.scrollHeight;
+
+    e.preventDefault();
+}
+function buildMessage(text) {
+    var element = document.createElement('div');
+    element.classList.add('message', 'sent');
+
+    element.innerHTML = text +
+            '<span class="metadata">' +
+            '<span class="time"> 2:25 </span>' +
+            '<span class="tick tick-animation">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>' +
+            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>' +
+            '</span>' +
+            '</span>';
+
+    return element;
+}
+function animateMessage(message) {
+    setTimeout(function () {
+        var tick = message.querySelector('.tick');
+        tick.classList.remove('tick-animation');
+    }, 500);
+}

@@ -22,9 +22,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/users/staff', 'UserController@Staff_index')->name('users.staff');
    
     //chat
-    Route::get('/user/chat','ChatController@index')->name('chat.index');
-    Route::post('user/chat/sendmessage' ,'ChatController@store')->name('sendmessage');
-    
+    Route::get('user/chat','ChatController@index')->name('chat.index');
+    Route::post('user/chat/{session}/sendmessage' ,'ChatController@send')->name('sendmessage');
+    Route::post('user/chat/createsession' ,'ChatController@createSession')->name('createsession');
     
     Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
     Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');

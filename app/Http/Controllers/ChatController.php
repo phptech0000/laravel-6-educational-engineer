@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Session;
 use App\message;
-use DB;
 use App\Events\UserMessageEvent;
-
+use App\Events\SessionEvent;
 class ChatController extends Controller {
 
     /**
@@ -27,8 +27,15 @@ class ChatController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
-        //
+    //open session
+    public function createSession(Request $request) {
+        $user  =auth()->user();
+        $session = new Session;
+        $session->sender_id =$user->id;
+        $session->receiver_id = $request->input('receiver_id');
+        event(new SessionEvent($session, $user));
+        $data = $session->save();
+        return response()->json($data);
     }
 
     /**
@@ -37,24 +44,16 @@ class ChatController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function send(Session $session, Request $request) {
         $request->validate(['message' => 'required|string|max:255']);
-        $user = auth()->user();
         $message = new message;
         $message->message = $request->input('message');
-        $message->messagetime = getTime();
-        $message->user()->save($user);
-        $message->sender_id = $request->input('sender_id');
-        $lastmessage = DB::table('messages')->where('user_id', $user->id)->latest()->get();
-        if ($lastmessage === $message) {
-            $message->isLastMessage = 1;
-        }
-
-       $sender = User::find($request->input('sender_id'));
-        event(new UserMessageEvent($sender, $message));
-        $data = $message->save();
-
-        return response()->json($data);
+        $message->messageTime = getTime();
+        $chat = $message->SessionForSend($session->id);
+        $user = User::find($request->input('receiver_id'));
+        $message->SessionForReceive($session->id,$user);
+        event(new UserMessageEvent($chat, $message));
+        $session->messages()->save($message);
     }
 
     private function getTime() {
