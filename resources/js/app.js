@@ -98,6 +98,11 @@ function firstsession() {
             },
             function (data) {
                 window.console.log('data:' + data);
+                var chat_channel = window.Echo.private(`chat.${data.id}`);
+                window.console.log(chat_channel);
+                chat_channel.listen('.App\\Events\\UserMessageEvent', (data) => {
+
+                });
             });
 }
 function addNotification(newNotification) {
@@ -362,6 +367,3 @@ function buildMessagereceived(message) {
 }
 var messages = [];
 var chats = [];
-function addmessageforsender(messages) {
-
-}

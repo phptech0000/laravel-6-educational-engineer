@@ -59469,6 +59469,9 @@ function firstsession() {
     receiver_id: user_id
   }, function (data) {
     window.console.log('data:' + data);
+    var chat_channel = window.Echo["private"]("chat.".concat(data.id));
+    window.console.log(chat_channel);
+    chat_channel.listen(".App\\Events\\UserMessageEvent", function (data) {});
   });
 }
 
