@@ -74,6 +74,7 @@ echo json_encode([
                 window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
                 window.Laravel.createsession = '<?= route('createsession') ?>'
                         window.Laravel.sendmessage = '<?= route('sendmessage', ':sessionid') ?>';
+                window.Laravel.getsession = '<?= route('getsession', [':sender_id', ':receiver_id']) ?>';
             </script>
         <?php endif; ?>
     </head>

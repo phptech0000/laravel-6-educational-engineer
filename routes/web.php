@@ -20,17 +20,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/adminapprove/{email}', 'UserAuth\AdminController@adminapprove')->name('admin.approve');
     Route::get('/users/{id}/user_profile', 'UserController@edit')->name('users.user.profile');
     Route::get('/users/staff', 'UserController@Staff_index')->name('users.staff');
-   
+
     //chat
-    Route::get('user/chat','ChatController@index')->name('chat.index');
-    Route::post('user/chat/{session}/sendmessage' ,'ChatController@send')->name('sendmessage');
-    Route::post('user/chat/createsession' ,'ChatController@createSession')->name('createsession');
-    
+    Route::get('user/chat', 'ChatController@index')->name('chat.index');
+    Route::post('user/chat/{session}/sendmessage', 'ChatController@send')->name('sendmessage');
+    Route::post('user/chat/createsession', 'ChatController@createSession')->name('createsession');
+    Route::get('user/chat/session/{sender_id}/{receiver_id}', 'ChatController@getsession')->name('getsession');
+
     Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
     Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');
     Route::get('/notification', 'UserController@notifications')->name('notification');
-    Route::get('/notification/{id}/show' ,'UserController@showNotification' )->name('notification.show');
-    Route::get('/deletenotifcation/{id}' , 'UserController@DeleteNotification')->name('notification.delete');
+    Route::get('/notification/{id}/show', 'UserController@showNotification')->name('notification.show');
+    Route::get('/deletenotifcation/{id}', 'UserController@DeleteNotification')->name('notification.delete');
     Route::post('/broadcast', function (Request $request) {
         $pusher = new Pusher\Pusher(env('PUSHER_APP_KEY'), env('PUSHER_APP_SECRET'), env('PUSHER_APP_ID'));
         return $pusher->socket_auth($request->request->get('channel_name'), $request->request->get('socket_id'));

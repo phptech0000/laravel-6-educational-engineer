@@ -44,7 +44,7 @@ class UserMessageEvent implements ShouldBroadcast {
      * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn() {
-        return new PrivateChannel('chat.' + $this->chat->session_id);
+        return new PrivateChannel('chat.'.$this->chat->session_id);
     }
 
 }

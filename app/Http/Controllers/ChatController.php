@@ -9,7 +9,7 @@ use App\message;
 use App\Events\UserMessageEvent;
 use App\Events\SessionEvent;
 use DB;
-
+use Carbon\Carbon;
 class ChatController extends Controller {
 
     /**
@@ -59,12 +59,15 @@ class ChatController extends Controller {
         $request->validate(['message' => 'required|string|max:255']);
         $message = new message;
         $message->message = $request->input('message');
-        $message->messageTime = getTime();
+        $message->messageTime = $this->getTime();
+         $session->messages()->save($message);
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
         $message->SessionForReceive($session->id, $user);
         event(new UserMessageEvent($chat, $message));
-        $session->messages()->save($message);
+       
+        return response()->json(['message'=>$session->messages,
+            'chats'=>$message->chats]);
     }
 
     private function getTime() {
@@ -73,6 +76,17 @@ class ChatController extends Controller {
         $dateFormat = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format($format);
         $DateTime = strtoupper($dateFormat);
         return $DateTime;
+    }
+
+    public function getsession($sender_id, $receiver_id) {
+        $table = DB::table('sessions');
+        $session = $collection_one = $table
+                ->where('sender_id', $sender_id)
+                ->where('receiver_id', $receiver_id)
+                ->orWhere('sender_id', $receiver_id)
+                ->where('receiver_id', $sender_id)
+                ->get()->first();
+        return response()->json(['session'=>$session]);
     }
 
     /**

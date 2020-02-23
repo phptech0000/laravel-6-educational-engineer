@@ -37,9 +37,10 @@ var NOTIFICATIONS_TYPE = {
 }
 
 $(document).ready(function () {
-    Pusher.logToConsole = true;
+
     window.Vue.config.devtools = true;
     if (window.Laravel.userId) {
+
         $.get('' + window.Laravel.url + '', function (data) {
             window.console.log(data);
             addNotification(data);
@@ -50,28 +51,22 @@ $(document).ready(function () {
         var channel = window.Echo.private(`App.User.${Laravel.userId}`);
         window.console.log(channel);
         channel.notification((notification) => {
-            window.console.log('notification:'+notification);
+            window.console.log('notification:' + notification);
             addNotification([notification]);
         });
+        firstsession();
+        Pusher.logToConsole = true;
         var session_channel = window.Echo.private('chat');
         window.console.log(session_channel);
-        session_channel.listen('App\\Events\\SessionEvent', function(data) {
-            window.console.log("user:" + data.user);
-            window.console.log("session:" + data.session);
+        session_channel.listen('.App\\Events\\SessionEvent', (data) => {
+            window.console.log('datapusher:' + data);
+            var chat_channel = window.Echo.private(`chat.${data.sesstion_id}`);
+            window.console.log(chat_channel);
+            chat_channel.listen('.App\\Events\\UserMessageEvent', (data) => {
+
+            });
         });
 
-
-
-        var form = document.querySelector('.conversation-compose');
-        var item = $("#user_sender");
-        var image = item.find("#user_image").attr('src');
-        var user_name = item.find("#user_name").text();
-        var user_id = item.find("#user_id").text();
-        var user_name_bar = $("#usernamebar");
-        var user_image_bar = $("#userimagebar");
-        form.receiver_id.value = user_id;
-        user_image_bar.attr("src", image);
-        user_name_bar.text(user_name);
     }
 
 
@@ -80,6 +75,31 @@ $(document).ready(function () {
 
 
 });
+function firstsession() {
+    var form = document.querySelector('.conversation-compose');
+    var item = $("#user_sender");
+    var image = item.find("#user_image").attr('src');
+    var user_name = item.find("#user_name").text();
+    var user_id = item.find("#user_id").text();
+    var user_name_bar = $("#usernamebar");
+    var user_image_bar = $("#userimagebar");
+    form.receiver_id.value = user_id;
+    user_image_bar.attr("src", image);
+    user_name_bar.text(user_name);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var createsession = window.Laravel.createsession;
+    $.post('' + createsession + '',
+            {
+                receiver_id: user_id,
+            },
+            function (data) {
+                window.console.log('data:' + data);
+            });
+}
 function addNotification(newNotification) {
     notifications = window._.concat(newNotification, notifications);
     // show only last 5 notifications
@@ -249,7 +269,6 @@ $(document).on('click', "#user_sender", function (event) {
     $.post('' + createsession + '',
             {
                 receiver_id: user_id,
-               
             },
             function (data) {
                 window.console.log('data:' + data);
@@ -258,8 +277,38 @@ $(document).on('click', "#user_sender", function (event) {
 });
 
 $(document).on('submit', "#messageForm", function (event) {
-    
-    newMessage(event);
+    var session = window.Laravel.getsession;
+    var sender_id = event.target.current_id.value;
+    var receiver_id = event.target.receiver_id.value;
+    var message = event.target.message.value;
+    session = session.replace(':sender_id', sender_id);
+    session = session.replace(':receiver_id', receiver_id);
+    window.console.log('session_ulr:' + session);
+    var session_id = '';
+    $.get('' + session + '', function (data) {
+        window.console.log('session.id:', data.session.id);
+        var message_post = window.Laravel.sendmessage;
+        var url_message_post = message_post.replace(":sessionid", data.session.id);
+        window.console.log('url_message_post:', url_message_post);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.post('' + url_message_post + '',
+                {
+                    receiver_id: receiver_id,
+                    current_id: sender_id,
+                    message: message,
+                },
+                function (data) {
+                    newMessage(event);
+                }
+        );
+
+    });
+
+
 
 });
 
@@ -269,7 +318,6 @@ function newMessage(e) {
     if (input.value) {
         var message = buildMessage(input.value);
         conversation.appendChild(message);
-        animateMessage(message);
     }
 
     input.value = '';
@@ -292,12 +340,17 @@ function buildMessage(text) {
 
     return element;
 }
-function animateMessage(message) {
+function ReadMessage(message) {
     setTimeout(function () {
         var tick = message.querySelector('.tick');
         tick.classList.remove('tick-animation');
     }, 500);
 }
+
+function unReadMessage(message) {
+
+}
+
 function buildMessagereceived(message) {
     var element = document.createElement('div');
     element.classList.add('message', 'received');
@@ -306,4 +359,9 @@ function buildMessagereceived(message) {
              <span class="metadata">
                 <span class="time">3:20PM</span>
              </span>`;
+}
+var messages = [];
+var chats = [];
+function addmessageforsender(messages) {
+
 }
