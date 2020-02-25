@@ -29,14 +29,9 @@ class UserMessageEvent implements ShouldBroadcast {
     public function __construct(Chat $chat, message $message) {
         $this->chat = $chat;
         $this->message = $message;
+        $this->dontBroadcastToCurrentUser();
     }
 
-    public function broadcastWith() {
-        return [
-           'message' => $this->message,
-            'chat' => $this->chat
-        ];
-    }
 
     /**
      * Get the channels the event should broadcast on.

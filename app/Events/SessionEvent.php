@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\User;
-use App\Session;
+
 
 class SessionEvent implements ShouldBroadcast {
 
@@ -29,16 +29,10 @@ class SessionEvent implements ShouldBroadcast {
     public function __construct($session, User $user) {
         $this->session = $session;
         $this->user = $user;
+        $this->dontBroadcastToCurrentUser();
     }
 
-    public function broadcastWith() {
-        return [
-            'user_id' => $this->user->id,
-            'sesstion_id' => $this->session->id,
-            'sender_id' => $this->session->sender_id,
-            'receiver_id' => $this->session->receiver_id
-        ];
-    }
+
 
     /**
      * Get the channels the event should broadcast on.

@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Session;
 use App\message;
+use App\Chat;
 use App\Events\UserMessageEvent;
 use App\Events\SessionEvent;
 use DB;
 use Carbon\Carbon;
+
 class ChatController extends Controller {
 
     /**
@@ -31,22 +33,24 @@ class ChatController extends Controller {
      */
 //open session
     public function createSession(Request $request) {
-        $session = '';
         $table = DB::table('sessions');
         $user = auth()->user();
-        $collection_one = $table->where('sender_id', $user->id)->where('receiver_id', $request->receiver_id)
+        $collection = $table->where('sender_id', $user->id)->where('receiver_id', $request->receiver_id)
                         ->orWhere('sender_id', $request->receiver_id)->where('receiver_id', $user->id)->get();
-        if ($collection_one->count() > 0) {
-            $session = $collection_one->first();
+
+
+        if ($collection->count() > 0) {
+            $session = $collection->first();
             event(new SessionEvent($session, $user));
+            return response()->json($session);
         } else {
             $session = new Session;
             $session->sender_id = $user->id;
             $session->receiver_id = $request->input('receiver_id');
-            event(new SessionEvent($session, $user));
             $session->save();
+            event(new SessionEvent($session, $user));
+            return response()->json($session);
         }
-        return response()->json($session);
     }
 
     /**
@@ -60,19 +64,21 @@ class ChatController extends Controller {
         $message = new message;
         $message->message = $request->input('message');
         $message->messageTime = $this->getTime();
-         $session->messages()->save($message);
+        $session->messages()->save($message);
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
         $message->SessionForReceive($session->id, $user);
-        event(new UserMessageEvent($chat, $message));
-       
-        return response()->json(['message'=>$session->messages,
-            'chats'=>$message->chats]);
+        broadcast(new UserMessageEvent($chat, $message))->toOthers();
+        $data = [
+            'chat' => $chat ,
+            'message'>$message
+        ];
+        return response()->json($data);
     }
 
     private function getTime() {
         $date = now()->timezone('egypt');
-        $format = "d/m/y-H:i";
+        $format = "d/m/Y-H:i";
         $dateFormat = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format($format);
         $DateTime = strtoupper($dateFormat);
         return $DateTime;
@@ -81,12 +87,12 @@ class ChatController extends Controller {
     public function getsession($sender_id, $receiver_id) {
         $table = DB::table('sessions');
         $session = $collection_one = $table
-                ->where('sender_id', $sender_id)
-                ->where('receiver_id', $receiver_id)
-                ->orWhere('sender_id', $receiver_id)
-                ->where('receiver_id', $sender_id)
-                ->get()->first();
-        return response()->json(['session'=>$session]);
+                        ->where('sender_id', $sender_id)
+                        ->where('receiver_id', $receiver_id)
+                        ->orWhere('sender_id', $receiver_id)
+                        ->where('receiver_id', $sender_id)
+                        ->get()->first();
+        return response()->json(['session' => $session]);
     }
 
     /**
@@ -128,6 +134,11 @@ class ChatController extends Controller {
      */
     public function destroy($id) {
 //
+    }
+
+    public function UnReadMessage() {
+       
+        
     }
 
 }

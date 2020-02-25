@@ -24,7 +24,7 @@ use App\message;;
  */
 class Chat extends Model
 {
-     protected $fillable = ['session_id','message_id' ,'user_id' , 'type','stats'];
+     protected $fillable = ['session_id','message_id' ,'user_id' , 'type','stats','read','read_at'];
      public function user() {
          return $this->belongsTo(User::class ,'user_id');
      }

@@ -23,6 +23,8 @@ class CreateChatsTable extends Migration
             $table->foreign('session_id')->references('id')->on('sessions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('read')->nullable();
+            $table->string('read_at')->nullable();
             $table->timestamps();
         });
     }

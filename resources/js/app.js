@@ -28,9 +28,13 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#app'
 });
 var notifications = [];
+var MESSAGE_TYPE = {
+    MessageSend: 0,
+    MessageReceive: 1
+}
 var NOTIFICATIONS_TYPE = {
     newuser: 'App\\Notifications\\NewUserNotification',
     follow: 'App\\Notifications\\UserFollowed',
@@ -60,10 +64,10 @@ $(document).ready(function () {
         window.console.log(session_channel);
         session_channel.listen('.App\\Events\\SessionEvent', (data) => {
             window.console.log('datapusher:' + data);
-            var chat_channel = window.Echo.private(`chat.${data.sesstion_id}`);
+            var chat_channel = window.Echo.private(`chat.${data.session.id}`);
             window.console.log(chat_channel);
             chat_channel.listen('.App\\Events\\UserMessageEvent', (data) => {
-
+                SessionForSend(data.chat, data.message);
             });
         });
 
@@ -75,12 +79,15 @@ $(document).ready(function () {
 
 
 });
+
+
 function firstsession() {
     var form = document.querySelector('.conversation-compose');
     var item = $("#user_sender");
     var image = item.find("#user_image").attr('src');
     var user_name = item.find("#user_name").text();
     var user_id = item.find("#user_id").text();
+    $("#user_id_bar").text(user_id);
     var user_name_bar = $("#usernamebar");
     var user_image_bar = $("#userimagebar");
     form.receiver_id.value = user_id;
@@ -101,7 +108,7 @@ function firstsession() {
                 var chat_channel = window.Echo.private(`chat.${data.id}`);
                 window.console.log(chat_channel);
                 chat_channel.listen('.App\\Events\\UserMessageEvent', (data) => {
-
+                    SessionForSend(data.chat, data.message);
                 });
             });
 }
@@ -153,6 +160,7 @@ function makeNotification(notification) {
     return '<li id="item">' + listitem + '</li>';
 
 }
+
 function routeNotifiction(notification) {
     var to = '?read' + notification.id;
     if (notification.type === NOTIFICATIONS_TYPE.follow) {
@@ -162,6 +170,30 @@ function routeNotifiction(notification) {
         to = 'user.' + to;
     }
     return '/' + to;
+}
+
+function MessageItem(message, chat) {
+    var MessageHTML = document.createElement('div');
+    if (chat.type === MESSAGE_TYPE.MessageSend) {
+
+        MessageHTML.classList.add('message', 'sent');
+        MessageHTML.innerHTML = message.message +
+                `<span class="metadata">
+                <span class="time"> 2:25 </span>
+                <span class="tick tick-animation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>
+                </span>' +
+                </span>`;
+    } else if (chat.type === MESSAGE_TYPE.MessageReceive) {
+        MessageHTML.classList.add('message', 'received');
+        MessageHTML.innerHTML =
+                `<span id="random">` + message.message + `</span>
+             <span class="metadata">
+                <span class="time">PM3:20PM</span>
+             </span>`;
+    }
+    return MessageHTML;
 }
 function NotificationItem(notification) {
     var NotificationHtml = '';
@@ -259,10 +291,13 @@ $(document).on('click', "#user_sender", function (event) {
     var image = item.find("#user_image").attr('src');
     var user_name = item.find("#user_name").text();
     var user_id = item.find("#user_id").text();
+    sender_id = user_id;
     var user_name_bar = $("#usernamebar");
     var user_image_bar = $("#userimagebar");
+    var user_id_bar = $("#user_id_bar")
     var form = document.querySelector('.conversation-compose');
     form.receiver_id.value = user_id;
+    user_id_bar.text(user_id);
     user_image_bar.attr("src", image);
     user_name_bar.text(user_name);
     $.ajaxSetup({
@@ -276,12 +311,14 @@ $(document).on('click', "#user_sender", function (event) {
                 receiver_id: user_id,
             },
             function (data) {
+
                 window.console.log('data:' + data);
             });
 
 });
 
 $(document).on('submit', "#messageForm", function (event) {
+
     var session = window.Laravel.getsession;
     var sender_id = event.target.current_id.value;
     var receiver_id = event.target.receiver_id.value;
@@ -308,8 +345,14 @@ $(document).on('submit', "#messageForm", function (event) {
                 },
                 function (data) {
                     newMessage(event);
+                    SessionForSend(data.chat, data.message);
                 }
-        );
+        ).error(function (data) {
+            var errors = $.parseJSON(data.responseText);
+            $.each(errors, function (key, value) {
+                $('#' + key).parent().addClass('error');
+            });
+        });
 
     });
 
@@ -352,18 +395,78 @@ function ReadMessage(message) {
     }, 500);
 }
 
-function unReadMessage(message) {
-
-}
-
 function buildMessagereceived(message) {
     var element = document.createElement('div');
     element.classList.add('message', 'received');
     element.innerHTML =
-            `<span id="random">` + message + `</span>
+            `<span id="random">` + message.message + `</span>
              <span class="metadata">
                 <span class="time">3:20PM</span>
              </span>`;
+    return element;
 }
-var messages = [];
 var chats = [];
+function SessionForSend(chat, msg) {
+    if (chat.type == MESSAGE_TYPE.MessageSend) {
+        $('div[id="user_sender"]').each(function (index) {
+            var userId = $(this).find("#user_id").text();
+            window.console.log('userId:' + userId);
+            var message = $(this).find("#chat_message");
+            var date = $(this).find("#chat_date");
+            var count = $(this).find("#chat_count");
+            var MessagesCount = parseInt(count.text());
+            window.console.log('MessageCount:' + MessagesCount);
+            if (chat.user_id == userId) {
+                MessagesCount = MessagesCount + 1;
+                window.console.log('MessagesCount:' + MessagesCount);
+                count.attr('data-count', MessagesCount);
+                count.css('display', 'block');
+                count.text(MessagesCount);
+                message.text(msg.message);
+                var Time = parsedata(msg.messageTime);
+                date.text(Time);
+                date.addClass('dateTimeColor');
+            }
+        });
+    }
+}
+function parsedata(date_time) {
+    var Value = '';
+    var index = date_time.indexOf('-');
+    var date = date_time.substring(0, index);
+    var time = date_time.substring(index + 1, date_time.length);
+    var CurrentDataTime = new Date();
+
+    var day = CurrentDataTime.getDate()
+    if (day < 10) {
+        day = '0' + day;
+    }
+    var month = CurrentDataTime.getMonth() + 1;
+    if (month < 10) {
+        month = '0' + month;
+    }
+    var year = CurrentDataTime.getFullYear();
+    var CurrentDate = day + '/' + month + '/' + year;
+    var char = new RegExp('/', 'g');
+    var dateInt = date.replace(char, '');
+    var currentdateInt = CurrentDate.replace(char, '');
+    var dateInteger = parseInt(dateInt);
+    window.console.log('dateInteger', dateInteger);
+    var currentdateInteger = parseInt(currentdateInt);
+    window.console.log('currentdateInteger', currentdateInteger);
+    var diff = currentdateInteger - dateInteger;
+    window.console.log('diff', diff);
+    if (diff == 0) {
+        Value = time;
+    } else if (diff == 1) {
+        Value = "Yesterday";
+    } else if (diff > 1) {
+        Value = date;
+    }
+    return Value;
+}
+
+
+
+
+
