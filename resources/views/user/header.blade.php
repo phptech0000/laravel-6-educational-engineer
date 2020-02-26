@@ -70,7 +70,7 @@ echo json_encode([
             <script>
                 window.Laravel.userId = <?= auth()->user()->id; ?>;
                 window.Laravel.url = '<?= route('notification') ?>';
-                window.Laravel.broadcast = '<?= route('broadcast') ?>';
+                window.Laravel.broadcast = '<?= url('/broadcasting/auth') ?>';
                 window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
                 window.Laravel.createsession = '<?= route('createsession') ?>'
                         window.Laravel.sendmessage = '<?= route('sendmessage', ':sessionid') ?>';

@@ -59810,13 +59810,8 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   cluster: 'eu',
   forceTLS: true,
   encrypted: true,
-  authEndpoint: '/broadcasting/auth',
-  //    csrfToken:window.Laravel,
-  auth: {
-    headers: {
-      Authorization: 'Bearer ' + window.Laravel
-    }
-  }
+  authEndpoint: window.Laravel.broadcast,
+  csrfToken: window.Laravel
 });
 
 /***/ }),
