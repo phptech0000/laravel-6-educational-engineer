@@ -35,7 +35,12 @@ window.Echo = new Echo({
     cluster: 'eu',
     forceTLS: true,
     encrypted: true,
-    authEndpoint:window.Laravel.broadcast ,
-    csrfToken:window.Laravel,
+    authEndpoint:'/broadcasting/auth' ,
+//    csrfToken:window.Laravel,
+    auth: {
+        headers: {
+            Authorization: 'Bearer ' + window.Laravel
+        },
+    },
 
 });

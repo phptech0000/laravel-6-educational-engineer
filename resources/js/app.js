@@ -69,6 +69,7 @@ $(document).ready(function () {
             chat_channel.listen('.App\\Events\\UserMessageEvent', (data) => {
                 SessionForSend(data.chat, data.message);
             });
+
         });
 
     }
@@ -80,37 +81,13 @@ $(document).ready(function () {
 
 });
 
-
 function firstsession() {
-    var form = document.querySelector('.conversation-compose');
-    var item = $("#user_sender");
-    var image = item.find("#user_image").attr('src');
-    var user_name = item.find("#user_name").text();
-    var user_id = item.find("#user_id").text();
-    $("#user_id_bar").text(user_id);
-    var user_name_bar = $("#usernamebar");
-    var user_image_bar = $("#userimagebar");
-    form.receiver_id.value = user_id;
-    user_image_bar.attr("src", image);
-    user_name_bar.text(user_name);
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    var createsession = window.Laravel.createsession;
-    $.post('' + createsession + '',
-            {
-                receiver_id: user_id,
-            },
-            function (data) {
-                window.console.log('data:' + data);
-                var chat_channel = window.Echo.private(`chat.${data.id}`);
-                window.console.log(chat_channel);
-                chat_channel.listen('.App\\Events\\UserMessageEvent', (data) => {
-                    SessionForSend(data.chat, data.message);
-                });
-            });
+    var mainchat = $("#chat_main");
+    var footer = $("#footer");
+    var splash = $("#splash");
+    mainchat.addClass('chat_main_hidden');
+    footer.addClass('chat_main_hidden');
+    splash.removeClass('chat_main_hidden');
 }
 function addNotification(newNotification) {
     notifications = window._.concat(newNotification, notifications);
@@ -160,7 +137,6 @@ function makeNotification(notification) {
     return '<li id="item">' + listitem + '</li>';
 
 }
-
 function routeNotifiction(notification) {
     var to = '?read' + notification.id;
     if (notification.type === NOTIFICATIONS_TYPE.follow) {
@@ -171,7 +147,6 @@ function routeNotifiction(notification) {
     }
     return '/' + to;
 }
-
 function MessageItem(message, chat) {
     var MessageHTML = document.createElement('div');
     if (chat.type === MESSAGE_TYPE.MessageSend) {
@@ -287,6 +262,12 @@ function RemoveFromArray(notificationArray, id) {
     }
 }
 $(document).on('click', "#user_sender", function (event) {
+    var mainchat = $("#chat_main");
+    var footer = $("#footer");
+    var splash = $("#splash");
+    mainchat.removeClass('chat_main_hidden');
+    footer.removeClass('chat_main_hidden');
+    splash.addClass('chat_main_hidden');
     var item = $(event.currentTarget);
     var image = item.find("#user_image").attr('src');
     var user_name = item.find("#user_name").text();
@@ -316,13 +297,11 @@ $(document).on('click', "#user_sender", function (event) {
             });
 
 });
-
 $(document).on('submit', "#messageForm", function (event) {
-
+    var message = newMessage(event);
     var session = window.Laravel.getsession;
     var sender_id = event.target.current_id.value;
     var receiver_id = event.target.receiver_id.value;
-    var message = event.target.message.value;
     session = session.replace(':sender_id', sender_id);
     session = session.replace(':receiver_id', receiver_id);
     window.console.log('session_ulr:' + session);
@@ -344,7 +323,7 @@ $(document).on('submit', "#messageForm", function (event) {
                     message: message,
                 },
                 function (data) {
-                    newMessage(event);
+
                     SessionForSend(data.chat, data.message);
                 }
         ).error(function (data) {
@@ -367,11 +346,12 @@ function newMessage(e) {
         var message = buildMessage(input.value);
         conversation.appendChild(message);
     }
-
+    var message = input.value;
     input.value = '';
     conversation.scrollTop = conversation.scrollHeight;
-
     e.preventDefault();
+    return message;
+
 }
 function buildMessage(text) {
     var element = document.createElement('div');
@@ -408,6 +388,8 @@ function buildMessagereceived(message) {
 var chats = [];
 function SessionForSend(chat, msg) {
     if (chat.type == MESSAGE_TYPE.MessageSend) {
+        chats = window._.concat(chats, chat);
+        window.console.log('chats:' + chats.length);
         $('div[id="user_sender"]').each(function (index) {
             var userId = $(this).find("#user_id").text();
             window.console.log('userId:' + userId);
@@ -465,8 +447,3 @@ function parsedata(date_time) {
     }
     return Value;
 }
-
-
-
-
-

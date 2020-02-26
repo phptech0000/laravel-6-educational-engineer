@@ -33,15 +33,14 @@ class ChatController extends Controller {
      */
 //open session
     public function createSession(Request $request) {
-        $table = DB::table('sessions');
         $user = auth()->user();
-        $collection = $table->where('sender_id', $user->id)->where('receiver_id', $request->receiver_id)
+        $collection = Session::where('sender_id', $user->id)->where('receiver_id', $request->receiver_id)
                         ->orWhere('sender_id', $request->receiver_id)->where('receiver_id', $user->id)->get();
 
 
         if ($collection->count() > 0) {
             $session = $collection->first();
-            event(new SessionEvent($session, $user));
+            broadcast(new SessionEvent($session, $user))->toOthers();
             return response()->json($session);
         } else {
             $session = new Session;
@@ -68,7 +67,7 @@ class ChatController extends Controller {
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
         $message->SessionForReceive($session->id, $user);
-        broadcast(new UserMessageEvent($chat, $message))->toOthers();
+        event(new UserMessageEvent($chat, $message));
         $data = [
             'chat' => $chat ,
             'message'>$message
@@ -136,9 +135,6 @@ class ChatController extends Controller {
 //
     }
 
-    public function UnReadMessage() {
-       
-        
-    }
+   
 
 }

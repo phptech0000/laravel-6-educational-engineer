@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\User;
-
+use App\Session;
 
 class SessionEvent implements ShouldBroadcast {
 
@@ -26,10 +26,10 @@ class SessionEvent implements ShouldBroadcast {
      *
      * @return void
      */
-    public function __construct($session, User $user) {
+    public function __construct(Session $session, User $user) {
         $this->session = $session;
         $this->user = $user;
-        $this->dontBroadcastToCurrentUser();
+ 
     }
 
 

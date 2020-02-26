@@ -47,7 +47,7 @@
                                         <?php if ($users): ?>
                                             <?php foreach ($users as $user): ?>
                                                 <?php if ($user != auth()->user()): ?>
-                                                       
+
                                                     <div class="chat_item" id="user_sender">
                                                         <span id= "user_id" style="display: none"><?= $user->id ?></span>   
                                                         <div class="chat_user_image">
@@ -123,7 +123,7 @@
     <!-- sidebar menu end -->
 
 </div>
-<div class="chat_page" id="chat_main">
+<div class="chat_page chat_main_hidden" id="chat_main">
     <div class="user-bar">
         <div class="back">
             <i class="fa back"></i>
@@ -160,9 +160,18 @@
 
 
 </div>
-<div class="chat_splash"></div>
-    
-<div class="footer-bottom footer_chat">
+<div class="chat_splash" id="splash">
+    <div class="chat_splash_image">
+        <div class="chat_user_image_set" style="transform: scale(1); opacity: 1></div>
+             <div class="mOuAM" style="opacity: 1; transform: translateY(0px)>
+            <h1 class="Qk8nZ">
+                Welcome To chat App
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div id="footer" class="footer-bottom footer_chat chat_main_hidden">
     <form class="conversation-compose" method="post" action="javascript:void(0)"id="messageForm">
         @csrf
         <a class="emoji" href="#emoji">
