@@ -80,3 +80,20 @@ window.addEventListener("resize", function (event) {
     }
 });
 
+$(document).on('click', "#chat_float", function (event) {
+    var chatusers = $("#chatUsersId");
+    var tabs = $("#tabs");
+    var back = $("#back");
+    chatusers.css('display', 'block');
+    tabs.css('display', 'none');
+    back.css('display' , 'block');
+
+});
+$(document).on('click',"#users_back" ,function(event){
+    var chatusers = $("#chatUsersId");
+    var tabs = $("#tabs");
+    var back = $("#back");
+    chatusers.css('display', 'none');
+    tabs.css('display', 'block');
+    back.css('display' , 'none');
+});

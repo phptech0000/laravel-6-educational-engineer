@@ -67,10 +67,10 @@ class ChatController extends Controller {
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
         $message->SessionForReceive($session->id, $user);
-        event(new UserMessageEvent($chat, $message));
+        broadcast(new UserMessageEvent($chat, $message))->toOthers();
         $data = [
-            'chat' => $chat ,
-            'message'>$message
+            'chat' => $chat,
+            'message' > $message
         ];
         return response()->json($data);
     }
@@ -135,6 +135,20 @@ class ChatController extends Controller {
 //
     }
 
-   
+    public function unReadMessages($id) {
+        $chats = Chat::where('user_id', $id)
+                ->where('type', 0)
+                ->where('read', 0)
+                ->get();
+        $chat = Chat::latest()->where('user_id', $id)->where('type', 0)->where('read', 0)->first();
+        $message_id = $chat->message_id;
+        $message = message::where('id', $message_id)->get();
+      
+        $data = [
+            'chats' => $chats,
+            'message' => $message,
+        ];
+        return response()->json($data);
+    }
 
 }

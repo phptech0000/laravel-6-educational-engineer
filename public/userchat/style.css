@@ -120,6 +120,20 @@
     font-size: 14px;
     font-weight: 500;
 }
+.back_button{ 
+    padding: 5px;
+    float: left;
+    
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.toolbar .toptoolbar .AppTitel{
+    display: inline-block;
+    float:left;
+
+}
 .toolbar .toptoolbar .AppAction{
     display: inline-block;
     float: right;
@@ -1048,7 +1062,7 @@
 .bade_chat{
     margin-top: 20px;
     margin-right: 20px;
-    display: none;
+    display: block;
     font-size: 10px;
     background-color: #25D366;
     text-align: center
@@ -1115,4 +1129,20 @@
     color: var(--primary-title);
     font-size: 36px;
     font-weight: 300;
+}
+#chat .float{
+    position:absolute;
+    width:60px;
+    height:60px;
+    bottom: 50%;
+    left:40px;
+    background-color:#25D366;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.my-float{
+    margin-top:22px;
 }

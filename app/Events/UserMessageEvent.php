@@ -29,6 +29,7 @@ class UserMessageEvent implements ShouldBroadcast {
     public function __construct(Chat $chat, message $message) {
         $this->chat = $chat;
         $this->message = $message;
+        $this->dontBroadcastToCurrentUser();
        
     }
 

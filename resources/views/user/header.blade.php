@@ -72,9 +72,10 @@ echo json_encode([
                 window.Laravel.url = '<?= route('notification') ?>';
                 window.Laravel.broadcast = '<?= url('/broadcasting/auth') ?>';
                 window.Laravel.deleteNotification = '<?= route('notification.delete', ':id') ?>';
-                window.Laravel.createsession = '<?= route('createsession') ?>'
-                        window.Laravel.sendmessage = '<?= route('sendmessage', ':sessionid') ?>';
+                window.Laravel.createsession = '<?= route('createsession') ?>';
+                window.Laravel.sendmessage = '<?= route('sendmessage', ':sessionid') ?>';
                 window.Laravel.getsession = '<?= route('getsession', [':sender_id', ':receiver_id']) ?>';
+                window.Laravel.getUnReadMessage = '<?= route('unreadmessages', ':id') ?>';
             </script>
         <?php endif; ?>
     </head>

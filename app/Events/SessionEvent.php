@@ -29,6 +29,7 @@ class SessionEvent implements ShouldBroadcast {
     public function __construct(Session $session, User $user) {
         $this->session = $session;
         $this->user = $user;
+        $this->dontBroadcastToCurrentUser();
  
     }
 
