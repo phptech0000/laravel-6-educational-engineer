@@ -59416,6 +59416,9 @@ var app = new Vue({
   el: '#app'
 });
 var notifications = [];
+var ChatsForReceive = [];
+var Chats = [];
+var Messages = [];
 var MESSAGE_TYPE = {
   MessageSend: 0,
   MessageReceive: 1
@@ -59443,15 +59446,15 @@ $(document).ready(function () {
     Pusher.logToConsole = true;
     var session_channel = window.Echo["private"]('chat');
     window.console.log(session_channel);
-    session_channel.listen('.App\\Events\\SessionEvent', function (data) {
-      window.console.log('datapusher:' + data);
-      var chat_channel = window.Echo["private"]("chat.".concat(data.session.id));
+    session_channel.listen('.App\\Events\\SessionEvent', function (session) {
+      window.console.log('datapusher:' + session);
+      var chat_channel = window.Echo["private"]("chat.".concat(session.session.id));
       window.console.log(chat_channel);
       chat_channel.listen(".App\\Events\\UserMessageEvent", function (data) {
-        addMessage([data.chat], data.message);
+        addMessage(data.chat, data.message);
       });
     });
-    getUnReadMessage();
+    Message();
   }
 });
 
@@ -59674,8 +59677,6 @@ function buildMessagereceived(message) {
   return element;
 }
 
-var chats = [];
-
 function parsedata(date_time) {
   var Value = '';
   var index = date_time.indexOf('-');
@@ -59719,7 +59720,105 @@ function parsedata(date_time) {
   return Value;
 }
 
-function getUnReadMessage() {
+function addMessage(chatReceive, message) {
+  ChatsForReceive = window._.concat(chatReceive, ChatsForReceive);
+  Messages = window._.concat(message, Messages);
+  var chats = MutiArray(ChatsForReceive);
+  window.console.log('chats:' + chats[1]);
+  window.console.log('chats:' + chats);
+  showMessages(ChatsForReceive, Messages);
+  ChatsForReceive = [];
+}
+
+function showMessages(ChatsForReceive, messages) {
+  var messageItem;
+
+  if (messages.length) {
+    for (var i = 0; i < messages.length; i++) {
+      messageItem = messages[i];
+    }
+  }
+
+  if (ChatsForReceive.length) {
+    ChatsForReceive.map(function (chat) {
+      MessageUnReadItem(chat, messageItem);
+      window.console.log('chat:', chat);
+    });
+  }
+}
+
+function MessageUnReadItem(chat, message) {
+  var ALLItems = $("#lsit_users");
+  var Itemlist = ALLItems.find('div[id="user_sender"]');
+  Itemlist.each(function (index) {
+    var userId = $(this).find("#user_id").text();
+    var id = parseInt(userId);
+    var chat_userId = chat.user_id;
+    window.console.log('chat_userId:' + chat_userId);
+    window.console.log('userId:' + id);
+    var username = $(this).find("#user_name").text();
+    window.console.log('username:' + username);
+
+    if (chat_userId == id) {
+      var findItem = UpdateItem(chat, message);
+
+      if (findItem == false) {
+        addItem(chat, message, username);
+        window.console.log('chat:' + chat);
+      }
+    }
+  });
+}
+
+function UpdateItem(chat, message) {
+  var finditem;
+  var ListChatItems = $("#startchat");
+  var Item = ListChatItems.find('div[id="user_sender"]');
+
+  if (!ListChatItems.html().length) {
+    window.console.log('nolist');
+    finditem = false;
+  } else {
+    var FoundItem = Item.filter(function () {
+      var userId = $(this).find("#user_id").text();
+      var id = parseInt(userId);
+      return chat.user_id == id;
+    });
+
+    if (FoundItem.length) {
+      updateItemData(FoundItem, message, chat);
+      finditem = true;
+    } else {
+      finditem = false;
+    }
+  }
+
+  window.console.log('founditem:' + finditem);
+  return finditem;
+}
+
+function updateItemData(Item, message, chat) {
+  var user_id = Item.find("#user_id").text();
+  var message = Item.find("#chat_message");
+  var date_time = Item.find("#chat_date");
+  var count = Item.find("#chat_count");
+  message.text(message.message);
+  var date = parsedata(message.messageTime);
+  date_time.text(date);
+  count.css('display', 'none');
+  count.text(ChatsForReceive.length);
+  window.console.log('message.message' + message.message);
+}
+
+function addItem(chat, message, username) {
+  var listChatItem = $("#startchat");
+  var dataTime = parsedata(message.messageTime);
+  var message = message.message;
+  var HtmlItem = "\n<div class=\"chat_item\" id=\"user_sender\">\n <span id= \"user_id\" style=\"display:none;\">" + chat.user_id + "</span>   \n <div class=\"chat_user_image\">\n <div class=\"_3RWII\" style=\"height: 44px; width: 44px;\">\n <img id=\"user_image\" src=\"../assets/images/profile/next.jpg\">\n </div>\n </div>\n <div class=\"_user_info\" >\n <div class=\"user_name_Chat\">\n <div class=\"_user_name_chat_set\">\n <span class=\"_user_name_chat_n\">\n <span id=\"user_name\"  class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable\">" + username + "</span>\n <div class=\"_2Ol0p\"></div>\n </span>\n </div>\n <div class=\"_user_time\" id=\"chat_date\">" + dataTime + "</div>\n </div>\n <div class=\"user_message\">\n <div class=\"user_message_text\">\n <span class=\"user_message_text_flex\"\u202C>\n <div class=\"user_message_text_flex2\">\n <span data-icon=\"status-check\" class=\"\">\n <svg xmlns=\"http://www.w3.org/2000/svg\" \n viewBox=\"0 0 14 18\" width=\"14\" height=\"18\">\n <path fill=\"currentColor\"\n d=\"M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 \n 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 \n 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 \n 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z\">\n </path>\n </svg>\n </span>\n </div>\n <span id=\"chat_message\" class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display\">" + message + "</span>\n </span>\n </div>\n <div class=\"user_count_text\">\n <span id=\"chat_count\" class=\"badge bade_chat\"  data-count=\"0\" >" + ChatsForReceive.length + "</span>\n </div>\n <div class=\"_user_time\">\n <span></span>\n <span></span>\n <span></span>\n </div></div>\n </div>\n </div>";
+  listChatItem.append(HtmlItem);
+}
+
+function Message() {
   var url = window.Laravel.getUnReadMessage;
   var listusers = $("#lsit_users");
   listusers.find('div[id="user_sender"]').each(function (index) {
@@ -59728,105 +59827,25 @@ function getUnReadMessage() {
     var unReadMessages = url.replace(':id', userId);
     window.console.log('unReadMessage:' + unReadMessages);
     $.get('' + unReadMessages, function (data) {
-      var message = data.message[0];
-      var chat = data.chats;
-      window.console.log('chats:', chat.length);
-      addMessage(chat, message, username);
+      var messages = data.Messages;
+      var chatReceives = data.ChatsForReceive;
+      addMessage(chatReceives, messages);
     });
   });
 }
 
-function addMessage(chat, message, username) {
+function MutiArray(array) {
   var chats = [];
-  chats = window._.concat(chat, chats);
-  showMessage(chats, message, username);
-}
 
-function showMessage(chats, message, username) {
-  var listChatItem = $("#startchat");
-  var i = 0;
-
-  if (chats.length) {
-    for (i = 0; i < chats.length; i++) {
-      var Html = chatIII(chats[i], message, chats, username);
-      listChatItem.append(Html);
-    }
-  } else {
-    listChatItem.html('no have any chat');
-  }
-}
-
-function bulidchatItem(chat, message, chats, username) {
-  var HtmlItem = '';
-  var dataTime = parsedata(message.messageTime);
-  window.console.log('dataTime:' + dataTime);
-
-  if (chat.type == MESSAGE_TYPE.MessageSend) {
-    if (chat.read == 0) {
-      var booleanItem = findItem(chat.user_id);
-
-      if (booleanItem === true) {
-        updataItem(chat, message, chats);
-        HtmlItem = '';
-      } else {
-        HtmlItem = "\n<div class=\"chat_item\" id=\"user_sender\">\n <span id= \"user_id\" style=\"display:none;\">" + chat.user_id + "</span>   \n <div class=\"chat_user_image\">\n <div class=\"_3RWII\" style=\"height: 44px; width: 44px;\">\n <img id=\"user_image\" src=\"../assets/images/profile/next.jpg\">\n </div>\n </div>\n <div class=\"_user_info\" >\n <div class=\"user_name_Chat\">\n <div class=\"_user_name_chat_set\">\n <span class=\"_user_name_chat_n\">\n <span id=\"user_name\"  class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable\">" + username + "</span>\n <div class=\"_2Ol0p\"></div>\n </span>\n </div>\n <div class=\"_user_time\" id=\"chat_date\">" + dataTime + "</div>\n </div>\n <div class=\"user_message\">\n <div class=\"user_message_text\">\n <span class=\"user_message_text_flex\"\u202C>\n <div class=\"user_message_text_flex2\">\n <span data-icon=\"status-check\" class=\"\">\n <svg xmlns=\"http://www.w3.org/2000/svg\" \n viewBox=\"0 0 14 18\" width=\"14\" height=\"18\">\n <path fill=\"currentColor\"\n d=\"M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 \n 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 \n 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 \n 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z\">\n </path>\n </svg>\n </span>\n </div>\n <span id=\"chat_message\" class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display\">" + message.message + "</span>\n </span>\n </div>\n <div class=\"user_count_text\">\n <span id=\"chat_count\" class=\"badge bade_chat\"  data-count=\"0\" >" + chats.length + "</span>\n </div>\n <div class=\"_user_time\">\n <span></span>\n <span></span>\n <span></span>\n </div></div>\n </div>\n </div>\n\n";
+  for (var i = 0; i < array.length; i++) {
+    for (var j = 0; j < array.length; j++) {
+      if (array[i].user_id == array[j].user_id) {
+        chats[array[i].user_id] = window._.concat(array[i], chats[array[i].user_id]);
       }
-    } //        else if (chat.read == 1) {
-    //
-    //
-    //        }
-
-  } //    else if (chat.type == MESSAGE_TYPE.MessageReceive) {
-  //
-  //    }
-
-
-  return HtmlItem;
-}
-
-function chatIII(chat, message, chats, username) {
-  var chatItem = bulidchatItem(chat, message, chats, username);
-  return '<div tabindex="-1">' + chatItem + '</div>';
-}
-
-function findItem(id) {
-  var bool;
-  window.console.log('id:', id);
-  var listChatItem = $('#startchat div[id="user_sender"]');
-  var exist = listChatItem.filter(function () {
-    var userId = $(this).find("#user_id").text();
-    window.console.log('user:' + userId);
-    return userId == id;
-  });
-  window.console.log('exit:' + exist.text());
-
-  if (!exist.length) {
-    bool = false;
-  } else {
-    bool = true;
+    }
   }
 
-  window.console.log('boolean:' + bool);
-  return bool;
-}
-
-function updataItem(chat, message, chats) {
-  var listChatItem = $("#startchat");
-  var item = listChatItem.find('div[id="user_sender"]');
-  item.each(function () {
-    var user_id = $(this).find("#user_id").text();
-    var message = $(this).find("#chat_message");
-    var date_time = $(this).find("#chat_date");
-    var count = $(this).find("#chat_count");
-
-    if (chat.user_id == user_id) {
-      message.text(message.message);
-      var date = parsedata(message.messageTime);
-      date_time.text(date);
-      count.text(chats.length);
-      window.console.log('message.message' + message.message);
-    }
-  });
+  return chats;
 }
 
 /***/ }),

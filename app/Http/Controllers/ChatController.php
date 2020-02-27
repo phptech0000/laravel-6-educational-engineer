@@ -66,7 +66,7 @@ class ChatController extends Controller {
         $session->messages()->save($message);
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
-        $message->SessionForReceive($session->id, $user);
+        $chatReceive = $message->SessionForReceive($session->id, $user);
         broadcast(new UserMessageEvent($chat, $message))->toOthers();
         $data = [
             'chat' => $chat,
@@ -136,19 +136,24 @@ class ChatController extends Controller {
     }
 
     public function unReadMessages($id) {
-        $chats = Chat::where('user_id', $id)
-                ->where('type', 0)
-                ->where('read', 0)
-                ->get();
-        $chat = Chat::latest()->where('user_id', $id)->where('type', 0)->where('read', 0)->first();
-        $message_id = $chat->message_id;
-        $message = message::where('id', $message_id)->get();
-      
-        $data = [
-            'chats' => $chats,
-            'message' => $message,
-        ];
-        return response()->json($data);
+        $you_id = auth()->user()->id;
+        $session = Session::where('sender_id', $you_id)
+                ->where('receiver_id', $id)
+                ->orWhere('sender_id', $id)
+                ->where('receiver_id', $you_id)
+                ->first();
+        if ($session) {
+            $ChatsForReceive = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type',0)->get();
+            $messages = $session->messages;
+
+            $data = [
+                'ChatsForReceive' => $ChatsForReceive,
+                'Messages' => $messages,
+            ];
+            return response()->json($data);
+        } else {
+            return response()->json('nofound');
+        }
     }
 
 }

@@ -27,8 +27,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('user/chat/createsession', 'ChatController@createSession')->name('createsession');
     Route::get('user/chat/session/{sender_id}/{receiver_id}', 'ChatController@getsession')->name('getsession');
     Route::get('user/chat/session/{id}','ChatController@unReadMessages')->name('unreadmessages');
+   
+    
+    //follow
     Route::post('users/{user}/follow', 'UserController@follow')->name('users.follow');
     Route::delete('users/{user}/unfollow', 'UserController@unfollow')->name('users.unfollow');
+    
+    //notification
     Route::get('/notification', 'UserController@notifications')->name('notification');
     Route::get('/notification/{id}/show', 'UserController@showNotification')->name('notification.show');
     Route::get('/deletenotifcation/{id}', 'UserController@DeleteNotification')->name('notification.delete');
