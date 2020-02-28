@@ -383,9 +383,9 @@ function parsedata(date_time) {
 function addMessage(chatReceive, message) {
     ChatsForReceive = window._.concat(chatReceive, ChatsForReceive);
     Messages = window._.concat(message, Messages);
-    var chats = MutiArray(ChatsForReceive);
+    Chats = MutiArray(ChatsForReceive);
+    window.console.log('chats:', Chats);
     showMessages(ChatsForReceive, Messages);
-    ChatsForReceive = [];
 }
 function showMessages(ChatsForReceive, messages) {
     var messageItem;
@@ -400,6 +400,7 @@ function showMessages(ChatsForReceive, messages) {
             window.console.log('chat:', chat);
         });
     }
+
 
 }
 function MessageUnReadItem(chat, message) {
@@ -503,7 +504,7 @@ function addItem(chat, message, username) {
  </span>
  </div>
  <div class="user_count_text">
- <span id="chat_count" class="badge bade_chat"  data-count="0" >` + ChatsForReceive.length + `</span>
+ <span id="chat_count" class="badge bade_chat"  data-count="0" >` + Chats[chat.user_id].length + `</span>
  </div>
  <div class="_user_time">
  <span></span>
@@ -530,13 +531,24 @@ function Message() {
     });
 }
 function MutiArray(array) {
+    window.console.log('array:' + array);
+    var length = array.length;
     var chats = [];
-    for (var i = 0; i < array.length; i++) {
-        for (var j = 0; j < array.length; j++) {
-            if (array[i].user_id == array[j].user_id) {
-                chats[array[i].user_id] = window._.concat(array[i], chats[array[i].user_id]);
+    var a = 0;
+    for (var i = 0; i < length - 1; i++) {
+        var NewArray = [];
+        var count = 0;
+        if (array[i].user_id != array[i + 1].user_id) {
+            for (var j = count; j < i + 1; j++) {
+                NewArray = window._.concat(array[j], NewArray);
+            }
+            a = count = i + 1;
+        } else if (i + 1 == length - 1) {
+            for (var j = a; j < length; j++) {
+                NewArray = window._.concat(array[j], NewArray);
             }
         }
+        chats[array[i].user_id] = NewArray;
     }
     return chats;
 }

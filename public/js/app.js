@@ -59723,11 +59723,9 @@ function parsedata(date_time) {
 function addMessage(chatReceive, message) {
   ChatsForReceive = window._.concat(chatReceive, ChatsForReceive);
   Messages = window._.concat(message, Messages);
-  var chats = MutiArray(ChatsForReceive);
-  window.console.log('chats:' + chats[1]);
-  window.console.log('chats:' + chats);
+  Chats = MutiArray(ChatsForReceive);
+  window.console.log('chats:', Chats);
   showMessages(ChatsForReceive, Messages);
-  ChatsForReceive = [];
 }
 
 function showMessages(ChatsForReceive, messages) {
@@ -59814,7 +59812,7 @@ function addItem(chat, message, username) {
   var listChatItem = $("#startchat");
   var dataTime = parsedata(message.messageTime);
   var message = message.message;
-  var HtmlItem = "\n<div class=\"chat_item\" id=\"user_sender\">\n <span id= \"user_id\" style=\"display:none;\">" + chat.user_id + "</span>   \n <div class=\"chat_user_image\">\n <div class=\"_3RWII\" style=\"height: 44px; width: 44px;\">\n <img id=\"user_image\" src=\"../assets/images/profile/next.jpg\">\n </div>\n </div>\n <div class=\"_user_info\" >\n <div class=\"user_name_Chat\">\n <div class=\"_user_name_chat_set\">\n <span class=\"_user_name_chat_n\">\n <span id=\"user_name\"  class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable\">" + username + "</span>\n <div class=\"_2Ol0p\"></div>\n </span>\n </div>\n <div class=\"_user_time\" id=\"chat_date\">" + dataTime + "</div>\n </div>\n <div class=\"user_message\">\n <div class=\"user_message_text\">\n <span class=\"user_message_text_flex\"\u202C>\n <div class=\"user_message_text_flex2\">\n <span data-icon=\"status-check\" class=\"\">\n <svg xmlns=\"http://www.w3.org/2000/svg\" \n viewBox=\"0 0 14 18\" width=\"14\" height=\"18\">\n <path fill=\"currentColor\"\n d=\"M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 \n 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 \n 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 \n 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z\">\n </path>\n </svg>\n </span>\n </div>\n <span id=\"chat_message\" class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display\">" + message + "</span>\n </span>\n </div>\n <div class=\"user_count_text\">\n <span id=\"chat_count\" class=\"badge bade_chat\"  data-count=\"0\" >" + ChatsForReceive.length + "</span>\n </div>\n <div class=\"_user_time\">\n <span></span>\n <span></span>\n <span></span>\n </div></div>\n </div>\n </div>";
+  var HtmlItem = "\n<div class=\"chat_item\" id=\"user_sender\">\n <span id= \"user_id\" style=\"display:none;\">" + chat.user_id + "</span>   \n <div class=\"chat_user_image\">\n <div class=\"_3RWII\" style=\"height: 44px; width: 44px;\">\n <img id=\"user_image\" src=\"../assets/images/profile/next.jpg\">\n </div>\n </div>\n <div class=\"_user_info\" >\n <div class=\"user_name_Chat\">\n <div class=\"_user_name_chat_set\">\n <span class=\"_user_name_chat_n\">\n <span id=\"user_name\"  class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable\">" + username + "</span>\n <div class=\"_2Ol0p\"></div>\n </span>\n </div>\n <div class=\"_user_time\" id=\"chat_date\">" + dataTime + "</div>\n </div>\n <div class=\"user_message\">\n <div class=\"user_message_text\">\n <span class=\"user_message_text_flex\"\u202C>\n <div class=\"user_message_text_flex2\">\n <span data-icon=\"status-check\" class=\"\">\n <svg xmlns=\"http://www.w3.org/2000/svg\" \n viewBox=\"0 0 14 18\" width=\"14\" height=\"18\">\n <path fill=\"currentColor\"\n d=\"M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 \n 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 \n 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 \n 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z\">\n </path>\n </svg>\n </span>\n </div>\n <span id=\"chat_message\" class=\"_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display\">" + message + "</span>\n </span>\n </div>\n <div class=\"user_count_text\">\n <span id=\"chat_count\" class=\"badge bade_chat\"  data-count=\"0\" >" + Chats[chat.user_id].length + "</span>\n </div>\n <div class=\"_user_time\">\n <span></span>\n <span></span>\n <span></span>\n </div></div>\n </div>\n </div>";
   listChatItem.append(HtmlItem);
 }
 
@@ -59835,14 +59833,28 @@ function Message() {
 }
 
 function MutiArray(array) {
+  window.console.log('array:' + array);
+  var length = array.length;
   var chats = [];
+  var a = 0;
 
-  for (var i = 0; i < array.length; i++) {
-    for (var j = 0; j < array.length; j++) {
-      if (array[i].user_id == array[j].user_id) {
-        chats[array[i].user_id] = window._.concat(array[i], chats[array[i].user_id]);
+  for (var i = 0; i < length - 1; i++) {
+    var NewArray = [];
+    var count = 0;
+
+    if (array[i].user_id != array[i + 1].user_id) {
+      for (var j = count; j < i + 1; j++) {
+        NewArray = window._.concat(array[j], NewArray);
+      }
+
+      a = count = i + 1;
+    } else if (i + 1 == length - 1) {
+      for (var j = a; j < length; j++) {
+        NewArray = window._.concat(array[j], NewArray);
       }
     }
+
+    chats[array[i].user_id] = NewArray;
   }
 
   return chats;
