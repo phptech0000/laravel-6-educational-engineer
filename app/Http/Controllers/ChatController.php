@@ -143,17 +143,15 @@ class ChatController extends Controller {
                 ->where('receiver_id', $you_id)
                 ->first();
         if ($session) {
-            $ChatsForReceive = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type',0)->get();
-            $messages = $session->messages;
-
+            $ChatsForReceive = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->where('read', 0)->get();
+            $chat = Chat::latest()->where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->where('read', 0)->first();
+            $message = message::where('id', $chat->message_id)->first();
             $data = [
                 'ChatsForReceive' => $ChatsForReceive,
-                'Messages' => $messages,
+                'Message' => $message,
             ];
             return response()->json($data);
-        } else {
-            return response()->json('nofound');
-        }
+        } 
     }
 
 }

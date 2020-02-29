@@ -74,12 +74,6 @@ $(document).ready(function () {
         });
         Message();
     }
-
-
-
-
-
-
 });
 function firstsession() {
     var mainchat = $("#chat_main");
@@ -141,7 +135,6 @@ function routeNotifiction(notification) {
     }
     return '/' + to;
 }
-
 function NotificationItem(notification) {
     var NotificationHtml = '';
     if (notification.type === NOTIFICATIONS_TYPE.follow) {
@@ -182,6 +175,16 @@ function NotificationItem(notification) {
 
     return NotificationHtml;
 }
+function RemoveFromArray(notificationArray, id) {
+    for (var i = 0; i < notificationArray.length; i++) {
+        window.console.log('id:' + notificationArray[i].id);
+        if (notificationArray[i].id === id) {
+            window.console.log('index:' + i);
+            notificationArray.splice(i, 1);
+            break;
+        }
+    }
+}
 $(document).on('click', '#notify  #delete', function (event) {
     var notificationsWrapper = $('#notification_list');
     var notificationsToggle = notificationsWrapper.find('a.ttr-submenu-toggle');
@@ -218,16 +221,6 @@ $(document).on('click', '#notify  #delete', function (event) {
         }
     });
 });
-function RemoveFromArray(notificationArray, id) {
-    for (var i = 0; i < notificationArray.length; i++) {
-        window.console.log('id:' + notificationArray[i].id);
-        if (notificationArray[i].id === id) {
-            window.console.log('index:' + i);
-            notificationArray.splice(i, 1);
-            break;
-        }
-    }
-}
 $(document).on('click', "#user_sender", function (event) {
     var mainchat = $("#chat_main");
     var footer = $("#footer");
@@ -378,25 +371,21 @@ function parsedata(date_time) {
 
     return Value;
 }
-
-
 function addMessage(chatReceive, message) {
     ChatsForReceive = window._.concat(chatReceive, ChatsForReceive);
-    Messages = window._.concat(message, Messages);
-    Chats = MutiArray(ChatsForReceive);
-    window.console.log('chats:', Chats);
-    showMessages(ChatsForReceive, Messages);
+
+    showMessages(ChatsForReceive, message);
 }
-function showMessages(ChatsForReceive, messages) {
-    var messageItem;
-    if (messages.length) {
-        for (var i = 0; i < messages.length; i++) {
-            messageItem = messages[i];
-        }
-    }
+function showMessages(ChatsForReceive, message) {
+
     if (ChatsForReceive.length) {
-        ChatsForReceive.map(function (chat) {
-            MessageUnReadItem(chat, messageItem);
+        var chats = sort(ChatsForReceive);
+        window.console.log('ChatsForReceive:' + ChatsForReceive.toString());
+        Chats = MutiArray(chats);
+        window.console.log('SortChats:', chats);
+        window.console.log('chats:', Chats);
+        chats.map(function (chat) {
+            MessageUnReadItem(chat, message);
             window.console.log('chat:', chat);
         });
     }
@@ -410,59 +399,31 @@ function MessageUnReadItem(chat, message) {
         var userId = $(this).find("#user_id").text();
         var id = parseInt(userId);
         var chat_userId = chat.user_id;
-        window.console.log('chat_userId:' + chat_userId);
-        window.console.log('userId:' + id);
         var username = $(this).find("#user_name").text();
-        window.console.log('username:' + username);
         if (chat_userId == id) {
-            var findItem = UpdateItem(chat, message);
-            if (findItem == false) {
-                addItem(chat, message, username);
-                window.console.log('chat:' + chat);
-            }
+            window.console.log('message:' + message.messageTime);
+            DataItem(chat, message, username);
         }
     });
 }
-function UpdateItem(chat, message) {
-    var finditem;
-    var ListChatItems = $("#startchat");
-    var Item = ListChatItems.find('div[id="user_sender"]');
-    if (!ListChatItems.html().length) {
-        window.console.log('nolist');
-        finditem = false;
-    } else {
-        var FoundItem = Item.filter(function () {
-            var userId = $(this).find("#user_id").text();
-            var id = parseInt(userId);
-            return chat.user_id == id;
-        });
-        if (FoundItem.length) {
-            updateItemData(FoundItem, message, chat);
-            finditem = true;
-        } else {
-            finditem = false;
-        }
-    }
-    window.console.log('founditem:' + finditem);
-    return finditem;
-}
+
 
 function updateItemData(Item, message, chat) {
+    window.console.log('message:' + message);
+    window.console.log('message:' + message.messageTime);
     var user_id = Item.find("#user_id").text();
     var message = Item.find("#chat_message");
     var date_time = Item.find("#chat_date");
     var count = Item.find("#chat_count");
-    message.text(message.message);
-    var date = parsedata(message.messageTime);
-    date_time.text(date);
-    count.css('display', 'none');
-    count.text(ChatsForReceive.length);
+    var dataTime = message.messageTime;
+    window.console.log('messagetime:' + dataTime);
+    date_time.text(dataTime);
+    count.text(Chats[user_id].length);
     window.console.log('message.message' + message.message);
 }
 
 
 function addItem(chat, message, username) {
-
     var listChatItem = $("#startchat");
     var dataTime = parsedata(message.messageTime);
     var message = message.message;
@@ -515,6 +476,34 @@ function addItem(chat, message, username) {
  </div>`;
     listChatItem.append(HtmlItem);
 }
+function DataItem(chat, message, username) {
+    var finditem;
+    var ListChatItems = $("#startchat");
+    var Item = ListChatItems.find('div[id="user_sender"]');
+    if (!ListChatItems.html().length) {
+        window.console.log('nolist');
+        addItem(chat, message, username);
+        finditem = false;
+    } else {
+        var FoundItem = Item.filter(function () {
+            var userId = $(this).find("#user_id").text();
+            var id = parseInt(userId);
+            return chat.user_id == id;
+        });
+        if (FoundItem.length) {
+            updateItemData(FoundItem, message, chat);
+            finditem = true;
+        } else {
+            addItem(chat, message, username);
+            finditem = false;
+        }
+    }
+    window.console.log('founditem:' + finditem);
+    return finditem;
+}
+
+
+
 function Message() {
     var url = window.Laravel.getUnReadMessage;
     var listusers = $("#lsit_users");
@@ -524,31 +513,64 @@ function Message() {
         var unReadMessages = url.replace(':id', userId);
         window.console.log('unReadMessage:' + unReadMessages);
         $.get('' + unReadMessages, function (data) {
-            var messages = data.Messages;
-            var chatReceives = data.ChatsForReceive;
-            addMessage(chatReceives, messages);
+            window.console.log('unreadData:', data);
+            if (data.ChatsForReceive) {
+                addMessage(data.ChatsForReceive, data.Message);
+            }
         });
     });
 }
 function MutiArray(array) {
-    window.console.log('array:' + array);
-    var length = array.length;
     var chats = [];
-    var a = 0;
-    for (var i = 0; i < length - 1; i++) {
-        var NewArray = [];
-        var count = 0;
-        if (array[i].user_id != array[i + 1].user_id) {
-            for (var j = count; j < i + 1; j++) {
-                NewArray = window._.concat(array[j], NewArray);
+    var i = 0, count = 0;
+    var length = array.length;
+    if (length > 1) {
+        for (i = 1; i < length; i++) {
+            if (array[i - 1].user_id != array[i].user_id) {
+                var NewArray = [];
+                for (var j = count; j < i; j++) {
+                    NewArray = window._.concat(array[j], NewArray);
+                }
+                count = i;
+                window.console.log('count:' + count);
+                chats[array[i - 1].user_id] = NewArray;
             }
-            a = count = i + 1;
-        } else if (i + 1 == length - 1) {
-            for (var j = a; j < length; j++) {
-                NewArray = window._.concat(array[j], NewArray);
+
+            if (i == length - 1) {
+                window.console.log('countend:' + count);
+                var NewArray = [];
+                for (var j = count; j < length; j++) {
+                    NewArray = window._.concat(array[j], NewArray);
+                }
+                chats[array[i].user_id] = NewArray;
             }
+
         }
-        chats[array[i].user_id] = NewArray;
+    } else {
+        chats[array[0].user_id] = array;
     }
+
     return chats;
 }
+
+function sort(Array) {
+    var len = Array.length,
+            i, j, stop;
+    if (len > 1) {
+        for (i = 0; i < len; i++) {
+            for (j = 1, stop = len - i; j < stop; j++) {
+                if (Array[j - 1].user_id > Array[j].user_id) {
+                    swap(Array, j - 1, j);
+                }
+            }
+        }
+    }
+    return Array;
+}
+function swap(array, firstIndex, lastIndex) {
+    var temp = array[firstIndex];
+    array[firstIndex] = array[lastIndex];
+    array[lastIndex] = temp;
+}
+
+

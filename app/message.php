@@ -45,6 +45,7 @@ class message extends Model {
         $chat = new chat();
         $chat->session_id = $session_id;
         $chat->type = '0';
+           $chat->read ='0';
         $chat->user()->associate(auth()->user());
         return $this->chats()->save($chat);
     }
@@ -53,7 +54,6 @@ class message extends Model {
         $chat = new chat();
         $chat->session_id = $session_id;
         $chat->type = '1';
-        $chat->read ='0';
         $chat->user()->associate($user);
         return $this->chats()->save($chat);
     }
