@@ -59417,6 +59417,7 @@ var app = new Vue({
 });
 var notifications = [];
 var ChatsForReceive = [];
+var MessagesForReceive = [];
 var Chats = [];
 var Messages = [];
 var MESSAGE_TYPE = {
@@ -59451,7 +59452,13 @@ $(document).ready(function () {
       var chat_channel = window.Echo["private"]("chat.".concat(session.session.id));
       window.console.log(chat_channel);
       chat_channel.listen(".App\\Events\\UserMessageEvent", function (data) {
-        addMessage(data.chat, data.message);
+        var chat = data.chat;
+        var message = data.message;
+        var ChatMessage = {
+          chat: chat,
+          message: message
+        };
+        addMessage(ChatMessage);
       });
     });
     Message();
@@ -59719,53 +59726,52 @@ function parsedata(date_time) {
   return Value;
 }
 
-function addMessage(chatReceive, message) {
-  ChatsForReceive = window._.concat(chatReceive, ChatsForReceive);
-  showMessages(ChatsForReceive, message);
+function addMessage(ChatMessage) {
+  ChatsForReceive = window._.concat(ChatMessage, ChatsForReceive);
+  window.console.log('ChatsForReceive:' + ChatsForReceive);
+  showMessages(ChatsForReceive);
 }
 
-function showMessages(ChatsForReceive, message) {
+function showMessages(ChatsForReceive) {
   if (ChatsForReceive.length) {
-    var chats = sort(ChatsForReceive);
-    window.console.log('ChatsForReceive:' + ChatsForReceive.toString());
-    Chats = MutiArray(chats);
-    window.console.log('SortChats:', chats);
+    var Array = sort(ChatsForReceive);
+    Chats = MutiArray(Array);
+    window.console.log('SortChats:', Array);
     window.console.log('chats:', Chats);
-    chats.map(function (chat) {
-      MessageUnReadItem(chat, message);
-      window.console.log('chat:', chat);
+    var userChat = Chats.map(function (chatsOfuser, index) {
+      window.console.log('chatsOfuser:', chatsOfuser);
+      window.console.log('chatsOfuserIndex:', index);
+      MessageUnReadItem(chatsOfuser, index);
     });
   }
 }
 
-function MessageUnReadItem(chat, message) {
+function MessageUnReadItem(chatsOfuser, index) {
   var ALLItems = $("#lsit_users");
   var Itemlist = ALLItems.find('div[id="user_sender"]');
-  Itemlist.each(function (index) {
+  Itemlist.each(function () {
     var userId = $(this).find("#user_id").text();
     var id = parseInt(userId);
-    var chat_userId = chat.user_id;
     var username = $(this).find("#user_name").text();
 
-    if (chat_userId == id) {
-      window.console.log('message:' + message.messageTime);
-      DataItem(chat, message, username);
+    if (index == id) {
+      chatsOfuser.map(function (chatmessage) {
+        DataItem(chatmessage.chat, chatmessage.message, username);
+      });
     }
   });
 }
 
 function updateItemData(Item, message, chat) {
-  window.console.log('message:' + message);
-  window.console.log('message:' + message.messageTime);
   var user_id = Item.find("#user_id").text();
-  var message = Item.find("#chat_message");
+  var messageText = Item.find("#chat_message");
   var date_time = Item.find("#chat_date");
   var count = Item.find("#chat_count");
-  var dataTime = message.messageTime;
+  var dataTime = parsedata(message.messageTime);
+  messageText.text(message.message);
   window.console.log('messagetime:' + dataTime);
   date_time.text(dataTime);
   count.text(Chats[user_id].length);
-  window.console.log('message.message' + message.message);
 }
 
 function addItem(chat, message, username) {
@@ -59801,7 +59807,6 @@ function DataItem(chat, message, username) {
     }
   }
 
-  window.console.log('founditem:' + finditem);
   return finditem;
 }
 
@@ -59816,49 +59821,62 @@ function Message() {
     $.get('' + unReadMessages, function (data) {
       window.console.log('unreadData:', data);
 
-      if (data.ChatsForReceive) {
-        addMessage(data.ChatsForReceive, data.Message);
+      if (data) {
+        var dataMessages = [];
+
+        for (var i = 0; i < data.ChatsForReceive.length; i++) {
+          var chat = data.ChatsForReceive[i];
+          var message = data.MessagesForReceive[i];
+          var ChatMessage = {
+            chat: chat,
+            message: message
+          };
+          dataMessages = window._.concat(ChatMessage, dataMessages);
+        }
+
+        addMessage(dataMessages);
       }
     });
   });
 }
 
 function MutiArray(array) {
-  var chats = [];
+  var ChatMessages = [];
   var i = 0,
       count = 0;
   var length = array.length;
 
   if (length > 1) {
     for (i = 1; i < length; i++) {
-      if (array[i - 1].user_id != array[i].user_id) {
+      if (array[i - 1].chat.user_id != array[i].chat.user_id) {
         var NewArray = [];
 
         for (var j = count; j < i; j++) {
+          var chat = array[j];
           NewArray = window._.concat(array[j], NewArray);
         }
 
         count = i;
         window.console.log('count:' + count);
-        chats[array[i - 1].user_id] = NewArray;
+        ChatMessages[array[i - 1].chat.user_id] = NewArray;
       }
 
       if (i == length - 1) {
-        window.console.log('countend:' + count);
         var NewArray = [];
+        window.console.log('countend:' + count);
 
         for (var j = count; j < length; j++) {
           NewArray = window._.concat(array[j], NewArray);
         }
 
-        chats[array[i].user_id] = NewArray;
+        ChatMessages[array[i].chat.user_id] = NewArray;
       }
     }
   } else {
-    chats[array[0].user_id] = array;
+    ChatMessages[array[0].chat.user_id] = array;
   }
 
-  return chats;
+  return ChatMessages;
 }
 
 function sort(Array) {
@@ -59870,7 +59888,7 @@ function sort(Array) {
   if (len > 1) {
     for (i = 0; i < len; i++) {
       for (j = 1, stop = len - i; j < stop; j++) {
-        if (Array[j - 1].user_id > Array[j].user_id) {
+        if (Array[j - 1].chat.user_id > Array[j].chat.user_id) {
           swap(Array, j - 1, j);
         }
       }

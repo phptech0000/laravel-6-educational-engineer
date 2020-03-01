@@ -144,14 +144,19 @@ class ChatController extends Controller {
                 ->first();
         if ($session) {
             $ChatsForReceive = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->where('read', 0)->get();
-            $chat = Chat::latest()->where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->where('read', 0)->first();
-            $message = message::where('id', $chat->message_id)->first();
+            $i = 0;
+            $messages =[];
+            foreach ($ChatsForReceive as  $chat) {
+                $message = message::where('id', $chat->message_id)->first();
+                $messages[$i] = $message;
+                $i++;
+            }
             $data = [
                 'ChatsForReceive' => $ChatsForReceive,
-                'Message' => $message,
+                'MessagesForReceive' => $messages,
             ];
             return response()->json($data);
-        } 
+        }
     }
 
 }
