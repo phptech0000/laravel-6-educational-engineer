@@ -73,7 +73,7 @@ $(document).ready(function () {
                 var chat = data.chat;
                 var message = data.message;
                 var ChatMessage = {chat, message};
-                addMessage(ChatMessage);
+                addMessage([ChatMessage]);
             });
         });
         Message();
@@ -341,44 +341,61 @@ function buildMessagereceived(message) {
 }
 function parsedata(date_time) {
     var Value = '';
-    var index = date_time.indexOf('-');
-
-    var date = date_time.substring(0, index);
-    var time = date_time.substring(index + 1, date_time.length);
+    var messageTimeDate = new Date(Date.parse(date_time, "dd/mm/yyyy HH:mm:ss"));
+    var messageDay = messageTimeDate.getDate();
+    var messageMonth = messageTimeDate.getMonth() + 1;
+    var messageYear = messageTimeDate.getFullYear();
+    var messaMint = messageTimeDate.getMinutes();
+    var messageHour = messageTimeDate.getHours();
     var CurrentDataTime = new Date();
-    var day = CurrentDataTime.getDate()
-    if (day < 10) {
-        day = '0' + day;
-    }
+    var day = CurrentDataTime.getDate();
     var month = CurrentDataTime.getMonth() + 1;
-    if (month < 10) {
-        month = '0' + month;
-    }
     var year = CurrentDataTime.getFullYear();
-    var CurrentDate = day + '/' + month + '/' + year;
-    var char = new RegExp('/', 'g');
-    var dateInt = date.replace(char, '');
-    var currentdateInt = CurrentDate.replace(char, '');
-    var dateInteger = parseInt(dateInt);
-    window.console.log('dateInteger', dateInteger);
-    var currentdateInteger = parseInt(currentdateInt);
-    window.console.log('currentdateInteger', currentdateInteger);
-    var diff = currentdateInteger - dateInteger;
-    window.console.log('diff', diff);
-    if (diff == 0) {
-        Value = time;
-    } else if (diff == 1) {
-        Value = "Yesterday";
-    } else if (diff > 1) {
-        Value = date;
-    }
+    var time = CurrentDataTime.getTime();
+    var diffYear = year - messageYear;
+    var diffMonth = month - messageMonth;
+    var diffDay = Math.abs(day - messageDay);
+    if (diffMonth == 0 && diffYear == 0) {
+        if (diffDay == 0) {
+            Value = messageHour + ':'+ messaMint;
+        } else if (diffDay == 1) {
+            Value = 'YesterDay';
+        } else {
+            Value = messageDay + '/' + messageMonth + '/' + messageYear;
+        }
 
+    } else if (diffMonth == 1 && diffYear == 0) {
+        if (messageMonth == 2 && diffDay == 28) {
+            Value = 'YesterDay';
+        } else if (
+                (messageMonth == 1 ||
+                        messageMonth == 3 ||
+                        messageMonth == 5 ||
+                        messageMonth == 7 ||
+                        messageMonth == 8 ||
+                        messageMonth == 10 ||
+                        messageMonth == 12) && diffDay) {
+
+            Value = 'YesterDay';
+
+        } else if (
+                (messageMonth == 4 ||
+                        messageMonth == 6 ||
+                        messageMonth == 9 ||
+                        messageMonth == 11) && diffDay == 29) {
+            Value = 'YesterDay';
+
+        } else {
+            Value = messageDay + '/' + messageMonth + '/' + messageYear;
+        }
+    } else {
+        Value = messageDay + '/' + messageMonth + '/' + messageYear;
+    }
     return Value;
 }
 
 function addMessage(ChatMessage) {
     ChatsForReceive = window._.concat(ChatMessage, ChatsForReceive);
-    window.console.log('ChatsForReceive:' + ChatsForReceive);
     showMessages(ChatsForReceive);
 }
 function showMessages(ChatsForReceive) {

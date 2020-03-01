@@ -67,6 +67,7 @@ class ChatController extends Controller {
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
         $chatReceive = $message->SessionForReceive($session->id, $user);
+        
         broadcast(new UserMessageEvent($chat, $message))->toOthers();
         $data = [
             'chat' => $chat,
@@ -77,10 +78,7 @@ class ChatController extends Controller {
 
     private function getTime() {
         $date = now()->timezone('egypt');
-        $format = "d/m/Y-H:i";
-        $dateFormat = Carbon::createFromFormat('Y-m-d H:i:s', $date)->format($format);
-        $DateTime = strtoupper($dateFormat);
-        return $DateTime;
+        return $date;
     }
 
     public function getsession($sender_id, $receiver_id) {
