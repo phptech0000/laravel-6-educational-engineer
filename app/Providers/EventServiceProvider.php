@@ -6,8 +6,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-class EventServiceProvider extends ServiceProvider
-{
+
+class EventServiceProvider extends ServiceProvider {
+
     /**
      * The event listener mappings for the application.
      *
@@ -17,12 +18,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-       'App\Events\UserMessageEvent'=>[
-           'App\Listeners\MessageListener',
-       ],
-        'App\Events\SessionEvent'=>[
-           'App\Listeners\SessionListener',
-       ]
+        'App\Events\UserMessageEvent' => [
+            'App\Listeners\MessageListener',
+        ],
+        'App\Events\SessionEvent' => [
+            'App\Listeners\SessionListener',
+        ],
+        'App\Envents\ReadEvent' => [
+            'App\Listeners\ReadListener',
+        ],
     ];
 
     /**
@@ -30,10 +34,10 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         parent::boot();
 
         //
     }
+
 }

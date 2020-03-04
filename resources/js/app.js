@@ -80,10 +80,8 @@ $(document).ready(function () {
     }
 });
 function firstsession() {
-    var mainchat = $("#chat_main");
-    var footer = $("#footer");
     var splash = $("#splash");
-    mainchat.addClass('chat_main_hidden');
+    var footer = $("#footer");
     footer.addClass('chat_main_hidden');
     splash.removeClass('chat_main_hidden');
 }
@@ -229,22 +227,17 @@ $(document).on('click', "#user_sender", function (event) {
     var mainchat = $("#chat_main");
     var footer = $("#footer");
     var splash = $("#splash");
-    mainchat.removeClass('chat_main_hidden');
     footer.removeClass('chat_main_hidden');
     splash.addClass('chat_main_hidden');
     var item = $(event.currentTarget);
     var image = item.find("#user_image").attr('src');
     var user_name = item.find("#user_name").text();
     var user_id = item.find("#user_id").text();
-    sender_id = user_id;
-    var user_name_bar = $("#usernamebar");
+    bulidChatMain(user_id, user_name, image);
     var user_image_bar = $("#userimagebar");
     var user_id_bar = $("#user_id_bar")
     var form = document.querySelector('.conversation-compose');
     form.receiver_id.value = user_id;
-    user_id_bar.text(user_id);
-    user_image_bar.attr("src", image);
-    user_name_bar.text(user_name);
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -259,6 +252,8 @@ $(document).on('click', "#user_sender", function (event) {
 
                 window.console.log('data:' + data);
             });
+
+    ReadMessages(user_id);
 });
 $(document).on('submit', "#messageForm", function (event) {
     var message = newMessage(event);
@@ -310,35 +305,7 @@ function newMessage(e) {
     e.preventDefault();
     return message;
 }
-function buildMessage(text) {
-    var element = document.createElement('div');
-    element.classList.add('message', 'sent');
-    element.innerHTML = text +
-            '<span class="metadata">' +
-            '<span class="time"> 2:25 </span>' +
-            '<span class="tick tick-animation">' +
-            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>' +
-            '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>' +
-            '</span>' +
-            '</span>';
-    return element;
-}
-function ReadMessage(message) {
-    setTimeout(function () {
-        var tick = message.querySelector('.tick');
-        tick.classList.remove('tick-animation');
-    }, 500);
-}
-function buildMessagereceived(message) {
-    var element = document.createElement('div');
-    element.classList.add('message', 'received');
-    element.innerHTML =
-            `<span id="random">` + message.message + `</span>
-             <span class="metadata">
-                <span class="time">3:20PM</span>
-             </span>`;
-    return element;
-}
+
 function parsedata(date_time) {
     var Value = '';
     var messageTimeDate = new Date(Date.parse(date_time, "dd/mm/yyyy HH:mm:ss"));
@@ -357,7 +324,7 @@ function parsedata(date_time) {
     var diffDay = Math.abs(day - messageDay);
     if (diffMonth == 0 && diffYear == 0) {
         if (diffDay == 0) {
-            Value = messageHour + ':'+ messaMint;
+            Value = messageHour + ':' + messaMint;
         } else if (diffDay == 1) {
             Value = 'YesterDay';
         } else {
@@ -439,7 +406,14 @@ function updateItemData(Item, message, chat) {
     messageText.text(message.message);
     window.console.log('messagetime:' + dataTime);
     date_time.text(dataTime);
-    count.text(Chats[user_id].length);
+    if (chat.read == 0 || chat.type == MESSAGE_TYPE.MessageSend) {
+        date_time.addClass('dateTimeColor');
+        count.text(Chats[user_id].length);
+        count.css('display', 'block');
+    } else if (chat.read == 1 || chat.type == MESSAGE_TYPE.MessageReceive) {
+        date_time.removeClass('dateTimeColor');
+        count.css('display', 'none');
+    }
 
 }
 
@@ -448,7 +422,9 @@ function addItem(chat, message, username) {
     var listChatItem = $("#startchat");
     var dataTime = parsedata(message.messageTime);
     var message = message.message;
-    var HtmlItem = `
+    var HtmlItem = [];
+    if (chat.type == MESSAGE_TYPE.MessageSend) {
+        HtmlItem = `
 <div class="chat_item" id="user_sender">
  <span id= "user_id" style="display:none;">` + chat.user_id + `</span>   
  <div class="chat_user_image">
@@ -464,7 +440,7 @@ function addItem(chat, message, username) {
  <div class="_2Ol0p"></div>
  </span>
  </div>
- <div class="_user_time" id="chat_date">` + dataTime + `</div>
+ <div class="_user_time dateTimeColor" id="chat_date">` + dataTime + `</div>
  </div>
  <div class="user_message">
  <div class="user_message_text">
@@ -495,6 +471,55 @@ function addItem(chat, message, username) {
  </div></div>
  </div>
  </div>`;
+    } else if (MESSAGE_TYPE.MessageReceive) {
+        HtmlItem = `
+<div class="chat_item" id="user_sender">
+ <span id= "user_id" style="display:none;">` + chat.user_id + `</span>   
+ <div class="chat_user_image">
+ <div class="_3RWII" style="height: 44px; width: 44px;">
+ <img id="user_image" src="../assets/images/profile/next.jpg">
+ </div>
+ </div>
+ <div class="_user_info" >
+ <div class="user_name_Chat">
+ <div class="_user_name_chat_set">
+ <span class="_user_name_chat_n">
+ <span id="user_name"  class="_user_text_name _user_text_name_dispaly _user_text_name_visiable">` + username + `</span>
+ <div class="_2Ol0p"></div>
+ </span>
+ </div>
+ <div class="_user_time dateTimeColor" id="chat_date">` + dataTime + `</div>
+ </div>
+ <div class="user_message">
+ <div class="user_message_text">
+ <span class="user_message_text_flex"‬>
+ <div class="user_message_text_flex2">
+ <span data-icon="status-check" class="">
+ <svg xmlns="http://www.w3.org/2000/svg" 
+ viewBox="0 0 14 18" width="14" height="18">
+ <path fill="currentColor"
+ d="M12.502 5.035l-.57-.444a.434.434 0 0 0-.609.076l-6.39 
+ 8.198a.38.38 0 0 1-.577.039l-2.614-2.556a.435.435 0 
+ 0 0-.614.007l-.505.516a.435.435 0 0 0 .007.614l3.887 
+ 3.8a.38.38 0 0 0 .577-.039l7.483-9.602a.435.435 0 0 0-.075-.609z">
+ </path>
+ </svg>
+ </span>
+ </div>
+ <span id="chat_message" class="_user_text_name _user_text_name_dispaly _user_text_name_visiable _message_text_display">` + message + `</span>
+ </span>
+ </div>
+ <div class="user_count_text">
+ <span id="chat_count" class="badge bade_chat" style="display:none;" data-count="0" >` + Chats[chat.user_id].length + `</span>
+ </div>
+ <div class="_user_time">
+ <span></span>
+ <span></span>
+ <span></span>
+ </div></div>
+ </div>
+ </div>`;
+    }
     listChatItem.append(HtmlItem);
 }
 function DataItem(chat, message, username) {
@@ -606,4 +631,118 @@ function swap(array, firstIndex, lastIndex) {
     var temp = array[firstIndex];
     array[firstIndex] = array[lastIndex];
     array[lastIndex] = temp;
+}
+function ReadMessages(user_id) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var url = window.Laravel.getReadMessages.replace(':id', user_id);
+    $.post('' + url, {read: 1}, function (data) {
+        var messageRead = [];
+        for (var i = 0; i < data.chats.length; i++) {
+            var chat = data.chats[i];
+            var message = data.messages[i];
+            var messages = {chat, message};
+            messageRead = window._.concat(messages, messageRead);
+        }
+        window.console.log(messageRead);
+        addMessageRead(messageRead);
+    });
+
+}
+
+function addMessageRead(newMessage) {
+    showReadMessage(newMessage);
+}
+function showReadMessage(Messages) {
+    var conversation = document.querySelector('.conversation-container');
+    Messages.map(function (message) {
+        var view = readmessageView(message);
+        conversation.appendChild(view);
+    });
+
+}
+function buildMessage(message) {
+    var element = document.createElement('div');
+    element.classList.add('message', 'sent');
+    element.innerHTML = message.message +
+            `<span class="metadata">
+            <span class="time">` + message.messageTime + `  </span>
+            <span class="tick tick-animation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck" x="2047" y="2061"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#92a58c"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="15" id="msg-dblcheck-ack" x="2063" y="2076"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z" fill="#4fc3f7"/></svg>
+            </span> 
+            </span>`;
+    return element;
+}
+function ReadMessageIcone() {
+    setTimeout(function (message) {
+        var tick = message.querySelector('.tick');
+        tick.classList.remove('tick-animation');
+    }, 500);
+}
+function buildMessagereceived(message) {
+    var element = document.createElement('div');
+    element.classList.add('message', 'received');
+    element.innerHTML =
+            `<span id="random">` + message.message + `</span>
+             <span class="metadata">
+                <span class="time">` + message.messageTime + `</span>
+             </span>`;
+    return element;
+}
+function readmessageView(chatmessage) {
+    var chat = chatmessage.chat;
+    var message = chatmessage.message;
+    var view = '';
+    if (chat.type == MESSAGE_TYPE.MessageSend) {
+        view = buildMessagereceived(message);
+
+    } else if (chat.type == MESSAGE_TYPE.MessageReceive) {
+        view = buildMessage(message);
+    }
+
+    return view;
+}
+
+function bulidChatMain(user_id, username, image) {
+    var Html = `
+<div class="user-bar">
+        <div class="back">
+            <i class="fa back"></i>
+        </div>
+        <span id= "user_id_bar" style="display: none">` + user_id + `</span>  
+        <div class="avatar">
+            <img id="userimagebar" src="` + image + `" alt="Avatar">
+        </div>
+        <div class="name">
+            <span id="usernamebar">` + username + `</span>
+            <span class="status">online</span>
+        </div>
+        <a class="actions more">
+
+            <i class="zmdi zmdi-more-vert"></i>
+        </a>
+        <a class="actions more">
+            <i class="fa fa-phone"></i>
+        </a>
+        <a class="actions more">
+            <i class="fa fa-video-camera"></i>
+        </a>
+    </div>
+    <div class="page_chat">
+
+        <div class="conversation content-scroll">
+            <div class="conversation-container" id="messageTextShow">
+
+            </div>
+        </div>
+
+
+    </div>
+`;
+    var chatmain = $("#chat_main");
+    chatmain.html(Html);
 }

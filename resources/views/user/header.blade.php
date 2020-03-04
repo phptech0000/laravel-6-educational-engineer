@@ -76,6 +76,7 @@ echo json_encode([
                 window.Laravel.sendmessage = '<?= route('sendmessage', ':sessionid') ?>';
                 window.Laravel.getsession = '<?= route('getsession', [':sender_id', ':receiver_id']) ?>';
                 window.Laravel.getUnReadMessage = '<?= route('unreadmessages',':id') ?>';
+                window.Laravel.getReadMessages ='<?= route('readmessages', ':id')?>';
             </script>
         <?php endif; ?>
     </head>
@@ -120,7 +121,7 @@ echo json_encode([
                 </div>
                 <div class="ttr-header-right ttr-with-seperator">
                     <!-- header right menu start -->
-                    <ul class="ttr-header-navigation">
+                    <ul class="ttr-header-navigation" >
                         <li>
                             <a href="#" class="ttr-material-button ttr-search-toggle"><i class="fa fa-search"></i></a>
                         </li>
@@ -157,7 +158,6 @@ echo json_encode([
                                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form></li>

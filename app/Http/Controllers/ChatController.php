@@ -67,7 +67,7 @@ class ChatController extends Controller {
         $chat = $message->SessionForSend($session->id);
         $user = User::find($request->input('receiver_id'));
         $chatReceive = $message->SessionForReceive($session->id, $user);
-        
+
         broadcast(new UserMessageEvent($chat, $message))->toOthers();
         $data = [
             'chat' => $chat,
@@ -120,7 +120,31 @@ class ChatController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-//
+        $you_id = auth()->user()->id;
+        $session = Session::where('sender_id', $you_id)
+                ->where('receiver_id', $id)
+                ->orWhere('sender_id', $id)
+                ->where('receiver_id', $you_id)
+                ->first();
+        $read = $request->input('read');
+        if ($session) {
+            $chats = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->where('read', 0)->get();
+            if ($chats) {
+                foreach ($chats as $chat) {
+                    $chat->read = $read;
+                    $chat->read_at = $this->getTime();
+                    $chat->update();
+                }
+
+                $messages = $session->messages;
+                $chatsRead = Chat::where('session_id', $session->id)->where('user_id', $id)->get();
+            }
+        }
+        $data = [
+            'messages'=>$messages ,
+            'chats'=>$chatsRead,
+        ];
+        return response()->json($data);
     }
 
     /**
@@ -141,10 +165,10 @@ class ChatController extends Controller {
                 ->where('receiver_id', $you_id)
                 ->first();
         if ($session) {
-            $ChatsForReceive = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->where('read', 0)->get();
+            $ChatsForReceive = Chat::where('session_id', $session->id)->where('user_id', $id)->where('type', 0)->get();
             $i = 0;
-            $messages =[];
-            foreach ($ChatsForReceive as  $chat) {
+            $messages = [];
+            foreach ($ChatsForReceive as $chat) {
                 $message = message::where('id', $chat->message_id)->first();
                 $messages[$i] = $message;
                 $i++;

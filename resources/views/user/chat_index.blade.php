@@ -129,40 +129,8 @@
     <!-- sidebar menu end -->
 
 </div>
-<div class="chat_page chat_main_hidden" id="chat_main">
-    <div class="user-bar">
-        <div class="back">
-            <i class="fa back"></i>
-        </div>
-        <span id= "user_id_bar" style="display: none"></span>  
-        <div class="avatar">
-            <img id="userimagebar" src="https://avatars2.githubusercontent.com/u/398893?s=128" alt="Avatar">
-        </div>
-        <div class="name">
-            <span id="usernamebar">Hassan Elsaied</span>
-            <span class="status">online</span>
-        </div>
-        <a class="actions more">
-
-            <i class="zmdi zmdi-more-vert"></i>
-        </a>
-        <a class="actions more">
-            <i class="fa fa-phone"></i>
-        </a>
-        <a class="actions more">
-            <i class="fa fa-video-camera"></i>
-        </a>
-    </div>
-    <div class="page_chat">
-
-        <div class="conversation content-scroll">
-            <div class="conversation-container" id="messageTextShow">
-
-            </div>
-        </div>
-
-
-    </div>
+<div class="chat_page" id="chat_main">
+    
 
 
 </div>
